@@ -6,11 +6,12 @@ const Password = ({
   handleChange,
   isPasswordVisible,
   setIsPasswordVisible,
+  Icon,
 }) => {
   return (
     <View className="flex flex-row bg-white items-center h-[60px] overflow-hidden rounded-lg shadow-md shadow-gray-300">
       <View className="w-14 flex flex-row items-center justify-center h-full">
-        <FontAwesome name="lock" size={20} color={'#545454'} />
+        <Icon />
       </View>
       <TextInput
         autoComplete="off"

@@ -260,6 +260,9 @@ const Register = () => {
                   handleChange={(text) => handleChange('password', text)}
                   isPasswordVisible={isPasswordVisible}
                   setIsPasswordVisible={setIsPasswordVisible}
+                  Icon={() => (
+                    <FontAwesome name="lock" size={20} color={'#545454'} />
+                  )}
                 />
 
                 {/* Botón */}

@@ -1,14 +1,11 @@
-import { Button } from '@react-navigation/elements'
 import { useNavigation } from '@react-navigation/native'
 import {
-  ActivityIndicator,
   Image,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -19,6 +16,7 @@ import { useState } from 'react'
 import { authAPI } from '../../../api/index.api'
 import Toast from 'react-native-toast-message'
 import { AxiosError } from 'axios'
+import { Input, Password, Submit } from '../../../components/index.components'
 const Login = () => {
   const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
@@ -145,53 +143,23 @@ const Login = () => {
 
               {/* Formulario */}
               <View className="flex flex-col gap-3 mt-20">
-                <View className="flex flex-row bg-white items-center h-[60px] overflow-hidden rounded-lg shadow-md shadow-gray-300">
-                  <View className="w-14 flex flex-row items-center justify-center h-full">
+                <Input
+                  Icon={() => (
                     <Octicons name="mail" size={20} color={'#545454'} />
-                  </View>
-                  <TextInput
-                    autoCapitalize="none"
-                    placeholder="Correo electrónico"
-                    defaultValue={credentials.email}
-                    onChangeText={(text) => handleChange('email', text)}
-                    className="flex-1 bg-white outline-none px-1"
-                    style={{
-                      fontFamily: 'Inter_400Regular',
-                      fontSize: 16,
-                      color: '#505050',
-                    }}
-                  />
-                </View>
-                <View className="flex flex-row bg-white items-center h-[60px] overflow-hidden rounded-lg shadow-md shadow-gray-300">
-                  <View className="w-14 flex flex-row items-center justify-center h-full">
+                  )}
+                  holder={'Correo electrónico'}
+                  value={credentials.email}
+                  onChange={(text) => handleChange('email', text)}
+                />
+                <Password
+                  Icon={() => (
                     <Octicons name="lock" size={20} color={'#545454'} />
-                  </View>
-                  <TextInput
-                    autoCapitalize="none"
-                    secureTextEntry={!isPasswordVisible}
-                    placeholder="Contraseña"
-                    defaultValue={credentials.password}
-                    onChangeText={(text) => handleChange('password', text)}
-                    className="flex-1 bg-white outline-none px-1"
-                    style={{
-                      fontFamily: 'Inter_400Regular',
-                      fontSize: 16,
-                      color: '#505050',
-                    }}
-                  />
-
-                  {/* Icono del ojo de candado */}
-                  <TouchableOpacity
-                    className="px-4"
-                    onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-                  >
-                    {isPasswordVisible ? (
-                      <Octicons name="eye" size={21} color={'#545454'} />
-                    ) : (
-                      <Octicons name="eye-closed" size={21} color={'#545454'} />
-                    )}
-                  </TouchableOpacity>
-                </View>
+                  )}
+                  handleChange={(text) => handleChange('password', text)}
+                  value={credentials.password}
+                  isPasswordVisible={isPasswordVisible}
+                  setIsPasswordVisible={setIsPasswordVisible}
+                />
               </View>
 
               {/* Recuperar contraseña */}
@@ -210,21 +178,11 @@ const Login = () => {
 
               {/* Boton */}
 
-              <TouchableOpacity
-                className="mt-3 py-4 rounded-full flex flex-row gap-3 items-center justify-center bg-[#0A192F]"
-                onPress={handleSubmit}
-              >
-                {loading && <ActivityIndicator size="small" color="white" />}
-                <Text
-                  style={{
-                    fontFamily: 'Inter_700Bold',
-                    fontSize: 18,
-                    color: 'white',
-                  }}
-                >
-                  {loading ? 'Cargando...' : 'Iniciar sesión'}
-                </Text>
-              </TouchableOpacity>
+              <Submit
+                loading={loading}
+                handleSubmit={handleSubmit}
+                text="Iniciar sesión"
+              />
 
               {/* Caja de registro y activacion */}
             </View>
