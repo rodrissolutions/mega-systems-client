@@ -20,8 +20,8 @@ import { authAPI } from '../../../api/index.api'
 import Toast from 'react-native-toast-message'
 import { AxiosError } from 'axios'
 const Login = () => {
+  const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
-
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const initialState = {
@@ -30,6 +30,11 @@ const Login = () => {
   }
 
   const [credentials, setCredentials] = useState(initialState)
+
+  const goToRegister = () => {
+    setCredentials(initialState)
+    navigation.navigate('Register')
+  }
 
   const handleChange = (name, value) => {
     setCredentials({ ...credentials, [name]: value })
@@ -137,27 +142,6 @@ const Login = () => {
                   </Text>
                 </View>
               </View>
-              {/* Titulo */}
-              {/* <View className="flex flex-col gap-1 px-5 mt-10">
-                <Text
-                  style={{
-                    fontFamily: 'Orbitron_700Bold',
-                    fontSize: 23,
-                    color: '#000000',
-                  }}
-                >
-                  Inicio de sesion
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: 'Inter_700Bold',
-                    fontSize: 16,
-                    color: '#000000',
-                  }}
-                >
-                  Accede a tu cuenta para continuar
-                </Text>
-              </View> */}
 
               {/* Formulario */}
               <View className="flex flex-col gap-3 mt-20">
@@ -255,7 +239,7 @@ const Login = () => {
                 >
                   ¿No tienes una cuenta?
                 </Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={goToRegister}>
                   <Text
                     className="underline"
                     style={{

@@ -1,1 +1,4 @@
 export { default as Toast } from './toast/Toast'
+export { default as Input } from './input/Input.jsx'
+export { default as Password } from './password/Password.jsx'
+export { default as Submit } from './button/Submit.jsx'
