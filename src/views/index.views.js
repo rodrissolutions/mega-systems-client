@@ -1,1 +1,1 @@
-export { Login, Home, Register } from './shared/index.shared.js'
+export { Login, Home, Register, Code } from './shared/index.shared.js'

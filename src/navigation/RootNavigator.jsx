@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { View } from 'react-native'
-import { Home, Login, Register } from '../views/index.views'
+import { Code, Home, Login, Register } from '../views/index.views'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Octicons } from '@expo/vector-icons'
 
@@ -88,6 +88,11 @@ const RootNavigator = () => {
       <Stack.Screen
         name="Register"
         component={Register}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Code"
+        component={Code}
         options={{ headerShown: false }}
       />
       <Stack.Screen

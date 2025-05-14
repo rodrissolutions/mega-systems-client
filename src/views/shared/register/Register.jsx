@@ -114,6 +114,13 @@ const Register = () => {
 
         setData(initialState)
         setImageUri(null)
+
+        setTimeout(() => {
+          navigation.replace('Code', {
+            email: formData.get('email'),
+            type: 'Verificación',
+          })
+        }, 2500)
       })
       .catch((err) => {
         if (err instanceof AxiosError) {
