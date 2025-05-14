@@ -1,6 +1,15 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { View } from 'react-native'
-import { Code, Home, Login, Register } from '../views/index.views'
+import {
+  Code,
+  Favorites,
+  Home,
+  Login,
+  Profile,
+  Register,
+  Sales,
+  Services,
+} from '../views/index.views'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Octicons } from '@expo/vector-icons'
 
@@ -29,20 +38,10 @@ const MainTabs = () => {
           ),
         }}
       />
-      <Tabs.Screen
-        name="Products"
-        component={Home}
-        options={{
-          headerShown: false,
-          tabBarLabel: 'Productos',
-          tabBarIcon: ({ color, size }) => (
-            <Octicons name="list-unordered" size={21} color={color} />
-          ),
-        }}
-      />
+
       <Tabs.Screen
         name="Services"
-        component={Home}
+        component={Services}
         options={{
           headerShown: false,
           tabBarLabel: 'Servicios',
@@ -51,9 +50,22 @@ const MainTabs = () => {
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="Sales"
+        component={Sales}
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Compras',
+          tabBarIcon: ({ color, size }) => (
+            <Octicons name="tag" size={21} color={color} />
+          ),
+        }}
+      />
+
       <Tabs.Screen
         name="Favorites"
-        component={Home}
+        component={Favorites}
         options={{
           headerShown: false,
           tabBarLabel: 'Favoritos',
@@ -64,7 +76,7 @@ const MainTabs = () => {
       />
       <Tabs.Screen
         name="Profile"
-        component={Home}
+        component={Profile}
         options={{
           headerShown: false,
           tabBarLabel: 'Ajustes',
