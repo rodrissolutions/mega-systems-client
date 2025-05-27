@@ -14,8 +14,8 @@ import {
 import logo from 'assets/logo.png'
 import { useEffect, useRef, useState } from 'react'
 import Toast from 'react-native-toast-message'
-import { codeAPI } from '../../../api/index.api'
-import { Countdown } from '../../../components/index.components'
+import { codeAPI } from 'api/index.api'
+import { Countdown } from 'components/index.components'
 import { AxiosError } from 'axios'
 import { useNavigation } from '@react-navigation/native'
 

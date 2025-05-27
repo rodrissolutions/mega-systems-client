@@ -8,10 +8,19 @@ import {
   Text,
 } from 'react-native'
 import logo from 'assets/logo.png'
-import { Feather, Octicons } from '@expo/vector-icons'
-import { useState } from 'react'
+import {
+  Feather,
+  FontAwesome,
+  FontAwesome5,
+  Octicons,
+} from '@expo/vector-icons'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
-const Header = ({ toggleOpenCart }) => {
+const Header = ({ toggleOpenCart, showBarSearch }) => {
+  const navigation = useNavigation()
+  const { counter } = useSelector((state) => state.cart)
   const [focusInput, setFocusInput] = useState(false)
 
   const handleFocus = () => setFocusInput(true)
@@ -22,41 +31,74 @@ const Header = ({ toggleOpenCart }) => {
     Keyboard.dismiss()
   }
 
+  const goToInfoAddress = () => {
+    navigation.navigate('Address')
+  }
+
+  useEffect(() => {
+    console.log(counter)
+  }, [])
+
   return (
     <View className="relative">
-      <View className="h-[80px] bg-[#1786f9] flex flex-row items-center px-5 gap-2">
-        <Image source={logo} className="w-[40px] h-[40px] scale-x-[-1]" />
+      <View className="flex flex-col">
+        <View
+          className={`h-[80px] bg-[#1786f9] flex flex-row items-center px-5 gap-2 ${
+            !showBarSearch && 'justify-between'
+          }`}
+        >
+          {/* <Image source={logo} className="w-[40px] h-[40px] scale-x-[-1]" /> */}
 
-        <View className="flex-1 h-[40px] flex flex-row bg-white rounded-lg mr-5">
-          <View className="w-[50px] h-full flex justify-center items-center">
-            <Octicons name="search" size={18} color="#ccc" />
+          <View className="flex-1 h-[40px] flex flex-row bg-white rounded-lg mr-5">
+            <View className="w-[50px] h-full flex justify-center items-center">
+              <Octicons name="search" size={18} color="#ccc" />
+            </View>
+            <TextInput
+              autoCapitalize="none"
+              className="outline-none flex-1 h-full text-[#ccc]"
+              placeholder="Estoy buscando..."
+              onFocus={handleFocus}
+              style={{
+                fontFamily: 'Inter_400Regular',
+                fontSize: 14,
+              }}
+            />
           </View>
-          <TextInput
-            autoCapitalize="none"
-            className="outline-none flex-1 h-full text-[#ccc]"
-            placeholder="Estoy buscando..."
-            onFocus={handleFocus}
-            style={{
-              fontFamily: 'Inter_400Regular',
-              fontSize: 14,
-            }}
-          />
-        </View>
 
-        <TouchableOpacity onPress={toggleOpenCart} className="relative">
-          <Feather name="shopping-cart" size={24} color="#fff" />
-          <View className="absolute w-[15px] h-[15px] bg-red-400 rounded-full flex justify-center items-center -right-2 -top-1">
+          <TouchableOpacity onPress={toggleOpenCart} className="relative">
+            <Feather name="shopping-cart" size={24} color="#fff" />
+            <View className="absolute w-[15px] h-[15px] bg-red-400 rounded-full flex justify-center items-center -right-2 -top-1">
+              <Text
+                style={{
+                  fontFamily: 'Inter_400Regular',
+                  fontSize: 10,
+                  color: '#fff',
+                }}
+              >
+                {counter}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        {/* Ubicacion */}
+        <View className="h-[40px] bg-[#1786f9] px-5">
+          <TouchableOpacity
+            className="flex flex-row items-center gap-2"
+            onPress={goToInfoAddress}
+          >
+            <Feather name="map-pin" color={'#fff'} size={12} />
             <Text
               style={{
                 fontFamily: 'Inter_400Regular',
-                fontSize: 10,
+                fontSize: 14,
                 color: '#fff',
               }}
             >
-              0
+              Ingresa tu ubicación
             </Text>
-          </View>
-        </TouchableOpacity>
+            <Octicons name="chevron-right" color={'#fff'} size={15} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       {focusInput && (

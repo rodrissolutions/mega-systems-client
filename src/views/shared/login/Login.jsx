@@ -13,10 +13,10 @@ import {
 import logo from 'assets/logo.png'
 import { Octicons } from '@expo/vector-icons'
 import { useState } from 'react'
-import { authAPI } from '../../../api/index.api'
+import { authAPI } from 'api/index.api'
 import Toast from 'react-native-toast-message'
 import { AxiosError } from 'axios'
-import { Input, Password, Submit } from '../../../components/index.components'
+import { Input, Password, Submit } from 'components/index.components'
 const Login = () => {
   const navigation = useNavigation()
   const [loading, setLoading] = useState(false)

@@ -1,10 +1,125 @@
-import { Text, View } from 'react-native'
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import Layout from 'layouts/Layout'
+import { Octicons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
 const Sales = () => {
+  const navigation = useNavigation()
+
+  const viewDetails = () => {
+    navigation.navigate('SaleProductDetail')
+  }
   return (
-    <View>
-      <Text>Sales</Text>
-    </View>
+    <Layout showBarSearch={false}>
+      <View className="flex-1 bg-[#F5F9FF]">
+        {/* Filtros */}
+        <View className="flex flex-row h-[50px] bg-white border-b border-gray-200 shadow-md shadow-gray-300">
+          <TouchableOpacity className="flex-1 h-full flex flex-row justify-center items-center border-r border-gray-200 gap-2">
+            <Octicons name="package" size={20} color={'#9ca3af'} />
+            <Text>Productos</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="flex-1 h-full flex flex-row justify-center items-center border-r border-gray-200 gap-2">
+            <Octicons name="tools" size={20} color={'#9ca3af'} />
+            <Text>Servicios</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity className="flex-1 h-full flex flex-row justify-center items-center border-r border-gray-200 gap-2">
+            <Octicons name="checklist" size={20} color={'#9ca3af'} />
+            <Text>Estado</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Busqueda */}
+        <View className="px-5 pt-5">
+          <View className="w-full h-[50px] flex flex-row bg-white rounded-lg mr-5">
+            <View className="w-[50px] h-full flex flex-row  justify-center items-center">
+              <Octicons name="search" size={18} color="#ccc" />
+            </View>
+            <TextInput
+              autoCapitalize="none"
+              className="outline-none flex-1 h-full  placeholder:text-gray-400 "
+              placeholder="Código de compra"
+              style={{
+                fontFamily: 'Inter_400Regular',
+                fontSize: 16,
+                color: '#000',
+              }}
+            />
+          </View>
+        </View>
+
+        {/* Mostrar Scroll View de compra de productos */}
+        <ScrollView
+          className="flex-1 bg-[#F5F9FF]"
+          contentContainerStyle={{
+            paddingTop: 20,
+            paddingBottom: 40,
+            paddingHorizontal: 20,
+          }}
+        >
+          <View className="flex flex-col gap-2">
+            {/* Compra */}
+            <View className="w-full h-fit py-3 bg-white border border-gray-100 rounded-lg flex flex-row justify-between px-5">
+              <View className="flex flex-col">
+                <Text
+                  style={{
+                    fontFamily: 'Inter_700Bold',
+                    fontSize: 24,
+                    color: '#0A192F',
+                  }}
+                >
+                  #123456
+                </Text>
+                <View className="flex flex-row items-center gap-1">
+                  <Text
+                    style={{
+                      fontFamily: 'Inter_700Bold',
+                      fontSize: 15,
+                      color: '#0A192F',
+                    }}
+                  >
+                    $ 1,000
+                  </Text>
+                  <Text> - </Text>
+                  <Text
+                    className="px-2 py-1 bg-gray-200 rounded-full"
+                    style={{
+                      fontFamily: 'Inter_400Regular',
+                      fontSize: 10,
+                    }}
+                  >
+                    Pendiente
+                  </Text>
+                </View>
+
+                <Text
+                  className="mt-1 text-gray-800"
+                  style={{
+                    fontFamily: 'Inter_600SemiBold',
+                    fontSize: 15,
+                  }}
+                >
+                  Hace 2 días
+                </Text>
+              </View>
+
+              <TouchableOpacity
+                className="flex flex-row items-center gap-2"
+                onPress={viewDetails}
+              >
+                <Octicons name="three-bars" size={20} color={'#9ca3af'} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    </Layout>
   )
 }
 

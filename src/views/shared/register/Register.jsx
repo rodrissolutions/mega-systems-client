@@ -20,11 +20,11 @@ import {
 } from '@expo/vector-icons'
 import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { pickerUtils } from '../../../utils/index.utils'
+import { pickerUtils } from 'utils/index.utils'
 import Toast from 'react-native-toast-message'
-import { userAPI } from '../../../api/index.api'
+import { userAPI } from 'api/index.api'
 import { AxiosError } from 'axios'
-import { Input, Password, Submit } from '../../../components/index.components'
+import { Input, Password, Submit } from 'components/index.components'
 
 const Register = () => {
   const initialState = {
