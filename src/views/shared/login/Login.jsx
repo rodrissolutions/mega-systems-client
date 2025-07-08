@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from "@react-navigation/native";
 import {
   Image,
   Keyboard,
@@ -9,101 +9,122 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-} from 'react-native'
-import logo from 'assets/logo.png'
-import { Octicons } from '@expo/vector-icons'
-import { useState } from 'react'
-import { authAPI } from 'api/index.api'
-import Toast from 'react-native-toast-message'
-import { AxiosError } from 'axios'
-import { Input, Password, Submit } from 'components/index.components'
+} from "react-native";
+import logo from "assets/logo.png";
+import { Octicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { authAPI } from "api/index.api";
+import Toast from "react-native-toast-message";
+import { AxiosError } from "axios";
+import { Input, Password, Submit } from "components/index.components";
+import { useDispatch } from "react-redux";
+import { setUser } from "redux/slices/data.slice";
+import storageUtil from "utils/storage/storage.util";
 const Login = () => {
-  const navigation = useNavigation()
-  const [loading, setLoading] = useState(false)
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const initialState = {
-    email: '',
-    password: '',
-  }
+    email: "",
+    password: "",
+  };
 
-  const [credentials, setCredentials] = useState(initialState)
+  const [credentials, setCredentials] = useState(initialState);
 
   const goToRegister = () => {
-    setCredentials(initialState)
-    navigation.navigate('Register')
-  }
+    setCredentials(initialState);
+    navigation.navigate("Register");
+  };
 
   const handleChange = (name, value) => {
-    setCredentials({ ...credentials, [name]: value })
-  }
+    setCredentials({ ...credentials, [name]: value });
+  };
+
+  const goToRecoveryPassword = () => {
+    navigation.navigate("Recovery");
+  };
+
+  const goToResendCode = () => {
+    navigation.navigate("Resend");
+  };
 
   const handleSubmit = () => {
-    if (credentials.email === '' || credentials.password === '') {
+    if (credentials.email === "" || credentials.password === "") {
       Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: 'Todos los campos son obligatorios',
+        type: "error",
+        text1: "Error",
+        text2: "Todos los campos son obligatorios",
         text1Style: {
           fontSize: 16,
-          fontWeight: '900',
+          fontWeight: "900",
         },
         text2Style: { fontSize: 14 },
-      })
-      return
+      });
+      return;
     }
-    setLoading(true)
+    setLoading(true);
     authAPI
       .login(credentials.email.trimEnd(), credentials.password.trimEnd())
-      .then((res) => {
-        const { message } = res.data
+      .then(async (res) => {
+        const { message, token, user } = res.data;
         Toast.show({
-          type: 'success',
-          text1: 'Inicio de sesión exitoso',
+          type: "success",
+          text1: "Inicio de sesión exitoso",
           text2: message,
           text1Style: {
             fontSize: 16,
-            fontWeight: '900',
+            fontWeight: "900",
           },
           text2Style: { fontSize: 14 },
-        })
-        setCredentials(initialState)
+        });
+
+        await storageUtil.saveItem("token", token);
+        await storageUtil.saveItem("user", user);
+
+        setTimeout(() => {
+          dispatch(setUser(user));
+          navigation.replace("Home");
+        }, 2500);
+        setCredentials(initialState);
       })
       .catch((err) => {
         if (err instanceof AxiosError) {
           Toast.show({
-            type: 'error',
-            text1: 'Error',
+            type: "error",
+            text1: "Error",
             text2:
               err.response.data.message ||
-              'Error desconocido. Intente nuevamente.',
+              "Error desconocido. Intente nuevamente.",
             text1Style: {
               fontSize: 16,
-              fontWeight: '900',
+              fontWeight: "900",
             },
             text2Style: { fontSize: 14 },
-          })
+          });
         } else {
           Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: 'Error desconocido. Intente nuevamente.',
+            type: "error",
+            text1: "Error",
+            text2: "Error desconocido. Intente nuevamente.",
             text1Style: {
               fontSize: 16,
-              fontWeight: '900',
+              fontWeight: "900",
             },
             text2Style: { fontSize: 14 },
-          })
+          });
         }
       })
       .finally(() => {
-        setLoading(false)
-      })
-  }
+        setLoading(false);
+      });
+  };
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       className="flex-1"
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -123,7 +144,7 @@ const Login = () => {
                   <Text
                     className="text-[#eb1c33]"
                     style={{
-                      fontFamily: 'Orbitron_800ExtraBold',
+                      fontFamily: "Orbitron_800ExtraBold",
                       fontSize: 30,
                     }}
                   >
@@ -132,7 +153,7 @@ const Login = () => {
                   <Text
                     className="text-gray-400"
                     style={{
-                      fontFamily: 'Inter_700Bold',
+                      fontFamily: "Inter_700Bold",
                       fontSize: 15,
                     }}
                   >
@@ -145,17 +166,17 @@ const Login = () => {
               <View className="flex flex-col gap-3 mt-20">
                 <Input
                   Icon={() => (
-                    <Octicons name="mail" size={20} color={'#545454'} />
+                    <Octicons name="mail" size={20} color={"#545454"} />
                   )}
-                  holder={'Correo electrónico'}
+                  holder={"Correo electrónico"}
                   value={credentials.email}
-                  onChange={(text) => handleChange('email', text)}
+                  onChange={(text) => handleChange("email", text)}
                 />
                 <Password
                   Icon={() => (
-                    <Octicons name="lock" size={20} color={'#545454'} />
+                    <Octicons name="lock" size={20} color={"#545454"} />
                   )}
-                  handleChange={(text) => handleChange('password', text)}
+                  handleChange={(text) => handleChange("password", text)}
                   value={credentials.password}
                   isPasswordVisible={isPasswordVisible}
                   setIsPasswordVisible={setIsPasswordVisible}
@@ -164,10 +185,10 @@ const Login = () => {
 
               {/* Recuperar contraseña */}
               <View className="flex flex-row justify-end items-center mt-3">
-                <TouchableOpacity>
+                <TouchableOpacity onPress={goToRecoveryPassword}>
                   <Text
                     style={{
-                      fontFamily: 'Inter_700Bold',
+                      fontFamily: "Inter_700Bold",
                       fontSize: 14,
                     }}
                   >
@@ -190,9 +211,9 @@ const Login = () => {
               <View className="flex flex-row justify-center items-center gap-2">
                 <Text
                   style={{
-                    fontFamily: 'Inter_400Regular',
+                    fontFamily: "Inter_400Regular",
                     fontSize: 15,
-                    color: '#545454',
+                    color: "#545454",
                   }}
                 >
                   ¿No tienes una cuenta?
@@ -201,9 +222,9 @@ const Login = () => {
                   <Text
                     className="underline"
                     style={{
-                      fontFamily: 'Inter_700Bold',
+                      fontFamily: "Inter_700Bold",
                       fontSize: 15,
-                      color: '#0A192F',
+                      color: "#0A192F",
                     }}
                   >
                     Registrate
@@ -214,21 +235,21 @@ const Login = () => {
               <View className="flex flex-col justify-center items-center gap-2">
                 <Text
                   style={{
-                    fontFamily: 'Inter_400Regular',
+                    fontFamily: "Inter_400Regular",
                     fontSize: 15,
-                    color: '#545454',
+                    color: "#545454",
                   }}
                 >
                   o deseas
                 </Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={goToResendCode}>
                   <Text
                     className="underline"
                     style={{
-                      fontFamily: 'Inter_700Bold',
+                      fontFamily: "Inter_700Bold",
                       fontSize: 15,
-                      color: '#0A192F',
-                      textAlign: 'center',
+                      color: "#0A192F",
+                      textAlign: "center",
                     }}
                   >
                     Activar cuenta registrada
@@ -241,7 +262,7 @@ const Login = () => {
       </TouchableWithoutFeedback>
       <Toast position="bottom" />
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

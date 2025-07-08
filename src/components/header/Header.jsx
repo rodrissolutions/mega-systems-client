@@ -6,45 +6,41 @@ import {
   Pressable,
   Keyboard,
   Text,
-} from 'react-native'
-import logo from 'assets/logo.png'
+} from "react-native";
+import logo from "assets/logo.png";
 import {
   Feather,
   FontAwesome,
   FontAwesome5,
   Octicons,
-} from '@expo/vector-icons'
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useNavigation } from '@react-navigation/native'
+} from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 const Header = ({ toggleOpenCart, showBarSearch }) => {
-  const navigation = useNavigation()
-  const { counter } = useSelector((state) => state.cart)
-  const [focusInput, setFocusInput] = useState(false)
+  const navigation = useNavigation();
+  const { cart, residency } = useSelector((state) => state.data);
+  const [focusInput, setFocusInput] = useState(false);
 
-  const handleFocus = () => setFocusInput(true)
-  const handleBlur = () => setFocusInput(false)
+  const handleFocus = () => setFocusInput(true);
+  const handleBlur = () => setFocusInput(false);
 
   const closeSearch = () => {
-    setFocusInput(false)
-    Keyboard.dismiss()
-  }
+    setFocusInput(false);
+    Keyboard.dismiss();
+  };
 
   const goToInfoAddress = () => {
-    navigation.navigate('Address')
-  }
-
-  useEffect(() => {
-    console.log(counter)
-  }, [])
+    navigation.navigate("Address");
+  };
 
   return (
     <View className="relative">
       <View className="flex flex-col">
         <View
           className={`h-[80px] bg-[#1786f9] flex flex-row items-center px-5 gap-2 ${
-            !showBarSearch && 'justify-between'
+            !showBarSearch && "justify-between"
           }`}
         >
           {/* <Image source={logo} className="w-[40px] h-[40px] scale-x-[-1]" /> */}
@@ -59,7 +55,7 @@ const Header = ({ toggleOpenCart, showBarSearch }) => {
               placeholder="Estoy buscando..."
               onFocus={handleFocus}
               style={{
-                fontFamily: 'Inter_400Regular',
+                fontFamily: "Inter_400Regular",
                 fontSize: 14,
               }}
             />
@@ -70,12 +66,12 @@ const Header = ({ toggleOpenCart, showBarSearch }) => {
             <View className="absolute w-[15px] h-[15px] bg-red-400 rounded-full flex justify-center items-center -right-2 -top-1">
               <Text
                 style={{
-                  fontFamily: 'Inter_400Regular',
+                  fontFamily: "Inter_400Regular",
                   fontSize: 10,
-                  color: '#fff',
+                  color: "#fff",
                 }}
               >
-                {counter}
+                {cart ? cart.Items.length : 0}
               </Text>
             </View>
           </TouchableOpacity>
@@ -86,17 +82,17 @@ const Header = ({ toggleOpenCart, showBarSearch }) => {
             className="flex flex-row items-center gap-2"
             onPress={goToInfoAddress}
           >
-            <Feather name="map-pin" color={'#fff'} size={12} />
+            <Feather name="map-pin" color={"#fff"} size={12} />
             <Text
               style={{
-                fontFamily: 'Inter_400Regular',
+                fontFamily: "Inter_400Regular",
                 fontSize: 14,
-                color: '#fff',
+                color: "#fff",
               }}
             >
-              Ingresa tu ubicación
+              {residency ? residency.city : "Ingresa tu ubicación"}
             </Text>
-            <Octicons name="chevron-right" color={'#fff'} size={15} />
+            <Octicons name="chevron-right" color={"#fff"} size={15} />
           </TouchableOpacity>
         </View>
       </View>
@@ -119,7 +115,7 @@ const Header = ({ toggleOpenCart, showBarSearch }) => {
               className="flex-1 ml-2 text-black"
               onBlur={handleBlur}
               style={{
-                fontFamily: 'Inter_400Regular',
+                fontFamily: "Inter_400Regular",
                 fontSize: 16,
               }}
             />
@@ -127,7 +123,7 @@ const Header = ({ toggleOpenCart, showBarSearch }) => {
         </Pressable>
       )}
     </View>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

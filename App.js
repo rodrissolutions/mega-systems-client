@@ -1,26 +1,44 @@
-import * as React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import './global.css'
-import RootNavigator from './src/navigation/RootNavigator'
-import { StatusBar } from 'react-native'
-import { useFontsLoader } from './src/hooks/index.hooks'
-import { Provider } from 'react-redux'
-import store from './src/redux/store'
+import { NavigationContainer } from "@react-navigation/native";
+import "./global.css";
+import RootNavigator from "./src/navigation/RootNavigator";
+import { StatusBar } from "react-native";
+import { useFontsLoader } from "hooks/index.hooks";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import store from "redux/store";
+import { useEffect } from "react";
+import storageUtil from "utils/storage/storage.util";
+import { setUser } from "redux/slices/data.slice";
+import { userAPI } from "./src/api/index.api";
 
 const AppContent = () => {
-  const fontsLoaded = useFontsLoader()
-  if (!fontsLoaded) return null
+  const fontsLoaded = useFontsLoader();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const user = await storageUtil.getItem("user");
+      if (user) {
+        const userFound = await userAPI.getById(user.id);
+        if (userFound) {
+          const { user: userDB } = await userFound.data;
+          dispatch(setUser(userDB));
+        }
+      }
+    };
+    loadUser();
+  }, []);
+  if (!fontsLoaded) return null;
   return (
     <NavigationContainer>
       <RootNavigator />
       <StatusBar style="auto" />
     </NavigationContainer>
-  )
-}
+  );
+};
 export default function App() {
   return (
     <Provider store={store}>
       <AppContent />
     </Provider>
-  )
+  );
 }

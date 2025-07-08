@@ -1,15 +1,18 @@
 // components/Layout.js
-import { View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { Cart, Header } from 'components/index.components'
+import { View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Cart, Header } from "components/index.components";
 
 const Layout = ({ children, showBarSearch = true }) => {
-  const [openCart, setOpenCart] = useState(false)
-  const toggleOpenCart = () => setOpenCart(!openCart)
+  const [openCart, setOpenCart] = useState(false);
+  const toggleOpenCart = () => {
+    console.log("click");
+    setOpenCart(!openCart);
+  };
 
   useEffect(() => {
-    console.log(showBarSearch)
-  }, [showBarSearch])
+    console.log(showBarSearch);
+  }, [showBarSearch]);
 
   return (
     <View className="flex-1 flex flex-col ">
@@ -17,6 +20,6 @@ const Layout = ({ children, showBarSearch = true }) => {
       {children}
       {openCart && <Cart openCart={openCart} toggleOpenCart={toggleOpenCart} />}
     </View>
-  )
-}
-export default Layout
+  );
+};
+export default Layout;

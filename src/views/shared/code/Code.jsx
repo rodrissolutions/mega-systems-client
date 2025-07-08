@@ -10,136 +10,136 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
-} from 'react-native'
-import logo from 'assets/logo.png'
-import { useEffect, useRef, useState } from 'react'
-import Toast from 'react-native-toast-message'
-import { codeAPI } from 'api/index.api'
-import { Countdown } from 'components/index.components'
-import { AxiosError } from 'axios'
-import { useNavigation } from '@react-navigation/native'
+} from "react-native";
+import logo from "assets/logo.png";
+import { useEffect, useRef, useState } from "react";
+import Toast from "react-native-toast-message";
+import { codeAPI } from "api/index.api";
+import { Countdown } from "components/index.components";
+import { AxiosError } from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 const Code = ({ route }) => {
-  const navigation = useNavigation()
-  const [email, setEmail] = useState('')
-  const [type, setType] = useState('')
-  const [code, setCode] = useState(['', '', '', ''])
-  const [loading, setLoading] = useState(false)
+  const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [type, setType] = useState("");
+  const [code, setCode] = useState(["", "", "", ""]);
+  const [loading, setLoading] = useState(false);
 
-  const [creationTime, setCreationTime] = useState(null)
-  const [expirationTime, setExpirationTime] = useState(null)
+  const [creationTime, setCreationTime] = useState(null);
+  const [expirationTime, setExpirationTime] = useState(null);
 
-  const input1Ref = useRef(null)
-  const input2Ref = useRef(null)
-  const input3Ref = useRef(null)
-  const input4Ref = useRef(null)
+  const input1Ref = useRef(null);
+  const input2Ref = useRef(null);
+  const input3Ref = useRef(null);
+  const input4Ref = useRef(null);
 
   const handleChange = (text, index) => {
-    const newCode = [...code]
-    newCode[index] = text
+    const newCode = [...code];
+    newCode[index] = text;
 
-    setCode(newCode)
+    setCode(newCode);
 
     if (text.length === 1 && index < 3) {
-      const refs = [input2Ref, input3Ref, input4Ref]
-      refs[index]?.current?.focus()
+      const refs = [input2Ref, input3Ref, input4Ref];
+      refs[index]?.current?.focus();
     }
-  }
+  };
 
   const handleSubmit = () => {
-    setLoading(true)
-    const codeString = code.join('')
+    setLoading(true);
+    const codeString = code.join("");
     codeAPI
-      .validateAccount(email, type, codeString)
+      .validateAccountCode(email, type, codeString)
       .then((res) => {
-        const { message } = res.data
+        const { message } = res.data;
         Toast.show({
-          type: 'success',
-          text1: 'Verificación exitosa',
+          type: "success",
+          text1: "Verificación exitosa",
           text2: message,
           text1Style: {
             fontSize: 16,
-            fontWeight: '900',
+            fontWeight: "900",
           },
           text2Style: { fontSize: 14 },
-        })
+        });
 
         setTimeout(() => {
-          navigation.replace('Login')
-        }, 2500)
+          navigation.replace("Login");
+        }, 2500);
       })
       .catch((err) => {
         if (err instanceof AxiosError) {
-          const { message } = err.response.data
+          const { message } = err.response.data;
           Toast.show({
-            type: 'error',
-            text1: 'Error',
+            type: "error",
+            text1: "Error",
             text2: message,
             text1Style: {
               fontSize: 16,
-              fontWeight: '900',
+              fontWeight: "900",
             },
             text2Style: { fontSize: 14 },
-          })
+          });
         }
-        setCode(['', '', '', ''])
-        const refs = [input1Ref, input2Ref, input3Ref, input4Ref]
-        refs[0]?.current?.focus()
+        setCode(["", "", "", ""]);
+        const refs = [input1Ref, input2Ref, input3Ref, input4Ref];
+        refs[0]?.current?.focus();
       })
       .finally(() => {
-        setLoading(false)
-      })
-  }
+        setLoading(false);
+      });
+  };
 
   const resendCode = () => {
     codeAPI.resendCode(email, type).then((res) => {
-      const { codeData } = res.data
-      setCreationTime(codeData.createdAt)
-      setExpirationTime(codeData.expirationTime)
+      const { codeData } = res.data;
+      setCreationTime(codeData.createdAt);
+      setExpirationTime(codeData.expirationTime);
 
       Toast.show({
-        type: 'success',
-        text1: 'Código enviado',
-        text2: 'Revisa tu correo',
+        type: "success",
+        text1: "Código enviado",
+        text2: "Revisa tu correo",
         text1Style: {
           fontSize: 16,
-          fontWeight: '900',
+          fontWeight: "900",
         },
         text2Style: { fontSize: 14 },
-      })
+      });
 
       setTimeout(() => {
-        navigation.replace('Login')
-      }, 2500)
-    })
-  }
+        navigation.replace("Login");
+      }, 2500);
+    });
+  };
 
   useEffect(() => {
     if (email.length > 0 && type.length > 0) {
       codeAPI
         .getCode(email, type)
         .then((res) => {
-          const { codeData } = res.data
-          setCreationTime(codeData.createdAt)
-          setExpirationTime(codeData.expirationTime)
+          const { codeData } = res.data;
+          setCreationTime(codeData.createdAt);
+          setExpirationTime(codeData.expirationTime);
         })
         .catch((err) => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     }
-  }, [email, type])
+  }, [email, type]);
 
   useEffect(() => {
     if (route.params) {
-      const { email, type } = route.params
-      setEmail(email)
-      setType(type)
+      const { email, type } = route.params;
+      setEmail(email);
+      setType(type);
     }
-  }, [])
+  }, []);
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       className="flex-1"
     >
       <TouchableNativeFeedback onPress={Keyboard.dismiss}>
@@ -158,7 +158,7 @@ const Code = ({ route }) => {
                   <Text
                     className="text-[#eb1c33]"
                     style={{
-                      fontFamily: 'Orbitron_800ExtraBold',
+                      fontFamily: "Orbitron_800ExtraBold",
                       fontSize: 30,
                     }}
                   >
@@ -168,7 +168,7 @@ const Code = ({ route }) => {
                   <Text
                     className="text-gray-400"
                     style={{
-                      fontFamily: 'Inter_700Bold',
+                      fontFamily: "Inter_700Bold",
                       fontSize: 15,
                     }}
                   >
@@ -181,7 +181,7 @@ const Code = ({ route }) => {
                 <Text
                   className="text-wrap text-center text-gray-500"
                   style={{
-                    fontFamily: 'Inter_600SemiBold',
+                    fontFamily: "Inter_600SemiBold",
                     fontSize: 20,
                   }}
                 >
@@ -203,9 +203,9 @@ const Code = ({ route }) => {
                       ref={ref}
                       className="flex-1 h-[100px] rounded-lg px-3 bg-white shadow-md border border-gray-300 text-center"
                       style={{
-                        fontFamily: 'Orbitron_800ExtraBold',
+                        fontFamily: "Orbitron_800ExtraBold",
                         fontSize: 40,
-                        color: '#505050',
+                        color: "#505050",
                       }}
                     />
                   )
@@ -214,18 +214,18 @@ const Code = ({ route }) => {
 
               <TouchableOpacity
                 className="mt-5 py-4 rounded-full flex flex-row gap-3 items-center justify-center bg-[#0A192F] disabled:bg-gray-400 mb-10"
-                disabled={code.some((c) => c === '')}
+                disabled={code.some((c) => c === "")}
                 onPress={handleSubmit}
               >
-                {loading && <ActivityIndicator size={'small'} color="white" />}
+                {loading && <ActivityIndicator size={"small"} color="white" />}
                 <Text
                   style={{
-                    fontFamily: 'Inter_700Bold',
+                    fontFamily: "Inter_700Bold",
                     fontSize: 18,
-                    color: 'white',
+                    color: "white",
                   }}
                 >
-                  {loading ? 'Validando...' : 'Validar'}
+                  {loading ? "Validando..." : "Validar"}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -238,9 +238,9 @@ const Code = ({ route }) => {
           </View>
         </ScrollView>
       </TouchableNativeFeedback>
-      <Toast position="bottom" />
+      <Toast position="top" />
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
-export default Code
+export default Code;
