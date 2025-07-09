@@ -12,3 +12,13 @@ export { default as Item } from "./item/Item.jsx";
 export { default as AdminHeader } from "./header/AdminHeader.jsx";
 export { default as Aside } from "./aside/Aside.jsx";
 export { default as LoginRequired } from "./login-required/LoginRequired.jsx";
+
+export { default as CustomBarChart } from "./bar-chart/CustomBarChart.jsx";
+export { default as CustomBarItem } from "./bar-item/CustomBarItem.jsx";
+export { default as RankingChart } from "./ranking-chart/RankingChart.jsx";
+export { default as UsersChart } from "./users-chart/UsersChart.jsx";
+
+export { default as FavoritesChart } from "./favorite-chart/FavoritesChart.jsx";
+export { default as ViewsChart } from "./views-chart/ViewsChart.jsx";
+
+export { default as RatingChart } from "./rating-chart/RatingChart.jsx";

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // export const instance = axios.create({
-//   baseURL: "https://mega-system-bi-server.onrender.com/api/v1",
+//   baseURL: "https://mega-systems-server.onrender.com/api/v1",
 // });
 
 export const instance = axios.create({

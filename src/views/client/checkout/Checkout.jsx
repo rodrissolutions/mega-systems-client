@@ -21,6 +21,10 @@ import Toast from "react-native-toast-message";
 import { AxiosError } from "axios";
 
 const Checkout = () => {
+  const [offerData, setOfferData] = useState({
+    disccountType: null,
+    disccountValue: null,
+  });
   const [accountVerification, setAccountVerification] = useState(false);
   const [code, setCode] = useState("");
   const [delivery, setDelivery] = useState({
@@ -73,9 +77,17 @@ const Checkout = () => {
       let totalAmmount;
 
       if (typeValue === "Porcentaje") {
+        setOfferData({
+          disccountType: "Porcentaje",
+          disccountValue: offer.value,
+        });
         const discount = (subTotalAmmount * offer.value) / 100;
         totalAmmount = subTotalAmmount - discount;
       } else {
+        setOfferData({
+          disccountType: "Fijo",
+          disccountValue: offer.value,
+        });
         const discount = offer.value;
         totalAmmount = subTotalAmmount - discount;
       }
@@ -223,15 +235,12 @@ const Checkout = () => {
   };
 
   const handleSubmit = () => {
-    console.log(sale);
-    console.log(delivery);
-
-    console.log(cart);
-    console.log(subtotal);
-    console.log(total);
-
     if (sale.typeBuy === "Entrega a Domicilio") {
       const saleData = {
+        subTotal: subtotal,
+        disccount: subtotal - total,
+        disccountType: offerData.disccountType,
+        disccountValue: offerData.disccountValue,
         total,
         typeBuy: sale.typeBuy,
         paymentMethod: sale.paymentMethod,
@@ -259,6 +268,7 @@ const Checkout = () => {
             text2Style: { fontSize: 14 },
           });
           dispatch(resetCart());
+          navigation.goBack();
         })
         .catch((err) => {
           console.log(err);

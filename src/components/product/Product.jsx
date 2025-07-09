@@ -28,13 +28,15 @@ const Product = ({ toggleShowInfo, product, index }) => {
   };
 
   const showInfoProduct = (currentProduct) => {
+    console.log(currentProduct);
     dispatch(setProduct(currentProduct));
     toggleShowInfo();
 
-    if (user) {
-      const { id } = user;
-      viewAPI.postView(currentProduct.id, id).then((res) => {});
-    }
+    const userId = user ? user.id : null;
+
+    viewAPI
+      .postView(currentProduct.id, userId)
+      .catch((err) => console.error("Error registrando vista:", err));
   };
 
   const addToCart = (product) => {

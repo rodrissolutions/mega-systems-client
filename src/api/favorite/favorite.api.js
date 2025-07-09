@@ -21,6 +21,14 @@ const favoriteAPI = {
   deleteAll: (UserId) => {
     return instance.delete(`/${model}/all/user/${UserId}`);
   },
+
+  getAll: (token) => {
+    return instance.get(`/${model}`, {
+      headers: {
+        "x-token": token,
+      },
+    });
+  },
 };
 
 export default favoriteAPI;

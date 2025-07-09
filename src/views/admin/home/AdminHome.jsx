@@ -1,14 +1,30 @@
-import { FontAwesome5 } from "@expo/vector-icons";
 import AdminLayout from "layouts/AdminLayout";
+import { Text, View, Dimensions, ScrollView } from "react-native";
+import { useEffect, useState } from "react";
 import {
-  Text,
-  View,
-  TouchableOpacity,
-  Dimensions,
-  ScrollView,
-} from "react-native";
-import { LineChart, PieChart, BarChart } from "react-native-chart-kit";
-import { useState } from "react";
+  favoriteAPI,
+  reviewAPI,
+  saleAPI,
+  userAPI,
+  viewAPI,
+  productAPI,
+} from "api/index.api";
+import { storageUtils } from "utils/index.utils";
+import { useDispatch } from "react-redux";
+import {
+  setAllFavorites,
+  setAllViews,
+  setUsers,
+  setAllReviews,
+  setProducts,
+} from "redux/slices/data.slice";
+import {
+  FavoritesChart,
+  RatingChart,
+  UsersChart,
+  ViewsChart,
+} from "components/index.components";
+import { setAllSales } from "../../../redux/slices/data.slice";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -20,42 +36,6 @@ const chartConfig = {
   labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
 };
 
-const ventasData = {
-  dia: {
-    labels: ["9 AM", "11 AM", "1 PM", "3 PM", "5 PM", "7 PM"],
-    datasets: [{ data: [5, 10, 7, 15, 9, 13] }],
-  },
-  semana: {
-    labels: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
-    datasets: [{ data: [40, 35, 50, 30, 60, 45, 70] }],
-  },
-  mes: {
-    labels: ["Sem 1", "Sem 2", "Sem 3", "Sem 4"],
-    datasets: [{ data: [120, 140, 160, 180] }],
-  },
-  año: {
-    labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun"],
-    datasets: [{ data: [500, 600, 800, 750, 900, 950] }],
-  },
-};
-
-const usuariosData = [
-  {
-    name: "Hombres",
-    population: 200,
-    color: "#4A90E2",
-    legendFontColor: "#4A90E2",
-    legendFontSize: 14,
-  },
-  {
-    name: "Mujeres",
-    population: 200,
-    color: "#E91E63",
-    legendFontColor: "#E91E63",
-    legendFontSize: 14,
-  },
-];
-
 const favoritosData = {
   labels: ["Paracetamol", "Ibuprofeno", "Vitamina C", "Aspirina", "Jarabe X"],
   datasets: [
@@ -66,113 +46,148 @@ const favoritosData = {
 };
 
 const AdminHome = () => {
-  const [periodo, setPeriodo] = useState("dia");
+  const dispatch = useDispatch();
+  const [kpi, setKpi] = useState({
+    totalRevenue: 0,
+    newUser: 0,
+    monthlyReviews: 0,
+  });
+
+  const getData = async () => {
+    const token = await storageUtils.getItem("token");
+    try {
+      const [userRes, saleRes, reviewRes, favoriteRes, viewRes, productRes] =
+        await Promise.all([
+          userAPI.getUsers(token),
+          saleAPI.getSales(token),
+          reviewAPI.listAll(token),
+          favoriteAPI.getAll(token),
+          viewAPI.getViews(token),
+          productAPI.getProducts(),
+        ]);
+      const users = userRes.data.users;
+      const sales = saleRes.data.sales;
+      const reviews = reviewRes.data.reviews;
+      const favorites = favoriteRes.data.favorites;
+      const views = viewRes.data.views;
+      const products = productRes.data.products;
+
+      dispatch(setUsers(users));
+      dispatch(setAllSales(sales));
+      dispatch(setAllFavorites(favorites));
+      dispatch(setAllReviews(reviews));
+      dispatch(setAllViews(views));
+      dispatch(setProducts(products));
+
+      const now = new Date();
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+
+      const newUsers = users.filter((usr) => {
+        const date = new Date(usr.createdAt);
+        return (
+          date.getMonth() === currentMonth && date.getFullYear() === currentYear
+        );
+      }).length;
+
+      let monthlyRevenue = 0;
+      sales.forEach((sale) => {
+        const date = new Date(sale.createdAt);
+        if (
+          date.getMonth() === currentMonth &&
+          date.getFullYear() === currentYear
+        ) {
+          monthlyRevenue += parseFloat(sale.total); // Adjust field name if needed
+        }
+      });
+
+      const monthlyReviews = reviews.filter((review) => {
+        const date = new Date(review.createdAt);
+        return (
+          date.getMonth() === currentMonth && date.getFullYear() === currentYear
+        );
+      }).length;
+
+      setKpi({
+        totalRevenue: monthlyRevenue,
+        newUser: newUsers,
+        monthlyReviews: monthlyReviews,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <AdminLayout>
       <ScrollView className="flex flex-col px-4 py-5">
+        {/* Kpis */}
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          className="mb-5"
+        >
+          {/* Total Revenue */}
+          <View className="w-[220px] mr-3 bg-white border border-gray-200 rounded-lg p-4">
+            <Text
+              className="mb-1"
+              style={{
+                fontFamily: "Inter_600SemiBold",
+              }}
+            >
+              Ingresos del mes
+            </Text>
+            <Text className="text-xl font-bold text-blue-600">
+              ${kpi.totalRevenue.toFixed(2)}
+            </Text>
+          </View>
+
+          {/* New Users */}
+          <View className="w-[220px] mr-3 bg-white border border-gray-200 rounded-lg p-4">
+            <Text
+              className="mb-1"
+              style={{
+                fontFamily: "Inter_600SemiBold",
+              }}
+            >
+              Nuevos usuarios
+            </Text>
+            <Text className="text-xl font-bold text-green-500">
+              {kpi.newUser}
+            </Text>
+          </View>
+
+          {/* Monthly Reviews */}
+          <View className="w-[220px] mr-3 bg-white border border-gray-200 rounded-lg p-4">
+            <Text
+              className="mb-1"
+              style={{
+                fontFamily: "Inter_600SemiBold",
+              }}
+            >
+              Opiniones recibidas
+            </Text>
+            <Text className="text-xl font-bold text-yellow-500">
+              {kpi.monthlyReviews}
+            </Text>
+          </View>
+        </ScrollView>
+
         {/* Usuarios Pie Chart */}
-        <View className="w-full bg-white border border-gray-200 rounded-lg px-5 py-4 mb-5">
-          <View className="flex flex-row items-center gap-2 mb-3">
-            <View className="w-[40px] h-[40px] rounded-lg bg-gray-100 flex justify-center items-center">
-              <FontAwesome5 name="users" size={20} color={"#4b5563"} />
-            </View>
-            <Text
-              style={{
-                fontFamily: "Inter_700Bold",
-                fontSize: 20,
-                color: "#4b5563",
-              }}
-            >
-              Distribución de Usuarios
-            </Text>
-          </View>
-
-          <PieChart
-            data={usuariosData}
-            width={screenWidth - 48}
-            height={220}
-            chartConfig={chartConfig}
-            accessor={"population"}
-            backgroundColor={"transparent"}
-            paddingLeft={"15"}
-            center={[0, 0]}
-            absolute
-          />
-        </View>
-
-        {/* Ventas */}
-        <View className="w-full bg-white border border-gray-200 rounded-lg px-5 py-4 mb-5">
-          <View className="flex flex-row justify-between items-center mb-2">
-            <Text
-              style={{
-                fontFamily: "Inter_700Bold",
-                fontSize: 18,
-                color: "#4b5563",
-              }}
-            >
-              Ventas ({periodo})
-            </Text>
-
-            <View className="flex flex-row gap-2">
-              {["dia", "semana", "mes", "año"].map((item) => (
-                <TouchableOpacity
-                  key={item}
-                  onPress={() => setPeriodo(item)}
-                  className={`px-2 py-1 rounded-full ${
-                    periodo === item ? "bg-blue-500" : "bg-gray-200"
-                  }`}
-                >
-                  <Text
-                    className={`text-sm ${
-                      periodo === item ? "text-white" : "text-gray-700"
-                    }`}
-                  >
-                    {item.charAt(0).toUpperCase() + item.slice(1)}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          <LineChart
-            data={ventasData[periodo]}
-            width={screenWidth - 48}
-            height={220}
-            chartConfig={chartConfig}
-            bezier
-            style={{ borderRadius: 16 }}
-          />
-        </View>
+        <UsersChart chartConfig={chartConfig} screenWidth={screenWidth} />
 
         {/* Productos añadidos a favoritos */}
-        <View className="w-full bg-white border border-gray-200 rounded-lg px-5 py-4">
-          <View className="flex flex-row items-center gap-2 mb-3">
-            <View className="w-[40px] h-[40px] rounded-lg bg-gray-100 flex justify-center items-center">
-              <FontAwesome5 name="heart" size={20} color={"#E91E63"} />
-            </View>
-            <Text
-              style={{
-                fontFamily: "Inter_700Bold",
-                fontSize: 18,
-                color: "#4b5563",
-              }}
-            >
-              Productos Favoritos
-            </Text>
-          </View>
+        <FavoritesChart chartConfig={chartConfig} screenWidth={screenWidth} />
 
-          <BarChart
-            data={favoritosData}
-            width={screenWidth - 48}
-            height={240}
-            chartConfig={chartConfig}
-            verticalLabelRotation={30}
-            fromZero
-            style={{ borderRadius: 16 }}
-            showValuesOnTopOfBars
-          />
-        </View>
+        {/* Productos mas vistos */}
+        <ViewsChart />
+
+        {/* Productos mejor calificados */}
+        <RatingChart />
       </ScrollView>
     </AdminLayout>
   );

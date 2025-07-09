@@ -26,6 +26,10 @@ const codeAPI = {
     });
   },
 
+  getRecoveryPasswordCode: (email) => {
+    return instance.post(`${model}/getRecoveryPasswordCode`, { email });
+  },
+
   // Para confirmar que desea realizqar una compra
   verifyPurchaseCode: (code, token, type) => {
     return instance.put(
@@ -94,6 +98,14 @@ const codeAPI = {
   generateNewVerificationAccountCode: (email) => {
     return instance.post(`${model}/generateNewVerificationAccountCode`, {
       email,
+    });
+  },
+
+  validatePasswordRecoveryCode: (code, email, password) => {
+    return instance.put(`${model}/validatePasswordRecoveryCode`, {
+      code,
+      email,
+      password,
     });
   },
 };

@@ -1,1 +1,1 @@
-export { default as InfoProduct } from './info-product/InfoProduct.modal'
+export { default as InfoProduct } from "./info-product/InfoProduct.modal";

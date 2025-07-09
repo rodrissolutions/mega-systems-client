@@ -15,8 +15,15 @@ const reviewAPI = {
   },
 
   deleteReview: (id) => {
-    console.log(id);
     return instance.delete(`/${model}/${id}`);
+  },
+
+  listAll: (token) => {
+    return instance.get(`/${model}`, {
+      headers: {
+        "x-token": token,
+      },
+    });
   },
 };
 

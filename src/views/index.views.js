@@ -31,4 +31,7 @@ export {
   Categories,
   Sales,
   Comments,
+  InfoUser,
+  Map,
+  InfoSale,
 } from "./admin/index.admin.js";

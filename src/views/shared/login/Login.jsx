@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import logo from "assets/logo.png";
 import { Octicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { use, useState } from "react";
 import { authAPI } from "api/index.api";
 import Toast from "react-native-toast-message";
 import { AxiosError } from "axios";
@@ -37,6 +37,10 @@ const Login = () => {
   const goToRegister = () => {
     setCredentials(initialState);
     navigation.navigate("Register");
+  };
+
+  const goToHome = () => {
+    navigation.navigate("Home");
   };
 
   const handleChange = (name, value) => {
@@ -86,7 +90,13 @@ const Login = () => {
 
         setTimeout(() => {
           dispatch(setUser(user));
-          navigation.replace("Home");
+          if (user.Role.name === "Cliente") {
+            navigation.replace("Home");
+          }
+
+          if (user.Role.name === "Administrador") {
+            navigation.replace("Admin");
+          }
         }, 2500);
         setCredentials(initialState);
       })
@@ -199,11 +209,38 @@ const Login = () => {
 
               {/* Boton */}
 
-              <Submit
-                loading={loading}
-                handleSubmit={handleSubmit}
-                text="Iniciar sesión"
-              />
+              <View className="flex flex-col gap-2">
+                <Submit
+                  loading={loading}
+                  handleSubmit={handleSubmit}
+                  text="Iniciar sesión"
+                />
+                <Text
+                  style={{
+                    fontFamily: "Inter_400Regular",
+                    fontSize: 15,
+                    color: "#545454",
+                    textAlign: "center",
+                  }}
+                >
+                  - o -
+                </Text>
+
+                <TouchableOpacity
+                  className="flex flex-row justify-center items-center gap-2 border border-[#0A192F] py-3 rounded-full bg-gray-200"
+                  onPress={goToHome}
+                >
+                  <Text
+                    style={{
+                      fontFamily: "Inter_700Bold",
+                      fontSize: 15,
+                      color: "#0A192F",
+                    }}
+                  >
+                    Continuar como visitante
+                  </Text>
+                </TouchableOpacity>
+              </View>
 
               {/* Caja de registro y activacion */}
             </View>

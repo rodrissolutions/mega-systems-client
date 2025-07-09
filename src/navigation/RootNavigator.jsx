@@ -28,7 +28,7 @@ import {
 } from "views/index.views";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Octicons } from "@expo/vector-icons";
-import { Checkout, Edit } from "../views/index.views";
+import { Checkout, Edit, InfoSale, InfoUser, Map } from "../views/index.views";
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -375,6 +375,52 @@ const MainTabs = () => {
   );
 };
 
+const UsersNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
+      <Stack.Screen
+        name="Users"
+        component={Users}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="InfoUser"
+        component={InfoUser}
+        options={{
+          headerTitle: "Información del Usuario",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 18,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+
+      <Stack.Screen
+        name="InfoSale"
+        component={InfoSale}
+        options={{
+          headerTitle: "Información de la compra",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 18,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 // AdminNavigator
 const AdminNavigator = () => {
   return (
@@ -385,8 +431,8 @@ const AdminNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Users"
-        component={Users}
+        name="MainUsers"
+        component={UsersNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -424,6 +470,22 @@ const AdminNavigator = () => {
         component={Settings}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="Map"
+        component={Map}
+        options={{
+          headerTitle: "Ubicación",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 18,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -431,7 +493,7 @@ const AdminNavigator = () => {
 const RootNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Register"
+      initialRouteName="Admin"
       screenOptions={{
         animation: "slide_from_right",
       }}

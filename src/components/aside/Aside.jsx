@@ -23,7 +23,7 @@ const Aside = ({ toggleShowAside }) => {
     },
     {
       name: "Usuarios",
-      link: "Users",
+      link: "MainUsers",
       icon: <FontAwesome5 name="users" size={18} color={"#4b5563"} />,
     },
     {

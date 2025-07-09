@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  users: [],
   user: null,
   products: [],
   filteredProducts: [],
@@ -10,6 +11,7 @@ const initialState = {
   product: null,
   buy: null,
   services: [],
+  currentUser: null,
   appointment: null,
   appointments: [],
   service: null,
@@ -17,17 +19,47 @@ const initialState = {
   buys: [],
   fileteredBuys: [],
   favorites: [],
+  allFavorites: [],
+  allSales: [],
+  allReviews: [],
   filteredFavorites: [],
   cart: null,
   residency: null,
   subtotal: 0.0,
   total: 0.0,
+  allViews: [],
+  currentSale: null,
 };
 
 const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    setUsers: (state, action) => {
+      state.users = action.payload;
+    },
+    setCurrentUser: (state, action) => {
+      state.currentUser = action.payload;
+    },
+
+    setCurrentSale: (state, action) => {
+      state.currentSale = action.payload;
+    },
+    setAllViews: (state, action) => {
+      state.allViews = action.payload;
+    },
+    setAllSales: (state, action) => {
+      state.allSales = action.payload;
+    },
+
+    setAllReviews: (state, action) => {
+      state.allReviews = action.payload;
+    },
+
+    setAllFavorites: (state, action) => {
+      state.allFavorites = action.payload;
+    },
+
     setUser: (state, action) => {
       state.user = action.payload;
     },
@@ -154,6 +186,7 @@ export const {
   logout,
   setProducts,
   setBuys,
+  setUsers,
   setBuy,
   setCategories,
   setOffer,
@@ -171,5 +204,11 @@ export const {
   setAppoitments,
   setAppoitment,
   removeItem,
+  setAllFavorites,
+  setAllReviews,
+  setAllSales,
+  setAllViews,
+  setCurrentUser,
+  setCurrentSale,
 } = dataSlice.actions;
 export default dataSlice.reducer;
