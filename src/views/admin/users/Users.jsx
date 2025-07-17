@@ -92,7 +92,7 @@ const Users = () => {
 
   return (
     <AdminLayout>
-      <View className="flex flex-col gap-2">
+      <View className="flex-1 flex-col gap-2 bg-[#F5F9FF]">
         {/* Buscador */}
         <View className="px-5 py-5">
           <View className="flex flex-row items-center bg-white border border-gray-200 rounded-xl h-[50px] shadow-sm">
@@ -117,7 +117,7 @@ const Users = () => {
 
         {/* Lista de usuarios */}
         <ScrollView
-          className="flex-1 bg-[#F9FAFB]"
+          className="flex-1 bg-[#F5F9FF]"
           contentContainerStyle={{
             flexGrow: 1,
             paddingBottom: 40,

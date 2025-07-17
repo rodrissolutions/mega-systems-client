@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import storageUtil from "utils/storage/storage.util";
 import { setUser } from "redux/slices/data.slice";
 import { userAPI } from "./src/api/index.api";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const AppContent = () => {
   const fontsLoaded = useFontsLoader();
@@ -29,10 +30,11 @@ const AppContent = () => {
   }, []);
   if (!fontsLoaded) return null;
   return (
-    <NavigationContainer>
-      <RootNavigator />
-      <StatusBar style="auto" />
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 export default function App() {

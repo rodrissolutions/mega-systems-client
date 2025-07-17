@@ -16,7 +16,10 @@ import { dateUtils } from "../../../utils/index.utils";
 import { appointmentAPI } from "../../../api/index.api";
 import { AxiosError } from "axios";
 import { useNavigation } from "@react-navigation/native";
-import { setAppoitments } from "../../../redux/slices/data.slice";
+import {
+  setAppointments,
+  setAppoitments,
+} from "../../../redux/slices/data.slice";
 
 const Appointment = () => {
   const navigation = useNavigation();
@@ -171,7 +174,7 @@ const Appointment = () => {
   const getAppoitments = () => {
     appointmentAPI.getAppointmentsByUser(user.id).then((res) => {
       const { appointments: appointmentsDB } = res.data;
-      dispatch(setAppoitments(appointmentsDB));
+      dispatch(setAppointments(appointmentsDB));
     });
   };
 
@@ -343,9 +346,10 @@ const Appointment = () => {
   return (
     <View className="flex flex-col flex-1">
       <ScrollView
+        className="flex-1 bg-[#F5F9FF] flex flex-col"
         contentContainerStyle={{
           flexGrow: 1,
-          backgroundColor: "#F5F9FF",
+          paddingBottom: 100,
           paddingHorizontal: 20,
         }}
       >
@@ -498,7 +502,7 @@ const Appointment = () => {
                         fontSize: 16,
                       },
                     }}
-                    onValueChange={(value) => handleProduct(value)}
+                    onValueChange={(value) => handleChange("ProductId", value)}
                     items={mappedProducts}
                   />
 

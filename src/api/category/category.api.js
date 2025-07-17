@@ -10,6 +10,7 @@ const categoryAPI = {
   createCategory: (token, data) => {
     return instance.post(`/${model}`, data, {
       headers: {
+        "Content-Type": "multipart/form-data",
         "x-token": token,
       },
     });
@@ -23,9 +24,18 @@ const categoryAPI = {
     });
   },
 
-  updateCategory: (token, id, data) => {
-    return instance.put(`/${model}/${id}`, data, {
+  updateCategoryWithoutImage: (token, id, data) => {
+    return instance.patch(`/${model}/without-image/${id}`, data, {
       headers: {
+        "x-token": token,
+      },
+    });
+  },
+
+  updateCategoryWithImage: (token, id, data) => {
+    return instance.patch(`/${model}/with-image/${id}`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
         "x-token": token,
       },
     });

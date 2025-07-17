@@ -7,6 +7,14 @@ const offerAPI = {
     return instance.get(`/${model}`);
   },
 
+  getAllOffers: (token) => {
+    return instance.get(`/${model}/all`, {
+      headers: {
+        "x-token": token,
+      },
+    });
+  },
+
   getOfferById: (id) => {
     return instance.get(`/${model}/${id}`);
   },
@@ -28,7 +36,7 @@ const offerAPI = {
   },
 
   updateOffer: (token, id, offer) => {
-    return instance.put(`/${model}/${id}`, offer, {
+    return instance.patch(`/${model}/${id}`, offer, {
       headers: {
         "x-token": token,
       },

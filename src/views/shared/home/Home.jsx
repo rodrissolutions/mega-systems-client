@@ -28,6 +28,7 @@ import {
 } from "redux/slices/data.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { appointmentAPI } from "../../../api/index.api";
+import { setAppointments } from "../../../redux/slices/data.slice";
 
 const Home = ({ navigation }) => {
   const [showInfo, setShowInfo] = useState(false);
@@ -75,6 +76,7 @@ const Home = ({ navigation }) => {
           const { residency } = res.data;
           dispatch(setResidency(residency));
         })
+
         .catch((err) => {
           console.log(err.response.data.message);
         });
@@ -83,7 +85,7 @@ const Home = ({ navigation }) => {
         .getAppointmentsByUser(id)
         .then((res) => {
           const { appointments } = res.data;
-          dispatch(setAppoitments(appointments));
+          dispatch(setAppointments(appointments));
         })
         .catch((err) => {
           console.log(err.response.data.message);

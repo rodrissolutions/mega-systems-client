@@ -24,7 +24,24 @@ import {
   UsersChart,
   ViewsChart,
 } from "components/index.components";
-import { setAllSales } from "../../../redux/slices/data.slice";
+import {
+  setAllApointments,
+  setAllSales,
+  setAppointments,
+  setBankAccounts,
+  setCategories,
+  setOffers,
+  setSchedules,
+  setServices,
+} from "../../../redux/slices/data.slice";
+import categoryAPI from "../../../api/category/category.api";
+import serviceAPI from "../../../api/service/service.api";
+import {
+  appointmentAPI,
+  bankAccountAPI,
+  offerAPI,
+} from "../../../api/index.api";
+import scheduleAPI from "../../../api/schedule/schedule.api";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -51,26 +68,52 @@ const AdminHome = () => {
     totalRevenue: 0,
     newUser: 0,
     monthlyReviews: 0,
+    pendingRevenue: 0,
+    rejectedRevenue: 0,
   });
 
   const getData = async () => {
     const token = await storageUtils.getItem("token");
     try {
-      const [userRes, saleRes, reviewRes, favoriteRes, viewRes, productRes] =
-        await Promise.all([
-          userAPI.getUsers(token),
-          saleAPI.getSales(token),
-          reviewAPI.listAll(token),
-          favoriteAPI.getAll(token),
-          viewAPI.getViews(token),
-          productAPI.getProducts(),
-        ]);
+      const [
+        userRes,
+        saleRes,
+        reviewRes,
+        favoriteRes,
+        viewRes,
+        productRes,
+        categoryRes,
+        serviceRes,
+        offerRes,
+        bankAccountRes,
+        scheduleRes,
+        appointmentRes,
+      ] = await Promise.all([
+        userAPI.getUsers(token),
+        saleAPI.getSales(token),
+        reviewAPI.listAll(token),
+        favoriteAPI.getAll(token),
+        viewAPI.getViews(token),
+        productAPI.getProducts(),
+        categoryAPI.getCategories(),
+        serviceAPI.getServices(),
+        offerAPI.getAllOffers(token),
+        bankAccountAPI.getAll(token),
+        scheduleAPI.listAll(),
+        appointmentAPI.getAppointments(token),
+      ]);
       const users = userRes.data.users;
       const sales = saleRes.data.sales;
       const reviews = reviewRes.data.reviews;
       const favorites = favoriteRes.data.favorites;
       const views = viewRes.data.views;
       const products = productRes.data.products;
+      const categories = categoryRes.data.categories;
+      const services = serviceRes.data.services;
+      const offers = offerRes.data.offers;
+      const bankAccounts = bankAccountRes.data.bankAccounts;
+      const schedules = scheduleRes.data.schedules;
+      const appointments = appointmentRes.data.appointments;
 
       dispatch(setUsers(users));
       dispatch(setAllSales(sales));
@@ -78,6 +121,12 @@ const AdminHome = () => {
       dispatch(setAllReviews(reviews));
       dispatch(setAllViews(views));
       dispatch(setProducts(products));
+      dispatch(setCategories(categories));
+      dispatch(setServices(services));
+      dispatch(setOffers(offers));
+      dispatch(setBankAccounts(bankAccounts));
+      dispatch(setSchedules(schedules));
+      dispatch(setAllApointments(appointments));
 
       const now = new Date();
       const currentMonth = now.getMonth();
@@ -91,13 +140,24 @@ const AdminHome = () => {
       }).length;
 
       let monthlyRevenue = 0;
+      let pendingRevenue = 0;
+      let rejectedRevenue = 0;
+
       sales.forEach((sale) => {
         const date = new Date(sale.createdAt);
-        if (
+        const isCurrentMonth =
           date.getMonth() === currentMonth &&
-          date.getFullYear() === currentYear
-        ) {
-          monthlyRevenue += parseFloat(sale.total); // Adjust field name if needed
+          date.getFullYear() === currentYear;
+
+        if (isCurrentMonth) {
+          const total = parseFloat(sale.total);
+          if (sale.status === "Pagada") {
+            monthlyRevenue += total;
+          } else if (sale.status === "Pendiente") {
+            pendingRevenue += total;
+          } else if (sale.status === "Rechazada") {
+            rejectedRevenue += total;
+          }
         }
       });
 
@@ -107,11 +167,12 @@ const AdminHome = () => {
           date.getMonth() === currentMonth && date.getFullYear() === currentYear
         );
       }).length;
-
       setKpi({
         totalRevenue: monthlyRevenue,
         newUser: newUsers,
         monthlyReviews: monthlyReviews,
+        pendingRevenue,
+        rejectedRevenue,
       });
     } catch (error) {
       console.log(error.message);
@@ -124,7 +185,15 @@ const AdminHome = () => {
 
   return (
     <AdminLayout>
-      <ScrollView className="flex flex-col px-4 py-5">
+      <ScrollView
+        className="flex-1"
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingTop: 20,
+          paddingBottom: 40,
+          paddingHorizontal: 20,
+        }}
+      >
         {/* Kpis */}
         <ScrollView
           horizontal={true}
@@ -143,6 +212,26 @@ const AdminHome = () => {
             </Text>
             <Text className="text-xl font-bold text-blue-600">
               ${kpi.totalRevenue.toFixed(2)}
+            </Text>
+          </View>
+
+          {/* Ingresos Pendientes */}
+          <View className="w-[220px] mr-3 bg-white border border-gray-200 rounded-lg p-4">
+            <Text className="mb-1" style={{ fontFamily: "Inter_600SemiBold" }}>
+              Ingresos pendientes
+            </Text>
+            <Text className="text-xl font-bold text-orange-500">
+              ${kpi.pendingRevenue.toFixed(2)}
+            </Text>
+          </View>
+
+          {/* Ingresos Perdidos */}
+          <View className="w-[220px] mr-3 bg-white border border-gray-200 rounded-lg p-4">
+            <Text className="mb-1" style={{ fontFamily: "Inter_600SemiBold" }}>
+              Ingresos perdidos
+            </Text>
+            <Text className="text-xl font-bold text-red-500">
+              ${kpi.rejectedRevenue.toFixed(2)}
             </Text>
           </View>
 
@@ -184,7 +273,7 @@ const AdminHome = () => {
         <FavoritesChart chartConfig={chartConfig} screenWidth={screenWidth} />
 
         {/* Productos mas vistos */}
-        <ViewsChart />
+        <ViewsChart screenWidth={screenWidth} chartConfig={chartConfig} />
 
         {/* Productos mejor calificados */}
         <RatingChart />

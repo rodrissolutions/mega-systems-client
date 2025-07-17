@@ -17,3 +17,4 @@ export { default as userAPI } from "./user/user.api";
 export { default as viewAPI } from "./view/view.api";
 export { default as residencyAPI } from "./residency/residency.api";
 export { default as voucherAPI } from "./voucher/voucher.api";
+export { default as bankAccountAPI } from "./bank-account/bankAccount.api";

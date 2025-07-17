@@ -446,37 +446,54 @@ const BuyProductDetail = () => {
               Estado: {buy.Voucher.status}
             </Text>
 
-            {buy.Voucher.status === "Pendiente" && (
-              <View className="flex flex-row gap-3 justify-between mt-3">
-                <TouchableOpacity
-                  className="flex-1 py-3 rounded-lg border border-red-500"
-                  onPress={handleDeleteVoucher}
-                >
-                  <Text
-                    style={{
-                      fontFamily: "Inter_700Bold",
-                      textAlign: "center",
-                      color: "#DC2626",
-                    }}
-                  >
-                    Eliminar comprobante
-                  </Text>
-                </TouchableOpacity>
+            {["Pendiente", "Rechazada"].includes(buy.Voucher.status) && (
+              <View className="flex flex-col gap-3 justify-between mt-3">
+                {buy.Voucher.status === "Rechazada" &&
+                  buy.Voucher.observations && (
+                    <View className="p-3 bg-red-100 border border-red-400 rounded-lg">
+                      <Text
+                        style={{
+                          fontFamily: "Inter_400Regular",
+                          fontSize: 14,
+                          color: "#991b1b",
+                        }}
+                      >
+                        Motivo del rechazo: {buy.Voucher.observations}
+                      </Text>
+                    </View>
+                  )}
 
-                <TouchableOpacity
-                  className="flex-1 py-3 rounded-lg bg-[#1786f9]"
-                  onPress={handleChangeVoucher}
-                >
-                  <Text
-                    style={{
-                      fontFamily: "Inter_700Bold",
-                      textAlign: "center",
-                      color: "#fff",
-                    }}
+                <View className="flex flex-row gap-3">
+                  <TouchableOpacity
+                    className="flex-1 py-3 rounded-lg border border-red-500"
+                    onPress={handleDeleteVoucher}
                   >
-                    Cambiar comprobante
-                  </Text>
-                </TouchableOpacity>
+                    <Text
+                      style={{
+                        fontFamily: "Inter_700Bold",
+                        textAlign: "center",
+                        color: "#DC2626",
+                      }}
+                    >
+                      Eliminar comprobante
+                    </Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    className="flex-1 py-3 rounded-lg bg-[#1786f9]"
+                    onPress={handleChangeVoucher}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "Inter_700Bold",
+                        textAlign: "center",
+                        color: "#fff",
+                      }}
+                    >
+                      Cambiar comprobante
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             )}
           </View>

@@ -2,23 +2,24 @@ import { Entypo, FontAwesome5, Octicons } from "@expo/vector-icons";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { LoginRequired } from "components/index.components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { dateUtils } from "../../../utils/index.utils";
 import LottieView from "lottie-react-native";
 import noData from "assets/animations/no-data.json";
 import { appointmentAPI } from "../../../api/index.api";
 import { AxiosError } from "axios";
 import Toast from "react-native-toast-message";
-import { setAppoitments } from "../../../redux/slices/data.slice";
+import { setAppointments } from "../../../redux/slices/data.slice";
 
 const History = () => {
   const dispatch = useDispatch();
+  const [appointmentsData, setAppointmentsData] = useState([]);
   const { user, appointments } = useSelector((state) => state.data);
 
   const getAppointments = () => {
     appointmentAPI.getAppointmentsByUser(user.id).then((res) => {
       const { appointments: appointmentsDB } = res.data;
-      dispatch(setAppoitments(appointmentsDB));
+      dispatch(setAppointments(appointmentsDB));
     });
   };
 
@@ -67,6 +68,12 @@ const History = () => {
       });
   };
 
+  useEffect(() => {
+    if (appointments) {
+      setAppointmentsData(appointments);
+    }
+  }, [appointments]);
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -107,7 +114,7 @@ const History = () => {
                           color: "white",
                         }}
                       >
-                        {!app.status ? "Pendiente" : "Realizada"}
+                        {app.status}
                       </Text>
                     </View>
                     <View className="flex flex-row gap-1 items-center mt-2">

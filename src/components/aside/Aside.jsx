@@ -1,5 +1,6 @@
 import {
   AntDesign,
+  Entypo,
   FontAwesome,
   FontAwesome5,
   Ionicons,
@@ -9,11 +10,17 @@ import {
 import { Text, TouchableOpacity, View } from "react-native";
 import { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/slices/data.slice";
+import storageUtil from "../../utils/storage/storage.util";
+import { storageUtils } from "../../utils/index.utils";
 
 const Aside = ({ toggleShowAside }) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const route = useRoute();
   const [selectedOption, setSelectedOption] = useState(route.name);
+  const { user } = useSelector((state) => state.data);
 
   const menuItems = [
     {
@@ -28,23 +35,28 @@ const Aside = ({ toggleShowAside }) => {
     },
     {
       name: "Productos",
-      link: "Products",
+      link: "MainProducts",
       icon: <FontAwesome5 name="boxes" size={18} color={"#4b5563"} />,
     },
     {
       name: "Servicios",
-      link: "Services",
+      link: "MainServices",
       icon: <MaterialCommunityIcons name="tools" size={18} color={"#4b5563"} />,
     },
     {
       name: "Categorías",
-      link: "Categories",
+      link: "MainCategories",
       icon: <MaterialIcons name="category" size={18} color={"#4b5563"} />,
     },
     {
       name: "Ventas",
-      link: "Sales",
+      link: "MainSales",
       icon: <AntDesign name="tags" size={18} color={"#4b5563"} />,
+    },
+    {
+      name: "Citas",
+      link: "MainAppointments",
+      icon: <Entypo name="calendar" size={18} color={"#4b5563"} />,
     },
     {
       name: "Comentarios",
@@ -52,13 +64,18 @@ const Aside = ({ toggleShowAside }) => {
       icon: <FontAwesome name="comments" size={18} color={"#4b5563"} />,
     },
     {
+      name: "Ofertas",
+      link: "MainOffers",
+      icon: <MaterialIcons name="local-offer" size={18} color={"#4b5563"} />,
+    },
+    {
       name: "Reportes",
-      link: "Reports",
+      link: "MainReports",
       icon: <Ionicons name="stats-chart" size={18} color={"#4b5563"} />,
     },
     {
       name: "Configuración",
-      link: "Settings",
+      link: "MainSettings",
       icon: <Ionicons name="settings" size={18} color={"#4b5563"} />,
     },
     {
@@ -68,7 +85,11 @@ const Aside = ({ toggleShowAside }) => {
     },
   ];
 
-  const selectOption = (option) => {
+  const selectOption = async (option) => {
+    if (option === "Login") {
+      dispatch(logout());
+      await storageUtils.clearAll();
+    }
     setSelectedOption(option);
     navigation.replace(option);
     toggleShowAside();
@@ -90,7 +111,7 @@ const Aside = ({ toggleShowAside }) => {
               color: "#0A192F",
             }}
           >
-            User name
+            {user?.fullName}
           </Text>
           <Text
             style={{
@@ -99,7 +120,7 @@ const Aside = ({ toggleShowAside }) => {
               color: "#0A192F",
             }}
           >
-            Administrador
+            {user?.Role.name}
           </Text>
         </View>
         <TouchableOpacity onPress={toggleShowAside}>

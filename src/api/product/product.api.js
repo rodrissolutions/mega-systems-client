@@ -29,7 +29,7 @@ const productAPI = {
   },
 
   updateProductWithImage: (token, id, product) => {
-    return instance.put(`/${model}/update/${id}`, product, {
+    return instance.patch(`/${model}/with-image/${id}`, product, {
       headers: {
         "Content-Type": "multipart/form-data",
         "x-token": token,
@@ -38,7 +38,7 @@ const productAPI = {
   },
 
   updateProductWithoutImage: (token, id, product) => {
-    return instance.put(`/${model}/update/withoutImage/${id}`, product, {
+    return instance.patch(`/${model}/without-image/${id}`, product, {
       headers: {
         "x-token": token,
       },

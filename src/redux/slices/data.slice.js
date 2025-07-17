@@ -7,13 +7,16 @@ const initialState = {
   filteredProducts: [],
   categories: [],
   fileteredCategories: [],
-  offer: {},
+  bankAccounts: [],
+  currentBankAccount: null,
+  offer: null,
+  offers: [],
   product: null,
   buy: null,
   services: [],
+  category: {},
   currentUser: null,
   appointment: null,
-  appointments: [],
   service: null,
   filteredServices: [],
   buys: [],
@@ -29,6 +32,10 @@ const initialState = {
   total: 0.0,
   allViews: [],
   currentSale: null,
+  category: null,
+  schedules: [],
+  appointments: [],
+  allAppointments: [],
 };
 
 const dataSlice = createSlice({
@@ -38,6 +45,34 @@ const dataSlice = createSlice({
     setUsers: (state, action) => {
       state.users = action.payload;
     },
+
+    setAllApointments: (state, action) => {
+      state.allAppointments = action.payload;
+    },
+
+    setBankAccounts: (state, action) => {
+      state.bankAccounts = action.payload;
+    },
+
+    setAppointments: (state, action) => {
+      state.appointments = action.payload;
+    },
+
+    setAppointment: (state, action) => {
+      state.appointment = action.payload;
+    },
+
+    setCategory: (state, action) => {
+      state.category = action.payload;
+    },
+
+    setSchedules: (state, action) => {
+      state.schedules = action.payload;
+    },
+
+    setOffers: (state, action) => {
+      state.offers = action.payload;
+    },
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
@@ -45,6 +80,11 @@ const dataSlice = createSlice({
     setCurrentSale: (state, action) => {
       state.currentSale = action.payload;
     },
+
+    setCurrentBankAccount: (state, action) => {
+      state.currentBankAccount = action.payload;
+    },
+
     setAllViews: (state, action) => {
       state.allViews = action.payload;
     },
@@ -67,14 +107,6 @@ const dataSlice = createSlice({
     setProducts: (state, action) => {
       state.products = action.payload;
       state.filteredProducts = action.payload;
-    },
-
-    setAppoitments: (state, action) => {
-      state.appointments = action.payload;
-    },
-
-    setAppoitment: (state, action) => {
-      state.appointment = action.payload;
     },
 
     setCategories: (state, action) => {
@@ -201,8 +233,8 @@ export const {
   setSubtotal,
   resetCart,
   setService,
-  setAppoitments,
-  setAppoitment,
+  setAppointments,
+  setAppointment,
   removeItem,
   setAllFavorites,
   setAllReviews,
@@ -210,5 +242,11 @@ export const {
   setAllViews,
   setCurrentUser,
   setCurrentSale,
+  setOffers,
+  setBankAccounts,
+  setCurrentBankAccount,
+  setCategory,
+  setSchedules,
+  setAllApointments,
 } = dataSlice.actions;
 export default dataSlice.reducer;

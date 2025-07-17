@@ -29,7 +29,7 @@ const serviceAPI = {
   },
 
   updateServiceWithImage: (token, id, service) => {
-    return instance.put(`/${model}/update/${id}`, service, {
+    return instance.patch(`/${model}/with-image/${id}`, service, {
       headers: {
         "Content-Type": "multipart/form-data",
         "x-token": token,
@@ -38,7 +38,7 @@ const serviceAPI = {
   },
 
   updateServiceWithoutImage: (token, id, service) => {
-    return instance.put(`/${model}/update/withoutImage/${id}`, service, {
+    return instance.patch(`/${model}/without-image/${id}`, service, {
       headers: {
         "x-token": token,
       },

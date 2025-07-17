@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Item from "../../../components/item/Item";
 import {
   resetCart,
+  setBuys,
   setSubtotal,
   setTotal,
 } from "../../../redux/slices/data.slice";
@@ -21,6 +22,9 @@ import Toast from "react-native-toast-message";
 import { AxiosError } from "axios";
 
 const Checkout = () => {
+  const { residency, cart, total, subtotal, offer, user } = useSelector(
+    (state) => state.data
+  );
   const [offerData, setOfferData] = useState({
     disccountType: null,
     disccountValue: null,
@@ -37,9 +41,18 @@ const Checkout = () => {
     typeBuy: null,
   });
 
-  const { residency, cart, total, subtotal, offer, user } = useSelector(
-    (state) => state.data
-  );
+  const getSales = async () => {
+    saleAPI
+      .getByUser(user.id)
+      .then((res) => {
+        const { sales: allSales } = res.data;
+        dispatch(setBuys(allSales));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -268,19 +281,96 @@ const Checkout = () => {
             text2Style: { fontSize: 14 },
           });
           dispatch(resetCart());
-          navigation.goBack();
+          getSales();
+          setTimeout(() => {
+            navigation.replace("Home");
+          }, 2500);
         })
         .catch((err) => {
-          console.log(err);
+          if (err instanceof AxiosError) {
+            const { message } = err.response.data;
+            Toast.show({
+              type: "error",
+              text1: "Error",
+              text2: message,
+              text1Style: {
+                fontSize: 16,
+                fontWeight: "900",
+              },
+              text2Style: { fontSize: 14 },
+            });
+          } else {
+            Toast.show({
+              type: "error",
+              text1: "Error",
+              text2: "Ha ocurrido un error",
+              text1Style: {
+                fontSize: 16,
+                fontWeight: "900",
+              },
+              text2Style: { fontSize: 14 },
+            });
+          }
         });
     } else {
       const saleData = {
+        subTotal: subtotal,
+        disccount: subtotal - total,
+        disccountType: offerData.disccountType,
+        disccountValue: offerData.disccountValue,
         total,
         typeBuy: sale.typeBuy,
         paymentMethod: sale.paymentMethod,
         UserId: user.id,
         Cart: cart,
       };
+
+      saleAPI
+        .createSaleWithoutDelivery(saleData)
+        .then((res) => {
+          const { message } = res.data;
+          Toast.show({
+            type: "success",
+            text1: "Compra realizada",
+            text2: message,
+            text1Style: {
+              fontSize: 16,
+              fontWeight: "900",
+            },
+            text2Style: { fontSize: 14 },
+          });
+          dispatch(resetCart());
+          getSales();
+          setTimeout(() => {
+            navigation.replace("Home");
+          }, 2500);
+        })
+        .catch((err) => {
+          if (err instanceof AxiosError) {
+            const { message } = err.response.data;
+            Toast.show({
+              type: "error",
+              text1: "Error",
+              text2: message,
+              text1Style: {
+                fontSize: 16,
+                fontWeight: "900",
+              },
+              text2Style: { fontSize: 14 },
+            });
+          } else {
+            Toast.show({
+              type: "error",
+              text1: "Error",
+              text2: "Ha ocurrido un error",
+              text1Style: {
+                fontSize: 16,
+                fontWeight: "900",
+              },
+              text2Style: { fontSize: 14 },
+            });
+          }
+        });
     }
   };
 
@@ -731,7 +821,7 @@ const Checkout = () => {
           {accountVerification && (
             <TouchableOpacity
               className="mt-10 py-4 rounded-full flex flex-row gap-3 items-center justify-center bg-[#1458b9] disabled:bg-gray-400"
-              disabled={!residency}
+              disabled={sale.typeBuy === "Entrega a Domicilio" && !residency}
               onPress={handleSubmit}
             >
               <Text

@@ -546,7 +546,7 @@ const InfoProduct = ({ showInfo, toggleShowInfo }) => {
                 </Text>
               </View>
             )}
-            {!hasReviewed && !bought && (
+            {!hasReviewed && bought && (
               <>
                 {/* Dejar un comentario */}
                 <View className="flex flex-col gap-3 mt-5">
@@ -633,7 +633,7 @@ const InfoProduct = ({ showInfo, toggleShowInfo }) => {
               </>
             )}
 
-            {!hasReviewed && bought && (
+            {!hasReviewed && !bought && (
               <View className="flex flex-col h-[100px] justify-center items-center px-5 bg-red-400 border border-red-700 rounded-xl ">
                 <Text
                   className="text-red-900"

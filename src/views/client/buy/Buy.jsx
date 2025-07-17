@@ -32,7 +32,7 @@ const Buy = () => {
     if (user) {
       const { id } = user;
       saleAPI
-        .getByUser("", id)
+        .getByUser(id)
         .then((res) => {
           const { sales } = res.data;
           dispatch(setBuys(sales));
@@ -129,7 +129,7 @@ const Buy = () => {
                               fontSize: 10,
                             }}
                           >
-                            Pendiente
+                            {buy.status}
                           </Text>
                         </View>
 

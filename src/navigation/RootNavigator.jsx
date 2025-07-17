@@ -25,10 +25,29 @@ import {
   Sales,
   Comments,
   Resend,
+  Checkout,
+  ClientReport,
+  Edit,
+  InfoSale,
+  InfoUser,
+  Map,
+  ProductReport,
+  SaleReport,
+  ServiceReport,
+  BankAccounts,
+  EditBankAccount,
+  Offers,
+  EditProduct,
+  EditCategory,
+  EditService,
+  InfoAccount,
+  InfoCompany,
 } from "views/index.views";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Octicons } from "@expo/vector-icons";
-import { Checkout, Edit, InfoSale, InfoUser, Map } from "../views/index.views";
+import { Appointments, EditOffer, Schedule } from "../views/index.views";
+import { EditAppointment } from "../views/admin/index.admin";
+import { useSelector } from "react-redux";
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -375,6 +394,35 @@ const MainTabs = () => {
   );
 };
 
+const AdminSalesNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
+      <Stack.Screen
+        name="Sales"
+        component={Sales}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="InfoSale"
+        component={InfoSale}
+        options={{
+          headerTitle: "Información de la compra",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 18,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const UsersNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
@@ -400,12 +448,136 @@ const UsersNavigator = () => {
           headerTintColor: "#fff",
         }}
       />
+    </Stack.Navigator>
+  );
+};
+
+const ReportsNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
+      <Stack.Screen
+        name="Reports"
+        component={Reports}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen name="ProductReport" component={ProductReport} />
+
+      <Stack.Screen name="ServiceReport" component={ServiceReport} />
+
+      <Stack.Screen name="ClientReport" component={ClientReport} />
+      <Stack.Screen name="SaleReport" component={SaleReport} />
+    </Stack.Navigator>
+  );
+};
+
+const SettingsNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BankAccounts"
+        component={BankAccounts}
+        options={{
+          headerTitle: "Cuentas bancarias",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+      <Stack.Screen
+        name="EditBankAccount"
+        component={EditBankAccount}
+        options={{
+          headerTitle: "Editar cuenta bancaria",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+      <Stack.Screen
+        name="InfoAccount"
+        component={InfoAccount}
+        options={{
+          headerTitle: "Información de la cuenta",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
 
       <Stack.Screen
-        name="InfoSale"
-        component={InfoSale}
+        name="InfoCompany"
+        component={InfoCompany}
         options={{
-          headerTitle: "Información de la compra",
+          headerTitle: "Información de la empresa",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+
+      <Stack.Screen
+        name="Schedules"
+        component={Schedule}
+        options={{
+          headerTitle: "Horarios de atención",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const AppoitnmentsNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
+      <Stack.Screen
+        name="Appointments"
+        component={Appointments}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditAppointment"
+        component={EditAppointment}
+        options={{
+          headerTitle: "Información de la cita",
           headerStyle: {
             backgroundColor: "#0A192F",
           },
@@ -413,6 +585,118 @@ const UsersNavigator = () => {
             color: "#fff",
             fontFamily: "Inter_700Bold",
             fontSize: 18,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const ProductsNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
+      <Stack.Screen
+        name="Products"
+        component={Products}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditProduct"
+        component={EditProduct}
+        options={{
+          headerTitle: "Editar producto",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const ServicesAdminNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
+      <Stack.Screen
+        name="ServicesDashboard"
+        component={ServicesDashboard}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditService"
+        component={EditService}
+        options={{
+          headerTitle: "Editar servicio",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+const CategoriesAdminNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
+      <Stack.Screen
+        name="Categories"
+        component={Categories}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditCategory"
+        component={EditCategory}
+        options={{
+          headerTitle: "Editar categoría",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const OffersNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
+      <Stack.Screen
+        name="Offers"
+        component={Offers}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="EditOffer"
+        component={EditOffer}
+        options={{
+          headerTitle: "Editar oferta",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
           },
           headerTintColor: "#fff",
         }}
@@ -436,23 +720,28 @@ const AdminNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Products"
-        component={Products}
+        name="MainProducts"
+        component={ProductsNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Categories"
-        component={Categories}
+        name="MainCategories"
+        component={CategoriesAdminNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Services"
-        component={ServicesDashboard}
+        name="MainAppointments"
+        component={AppoitnmentsNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Sales"
-        component={Sales}
+        name="MainServices"
+        component={ServicesAdminNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MainSales"
+        component={AdminSalesNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -461,13 +750,19 @@ const AdminNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Reports"
-        component={Reports}
+        name="MainReports"
+        component={ReportsNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Settings"
-        component={Settings}
+        name="MainSettings"
+        component={SettingsNavigator}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="MainOffers"
+        component={OffersNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -491,9 +786,17 @@ const AdminNavigator = () => {
 };
 
 const RootNavigator = () => {
+  const { user } = useSelector((state) => state.data);
+  const initialRoute = user
+    ? user.Role.name === "Administrador"
+      ? "Admin"
+      : "Home"
+    : "Home";
+
+  console.log(initialRoute);
   return (
     <Stack.Navigator
-      initialRouteName="Admin"
+      initialRouteName={initialRoute}
       screenOptions={{
         animation: "slide_from_right",
       }}
