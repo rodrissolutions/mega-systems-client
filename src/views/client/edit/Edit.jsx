@@ -173,7 +173,7 @@ const Edit = () => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
+          contentContainerStyle={{ flexGrow: 1, paddingBottom: 40 }}
           keyboardShouldPersistTaps="handled"
         >
           <View className="flex-1 items-center bg-[#F5F9FF] flex-col gap-2 pt-5">
@@ -182,7 +182,7 @@ const Edit = () => {
               <View className="flex flex-col gap-3 mt-10">
                 {/* Foto de perfil */}
                 <TouchableOpacity
-                  className="relative w-32 h-32 rounded-full border-2 border-gray-[#0A192F] mx-auto flex justify-center items-center bg-white mb-5"
+                  className="relative w-32 h-32 rounded-full border-2 border-gray-200 mx-auto flex justify-center items-center bg-white mb-5"
                   onPress={pickImage}
                 >
                   <Image

@@ -3,13 +3,31 @@ import { instance } from "../base.api";
 const model = "companies";
 
 const companyAPI = {
-  getDataCompany: (token) => {
+  getDataCompany: () => {
     return instance.get(`/${model}`);
   },
 
-  updateDataCompany: (token, data) => {
-    return instance.put(`/${model}`, data, {
+  updateWithImage: (token, data, id) => {
+    return instance.patch(`/${model}/with-image/${id}`, data, {
       headers: {
+        "Content-Type": "multipart/form-data",
+        "x-token": token,
+      },
+    });
+  },
+
+  updateWithoutImage: (token, data, id) => {
+    return instance.patch(`/${model}/without-image/${id}`, data, {
+      headers: {
+        "x-token": token,
+      },
+    });
+  },
+
+  createCompany: (token, data) => {
+    return instance.post(`/${model}`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
         "x-token": token,
       },
     });

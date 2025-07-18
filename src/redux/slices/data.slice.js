@@ -4,6 +4,7 @@ const initialState = {
   users: [],
   user: null,
   products: [],
+  company: null,
   filteredProducts: [],
   categories: [],
   fileteredCategories: [],
@@ -44,6 +45,10 @@ const dataSlice = createSlice({
   reducers: {
     setUsers: (state, action) => {
       state.users = action.payload;
+    },
+
+    setCompany: (state, action) => {
+      state.company = action.payload;
     },
 
     setAllApointments: (state, action) => {
@@ -248,5 +253,6 @@ export const {
   setCategory,
   setSchedules,
   setAllApointments,
+  setCompany,
 } = dataSlice.actions;
 export default dataSlice.reducer;

@@ -17,6 +17,7 @@ import {
   setUsers,
   setAllReviews,
   setProducts,
+  setCompany,
 } from "redux/slices/data.slice";
 import {
   FavoritesChart,
@@ -39,6 +40,7 @@ import serviceAPI from "../../../api/service/service.api";
 import {
   appointmentAPI,
   bankAccountAPI,
+  companyAPI,
   offerAPI,
 } from "../../../api/index.api";
 import scheduleAPI from "../../../api/schedule/schedule.api";
@@ -88,6 +90,7 @@ const AdminHome = () => {
         bankAccountRes,
         scheduleRes,
         appointmentRes,
+        companyRes,
       ] = await Promise.all([
         userAPI.getUsers(token),
         saleAPI.getSales(token),
@@ -101,6 +104,7 @@ const AdminHome = () => {
         bankAccountAPI.getAll(token),
         scheduleAPI.listAll(),
         appointmentAPI.getAppointments(token),
+        companyAPI.getDataCompany(),
       ]);
       const users = userRes.data.users;
       const sales = saleRes.data.sales;
@@ -114,6 +118,7 @@ const AdminHome = () => {
       const bankAccounts = bankAccountRes.data.bankAccounts;
       const schedules = scheduleRes.data.schedules;
       const appointments = appointmentRes.data.appointments;
+      const company = companyRes.data.company;
 
       dispatch(setUsers(users));
       dispatch(setAllSales(sales));
@@ -127,6 +132,7 @@ const AdminHome = () => {
       dispatch(setBankAccounts(bankAccounts));
       dispatch(setSchedules(schedules));
       dispatch(setAllApointments(appointments));
+      dispatch(setCompany(company));
 
       const now = new Date();
       const currentMonth = now.getMonth();

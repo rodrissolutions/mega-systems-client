@@ -793,7 +793,6 @@ const RootNavigator = () => {
       : "Home"
     : "Home";
 
-  console.log(initialRoute);
   return (
     <Stack.Navigator
       initialRouteName={initialRoute}
