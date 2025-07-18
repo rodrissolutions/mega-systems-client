@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import {
   LowRotationProducts,
   MostFavoritedProducts,
@@ -11,15 +11,24 @@ import {
 
 const ProductReport = () => {
   return (
-    <View>
-      <TopSellingProducts />
+    <ScrollView
+      className="flex flex-col gap-4 flex-1 bg-[#F5F9FF]"
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingTop: 20,
+        paddingBottom: 40,
+        paddingHorizontal: 20,
+      }}
+    >
       <LowRotationProducts />
+      <TopSellingProducts />
       <ProductRevenue />
       <StockVsSales />
       <TopRatedProducts />
+      {/*
       <MostViewedProducts />
-      <MostFavoritedProducts />
-    </View>
+      <MostFavoritedProducts /> */}
+    </ScrollView>
   );
 };
 
