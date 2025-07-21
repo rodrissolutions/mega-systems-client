@@ -18,7 +18,7 @@ import Toast from "react-native-toast-message";
 import { AxiosError } from "axios";
 import { Input, Password, Submit } from "components/index.components";
 import { useDispatch } from "react-redux";
-import { setUser } from "redux/slices/data.slice";
+import { setUser } from "store/slices/data.slice";
 import storageUtil from "utils/storage/storage.util";
 const Login = () => {
   const navigation = useNavigation();

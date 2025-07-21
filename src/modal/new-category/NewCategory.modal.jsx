@@ -12,7 +12,7 @@ import Modal from "react-native-modal";
 import Toast from "react-native-toast-message";
 import { categoryAPI } from "../../api/index.api";
 import { useDispatch } from "react-redux";
-import { setCategories } from "../../redux/slices/data.slice";
+import { setCategories } from "store/slices/data.slice";
 import { AxiosError } from "axios";
 import { pickerUtils, storageUtils } from "../../utils/index.utils";
 import { SafeAreaView } from "react-native-safe-area-context";

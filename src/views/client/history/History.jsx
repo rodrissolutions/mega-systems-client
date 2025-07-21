@@ -9,7 +9,7 @@ import noData from "assets/animations/no-data.json";
 import { appointmentAPI } from "../../../api/index.api";
 import { AxiosError } from "axios";
 import Toast from "react-native-toast-message";
-import { setAppointments } from "../../../redux/slices/data.slice";
+import { setAppointments } from "store/slices/data.slice";
 
 const History = () => {
   const dispatch = useDispatch();

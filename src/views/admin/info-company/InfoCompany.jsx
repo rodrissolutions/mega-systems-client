@@ -20,7 +20,7 @@ import { storageUtils, pickerUtils } from "utils/index.utils";
 import { companyAPI } from "api/index.api";
 import { AxiosError } from "axios";
 import * as Location from "expo-location";
-import { setCompany } from "../../../redux/slices/data.slice";
+import { setCompany } from "store/slices/data.slice";
 
 const InfoCompany = () => {
   const dispatch = useDispatch();

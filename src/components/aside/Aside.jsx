@@ -11,7 +11,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/slices/data.slice";
+import { logout } from "store/slices/data.slice";
 import storageUtil from "../../utils/storage/storage.util";
 import { storageUtils } from "../../utils/index.utils";
 

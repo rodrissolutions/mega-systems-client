@@ -13,7 +13,7 @@ import { Octicons, MaterialIcons } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import { reviewAPI } from "../../../api/index.api";
 import { storageUtils } from "../../../utils/index.utils";
-import { setAllReviews } from "../../../redux/slices/data.slice";
+import { setAllReviews } from "store/slices/data.slice";
 import { AxiosError } from "axios";
 
 const Comments = () => {

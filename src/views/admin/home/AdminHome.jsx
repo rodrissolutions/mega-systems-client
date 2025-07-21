@@ -18,7 +18,7 @@ import {
   setAllReviews,
   setProducts,
   setCompany,
-} from "redux/slices/data.slice";
+} from "store/slices/data.slice";
 import {
   FavoritesChart,
   RatingChart,
@@ -34,7 +34,7 @@ import {
   setOffers,
   setSchedules,
   setServices,
-} from "../../../redux/slices/data.slice";
+} from "store/slices/data.slice";
 import categoryAPI from "../../../api/category/category.api";
 import serviceAPI from "../../../api/service/service.api";
 import {

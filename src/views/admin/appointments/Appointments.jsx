@@ -11,7 +11,7 @@ import { Entypo, Octicons, MaterialIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { setAppointment } from "../../../redux/slices/data.slice";
+import { setAppointment } from "store/slices/data.slice";
 import { dateUtils } from "../../../utils/index.utils";
 
 const Appointments = () => {

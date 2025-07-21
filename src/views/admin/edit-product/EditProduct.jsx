@@ -15,7 +15,7 @@ import { productAPI } from "../../../api/index.api";
 import Toast from "react-native-toast-message";
 import { AxiosError } from "axios";
 import { useNavigation } from "@react-navigation/native";
-import { setProducts } from "../../../redux/slices/data.slice";
+import { setProducts } from "store/slices/data.slice";
 
 const EditProduct = () => {
   const dispatch = useDispatch();

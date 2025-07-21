@@ -12,7 +12,7 @@ import { codeAPI } from "../../../api/index.api";
 import { AxiosError } from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import { logout } from "../../../redux/slices/data.slice";
+import { logout } from "store/slices/data.slice";
 
 const ChangePassword = () => {
   const navigation = useNavigation();

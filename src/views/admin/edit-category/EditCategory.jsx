@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryAPI } from "../../../api/index.api";
-import { setCategories } from "../../../redux/slices/data.slice";
+import { setCategories } from "store/slices/data.slice";
 import { pickerUtils, storageUtils } from "../../../utils/index.utils";
 import Toast from "react-native-toast-message";
 

@@ -21,7 +21,7 @@ import {
 import Toast from "react-native-toast-message";
 import { pickerUtils } from "../../../utils/index.utils";
 import { userAPI } from "../../../api/index.api";
-import { setUser } from "../../../redux/slices/data.slice";
+import { setUser } from "store/slices/data.slice";
 import { AxiosError } from "axios";
 import { useNavigation } from "@react-navigation/native";
 

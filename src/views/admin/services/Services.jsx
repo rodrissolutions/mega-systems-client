@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Feather, Octicons } from "@expo/vector-icons";
 import { NewService } from "../../../modal/index.modals";
 import { useNavigation } from "@react-navigation/native";
-import { setService } from "../../../redux/slices/data.slice";
+import { setService } from "store/slices/data.slice";
 
 const Services = () => {
   const dispatch = useDispatch();

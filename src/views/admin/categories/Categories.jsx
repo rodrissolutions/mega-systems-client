@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Octicons, Feather } from "@expo/vector-icons";
 import { useState } from "react";
 import { NewCategory } from "../../../modal/index.modals";
-import { setCategory } from "../../../redux/slices/data.slice";
+import { setCategory } from "store/slices/data.slice";
 import { useNavigation } from "@react-navigation/native";
 
 const Categories = () => {

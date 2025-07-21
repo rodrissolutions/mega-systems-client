@@ -28,9 +28,9 @@ import {
   addOrIncrementItem,
   setProducts,
   setProduct,
-} from "redux/slices/data.slice";
+} from "store/slices/data.slice";
 import { AxiosError } from "axios";
-import { removeItem, setSubtotal } from "../../redux/slices/data.slice";
+import { removeItem, setSubtotal } from "store/slices/data.slice";
 
 const InfoProduct = ({ showInfo, toggleShowInfo }) => {
   const dispatch = useDispatch();

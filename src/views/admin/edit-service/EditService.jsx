@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { pickerUtils, storageUtils } from "../../../utils/index.utils";
 import { categoryAPI, serviceAPI } from "../../../api/index.api";
 import { AxiosError } from "axios";
-import { setServices } from "../../../redux/slices/data.slice";
+import { setServices } from "store/slices/data.slice";
 
 const EditService = () => {
   const dispatch = useDispatch();

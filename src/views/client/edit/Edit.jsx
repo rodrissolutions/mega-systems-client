@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 import { pickerUtils } from "../../../utils/index.utils";
 import { userAPI } from "../../../api/index.api";
 import { AxiosError } from "axios";
-import { setUser } from "../../../redux/slices/data.slice";
+import { setUser } from "store/slices/data.slice";
 import storageUtil from "../../../utils/storage/storage.util";
 
 const Edit = () => {

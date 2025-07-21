@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { pickerUtils, storageUtils } from "../../utils/index.utils";
 import { useDispatch } from "react-redux";
 import { serviceAPI } from "../../api/index.api";
-import { setServices } from "../../redux/slices/data.slice";
+import { setServices } from "store/slices/data.slice";
 import Toast from "react-native-toast-message";
 import { AxiosError } from "axios";
 

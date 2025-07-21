@@ -16,7 +16,7 @@ import {
   setBuys,
   setSubtotal,
   setTotal,
-} from "../../../redux/slices/data.slice";
+} from "store/slices/data.slice";
 import { codeAPI, saleAPI } from "../../../api/index.api";
 import Toast from "react-native-toast-message";
 import { AxiosError } from "axios";

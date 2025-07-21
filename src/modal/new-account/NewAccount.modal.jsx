@@ -14,7 +14,7 @@ import Toast from "react-native-toast-message";
 import { bankAccountAPI } from "../../api/index.api";
 import { storageUtils } from "../../utils/index.utils";
 import { useDispatch } from "react-redux";
-import { setBankAccounts } from "../../redux/slices/data.slice";
+import { setBankAccounts } from "store/slices/data.slice";
 import { AxiosError } from "axios";
 
 const NewAccount = ({ isVisible, onClose }) => {

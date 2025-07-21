@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { InfoProduct } from "modal/index.modals";
 import { favoriteAPI } from "api/index.api";
 import { useDispatch, useSelector } from "react-redux";
-import { setFavorites, setProduct } from "redux/slices/data.slice";
+import { setFavorites, setProduct } from "store/slices/data.slice";
 import LottieView from "lottie-react-native";
 import noData from "assets/animations/no-data.json";
 import Toast from "react-native-toast-message";

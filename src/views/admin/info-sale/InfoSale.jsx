@@ -19,7 +19,7 @@ import { saleAPI } from "../../../api/index.api";
 import { AxiosError } from "axios";
 import Toast from "react-native-toast-message";
 import { useNavigation } from "@react-navigation/native";
-import { setAllSales } from "../../../redux/slices/data.slice";
+import { setAllSales } from "store/slices/data.slice";
 
 const InfoSale = () => {
   const dispatch = useDispatch();

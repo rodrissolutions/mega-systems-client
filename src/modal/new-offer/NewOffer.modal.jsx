@@ -16,7 +16,7 @@ import { storageUtils } from "../../utils/index.utils";
 import { offerAPI } from "../../api/index.api";
 import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
-import { setOffer, setOffers } from "../../redux/slices/data.slice";
+import { setOffer, setOffers } from "store/slices/data.slice";
 
 const NewOffer = ({ isVisible, onClose }) => {
   const dispatch = useDispatch();

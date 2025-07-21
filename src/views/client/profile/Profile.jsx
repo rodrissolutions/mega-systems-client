@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import storageUtil from "utils/storage/storage.util";
-import { logout } from "redux/slices/data.slice";
+import { logout } from "store/slices/data.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { LoginRequired } from "components/index.components";
 const Profile = () => {

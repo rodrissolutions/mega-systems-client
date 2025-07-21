@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 import LottieView from "lottie-react-native";
 import empty from "assets/empty.json";
 import { useDispatch, useSelector } from "react-redux";
-import { setTotal } from "redux/slices/data.slice";
-import { setSubtotal } from "../../redux/slices/data.slice";
+import { setTotal } from "store/slices/data.slice";
+import { setSubtotal } from "store/slices/data.slice";
 
 const Cart = ({ openCart, toggleOpenCart }) => {
   const navigation = useNavigation();

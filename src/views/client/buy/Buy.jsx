@@ -11,12 +11,12 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saleAPI } from "api/index.api";
-import { setBuys } from "redux/slices/data.slice";
+import { setBuys } from "store/slices/data.slice";
 import LottieView from "lottie-react-native";
 import recovery from "assets/animations/recovery.json";
 import { LoginRequired } from "components/index.components";
 import { dateUtils } from "../../../utils/index.utils";
-import { setBuy } from "../../../redux/slices/data.slice";
+import { setBuy } from "store/slices/data.slice";
 
 const Buy = () => {
   const { user, buys } = useSelector((state) => state.data);

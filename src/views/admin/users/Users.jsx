@@ -10,8 +10,7 @@ import AdminLayout from "layouts/AdminLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Octicons } from "@expo/vector-icons";
-import InfoUser from "../info-user/InfoUser";
-import { setCurrentUser } from "../../../redux/slices/data.slice";
+import { setCurrentUser } from "store/slices/data.slice";
 import { useNavigation } from "@react-navigation/native";
 
 const Users = () => {

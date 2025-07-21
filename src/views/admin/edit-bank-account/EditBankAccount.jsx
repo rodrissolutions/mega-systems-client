@@ -18,7 +18,7 @@ import { AxiosError } from "axios";
 import {
   setBankAccounts,
   setCurrentBankAccount,
-} from "../../../redux/slices/data.slice";
+} from "store/slices/data.slice";
 import { useNavigation } from "@react-navigation/native";
 
 const EditBankAccount = () => {

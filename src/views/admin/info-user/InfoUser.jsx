@@ -7,7 +7,7 @@ import { dateUtils } from "../../../utils/index.utils";
 // Mostrar ubicación en map
 import MapView, { Marker } from "react-native-maps";
 import { useNavigation } from "@react-navigation/native";
-import { setCurrentSale } from "../../../redux/slices/data.slice";
+import { setCurrentSale } from "store/slices/data.slice";
 
 const InfoUser = () => {
   const navigation = useNavigation();

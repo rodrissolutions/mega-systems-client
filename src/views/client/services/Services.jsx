@@ -6,8 +6,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 import { serviceAPI } from "api/index.api";
 import { useDispatch, useSelector } from "react-redux";
-import { setServices } from "redux/slices/data.slice";
-import { setService } from "../../../redux/slices/data.slice";
+import { setServices } from "store/slices/data.slice";
+import { setService } from "store/slices/data.slice";
 const Services = () => {
   const dispatch = useDispatch();
   const { services, user, appointments } = useSelector((state) => state.data);

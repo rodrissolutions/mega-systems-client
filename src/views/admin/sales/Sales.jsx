@@ -11,7 +11,7 @@ import { Octicons } from "@expo/vector-icons";
 import RNPickerSelect from "react-native-picker-select";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { setCurrentSale } from "../../../redux/slices/data.slice";
+import { setCurrentSale } from "store/slices/data.slice";
 
 const Sales = () => {
   const dispatch = useDispatch();

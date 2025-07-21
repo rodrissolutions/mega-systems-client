@@ -3,9 +3,9 @@ import laptop from "assets/laptop.png";
 import { Entypo, Octicons } from "@expo/vector-icons";
 import cartAPI from "../../api/cart/cart.api";
 import { useDispatch, useSelector } from "react-redux";
-import { addOrIncrementItem, decrementItem } from "redux/slices/data.slice";
+import { addOrIncrementItem, decrementItem } from "store/slices/data.slice";
 import { useEffect } from "react";
-import { setSubtotal, setTotal } from "redux/slices/data.slice";
+import { setSubtotal, setTotal } from "store/slices/data.slice";
 const Item = ({ product, quantity, id, index, pd }) => {
   const dispatch = useDispatch();
   const { cart, offer } = useSelector((state) => state.data);

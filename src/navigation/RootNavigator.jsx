@@ -847,16 +847,16 @@ const AdminNavigator = () => {
 };
 
 const RootNavigator = () => {
-  const { user } = useSelector((state) => state.data);
-  const initialRoute = user
-    ? user.Role.name === "Administrador"
-      ? "Admin"
-      : "Home"
-    : "Home";
+  // const { user } = useSelector((state) => state.data);
+  // const initialRoute = user
+  //   ? user.Role.name === "Administrador"
+  //     ? "Admin"
+  //     : "Home"
+  //   : "Home";
 
   return (
     <Stack.Navigator
-      initialRouteName={"Onboarding"}
+      initialRouteName={"Home"}
       screenOptions={{
         animation: "slide_from_right",
       }}

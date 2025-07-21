@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saleAPI, voucherAPI } from "../../../api/index.api";
 import { AxiosError } from "axios";
 import Toast from "react-native-toast-message";
-import { setBuy, setBuys } from "../../../redux/slices/data.slice";
+import { setBuy, setBuys } from "store/slices/data.slice";
 
 const BuyProductDetail = () => {
   const dispatch = useDispatch();

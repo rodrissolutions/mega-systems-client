@@ -15,7 +15,7 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import Toast from "react-native-toast-message";
 import residencyAPI from "../../../api/residency/residency.api";
-import { setResidency } from "../../../redux/slices/data.slice";
+import { setResidency } from "store/slices/data.slice";
 
 const Address = () => {
   const dispatch = useDispatch();

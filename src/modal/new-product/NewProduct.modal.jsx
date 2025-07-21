@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { pickerUtils, storageUtils } from "../../utils/index.utils";
 import Toast from "react-native-toast-message";
 import { productAPI } from "../../api/index.api";
-import { setProducts } from "../../redux/slices/data.slice";
+import { setProducts } from "store/slices/data.slice";
 import { AxiosError } from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
 

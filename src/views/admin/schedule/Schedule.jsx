@@ -13,7 +13,7 @@ import RNPickerSelect from "react-native-picker-select";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useDispatch, useSelector } from "react-redux";
 import scheduleAPI from "../../../api/schedule/schedule.api";
-import { setSchedules } from "../../../redux/slices/data.slice";
+import { setSchedules } from "store/slices/data.slice";
 import Toast from "react-native-toast-message";
 import { AxiosError } from "axios";
 import { storageUtils } from "../../../utils/index.utils";

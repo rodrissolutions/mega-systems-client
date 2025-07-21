@@ -10,7 +10,7 @@ import { Octicons, Feather } from "@expo/vector-icons";
 import { useState } from "react";
 import { NewAccount } from "../../../modal/index.modals";
 import { useNavigation } from "@react-navigation/native";
-import { setCurrentBankAccount } from "../../../redux/slices/data.slice";
+import { setCurrentBankAccount } from "store/slices/data.slice";
 
 const BankAccounts = () => {
   const navigation = useNavigation();

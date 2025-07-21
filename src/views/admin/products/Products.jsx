@@ -12,7 +12,7 @@ import { Octicons, Feather } from "@expo/vector-icons";
 import { useState } from "react";
 import { NewProduct } from "../../../modal/index.modals";
 import { useNavigation } from "@react-navigation/native";
-import { setProduct } from "../../../redux/slices/data.slice";
+import { setProduct } from "store/slices/data.slice";
 
 const Products = () => {
   const dispatch = useDispatch();

@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { NewOffer } from "../../../modal/index.modals";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { setOffer } from "../../../redux/slices/data.slice";
+import { setOffer } from "store/slices/data.slice";
 
 const Offers = () => {
   const dispatch = useDispatch();

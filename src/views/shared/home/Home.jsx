@@ -25,10 +25,10 @@ import {
   setResidency,
   setAppoitments,
   setOffer,
-} from "redux/slices/data.slice";
+} from "store/slices/data.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { appointmentAPI } from "../../../api/index.api";
-import { setAppointments } from "../../../redux/slices/data.slice";
+import { setAppointments } from "store/slices/data.slice";
 
 const Home = ({ navigation }) => {
   const [showInfo, setShowInfo] = useState(false);

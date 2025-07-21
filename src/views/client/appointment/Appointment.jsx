@@ -16,10 +16,7 @@ import { dateUtils } from "../../../utils/index.utils";
 import { appointmentAPI } from "../../../api/index.api";
 import { AxiosError } from "axios";
 import { useNavigation } from "@react-navigation/native";
-import {
-  setAppointments,
-  setAppoitments,
-} from "../../../redux/slices/data.slice";
+import { setAppointments } from "store/slices/data.slice";
 
 const Appointment = () => {
   const navigation = useNavigation();

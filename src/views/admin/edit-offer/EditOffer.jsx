@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { storageUtils } from "../../../utils/index.utils";
 import { offerAPI } from "../../../api/index.api";
-import { setOffers } from "../../../redux/slices/data.slice";
+import { setOffers } from "store/slices/data.slice";
 import RNPickerSelect from "react-native-picker-select";
 import Toast from "react-native-toast-message";
 import { Feather } from "@expo/vector-icons";
