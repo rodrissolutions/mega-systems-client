@@ -42,6 +42,7 @@ import {
   EditService,
   InfoAccount,
   InfoCompany,
+  Onboarding,
 } from "views/index.views";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Octicons } from "@expo/vector-icons";
@@ -855,7 +856,7 @@ const RootNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={initialRoute}
+      initialRouteName={"Onboarding"}
       screenOptions={{
         animation: "slide_from_right",
       }}
@@ -888,6 +889,11 @@ const RootNavigator = () => {
       <Stack.Screen
         name="Resend"
         component={Resend}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Onboarding"
+        component={Onboarding}
         options={{ headerShown: false }}
       />
 

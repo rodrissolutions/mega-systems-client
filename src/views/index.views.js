@@ -5,6 +5,7 @@ export {
   Code,
   Recovery,
   Resend,
+  Onboarding,
 } from "./shared/index.shared.js";
 export {
   Favorites,
@@ -46,7 +47,6 @@ export {
   MostFavoritedProducts,
   MostViewedProducts,
   SalesByPaymentMethod,
-  SalesOvertime,
   SalesRejected,
   RevenueOvertime,
   TopClientBySales,
