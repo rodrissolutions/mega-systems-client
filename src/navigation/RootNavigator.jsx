@@ -461,12 +461,72 @@ const ReportsNavigator = () => {
         options={{ headerShown: false }}
       />
 
-      <Stack.Screen name="ProductReport" component={ProductReport} />
+      <Stack.Screen
+        name="ProductReport"
+        component={ProductReport}
+        options={{
+          headerTitle: "Reporte de productos",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
 
-      <Stack.Screen name="ServiceReport" component={ServiceReport} />
+      <Stack.Screen
+        name="ServiceReport"
+        component={ServiceReport}
+        options={{
+          headerTitle: "Reporte de servicios",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
 
-      <Stack.Screen name="ClientReport" component={ClientReport} />
-      <Stack.Screen name="SaleReport" component={SaleReport} />
+      <Stack.Screen
+        name="ClientReport"
+        component={ClientReport}
+        options={{
+          headerTitle: "Reporte de clientes",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+      <Stack.Screen
+        name="SaleReport"
+        component={SaleReport}
+        options={{
+          headerTitle: "Reporte de ventas",
+          headerStyle: {
+            backgroundColor: "#0A192F",
+          },
+          headerTitleStyle: {
+            color: "#fff",
+            fontFamily: "Inter_700Bold",
+            fontSize: 24,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
     </Stack.Navigator>
   );
 };

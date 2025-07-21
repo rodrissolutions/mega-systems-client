@@ -277,7 +277,6 @@ const AdminHome = () => {
 
         {/* Productos añadidos a favoritos */}
         <FavoritesChart chartConfig={chartConfig} screenWidth={screenWidth} />
-
         {/* Productos mas vistos */}
         <ViewsChart screenWidth={screenWidth} chartConfig={chartConfig} />
 

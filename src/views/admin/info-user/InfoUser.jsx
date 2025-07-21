@@ -373,7 +373,7 @@ const InfoUser = () => {
                 color: "#0A192F",
               }}
             >
-              No hay datos de reesidenciaa
+              No hay datos de residencia
             </Text>
           </View>
         )}

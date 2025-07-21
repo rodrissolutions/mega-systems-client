@@ -26,7 +26,7 @@ export { default as MostFavoritedProducts } from "./most-favorited-products/Most
 export { default as MostViewedProducts } from "./most-viewed-products/MostViewedProducts";
 
 export { default as SalesByPaymentMethod } from "./sales-by-payment-method/SalesByPaymentMethod";
-export { default as SalesOvertime } from "./sales-overtime/SalesOvertime";
+export { default as SalesByMonth } from "./sales-by-month/SalesByMonth.jsx";
 export { default as SalesRejected } from "./sales-rejected/SalesRejected";
 export { default as RevenueOvertime } from "./revenue-overTime/RevenueOvertime";
 
@@ -60,3 +60,7 @@ export { default as EditAppointment } from "./edit-appointment/EditAppointment.j
 
 export { default as InfoCompany } from "./info-company/InfoCompany";
 export { default as InfoAccount } from "./info-account/InfoAccount";
+
+export { default as GroupByCity } from "./group-by-city/GroupByCity.jsx";
+export { default as SalesByYear } from "./sales-by-year/SalesByYear.jsx";
+export { default as SaleByWeek } from "./sale-by-week/SaleByWeek.jsx";

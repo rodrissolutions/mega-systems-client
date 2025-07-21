@@ -52,7 +52,7 @@ const ViewsChart = ({ screenWidth }) => {
         </Text>
       </View>
 
-      {viewsData ? (
+      {viewsData && viewsData.length > 0 ? (
         <View className="flex flex-col gap-3">
           {viewsData.map((item, index) => (
             <View key={index} className="flex flex-row items-center gap-2">
@@ -113,7 +113,7 @@ const ViewsChart = ({ screenWidth }) => {
             marginTop: 20,
           }}
         >
-          Aún no hay productos añadidos a favoritos.
+          Aún no hay productos vistos
         </Text>
       )}
     </View>

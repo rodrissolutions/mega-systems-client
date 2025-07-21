@@ -25,9 +25,7 @@ const ProductReport = () => {
       <ProductRevenue />
       <StockVsSales />
       <TopRatedProducts />
-      {/*
-      <MostViewedProducts />
-      <MostFavoritedProducts /> */}
+      
     </ScrollView>
   );
 };

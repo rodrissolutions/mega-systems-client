@@ -1,46 +1,57 @@
 import { useEffect, useState } from "react";
 import { Text, View, Dimensions } from "react-native";
 import { useSelector } from "react-redux";
+
 import { PieChart } from "react-native-chart-kit";
 
 const screenWidth = Dimensions.get("window").width;
 
-const TopClientBySales = () => {
-  const [mapSales, setMapSales] = useState([]);
-  const colors = ["#f44336", "#2196f3", "#4caf50", "#ff9800", "#9c27b0"];
-  const { allSales } = useSelector((state) => state.data);
+const GroupByCity = () => {
+  const [mapClients, setMapClients] = useState([]);
 
-  const groupBySales = () => {
-    const ammountsByClient = {};
-    allSales.forEach((sale) => {
-      if (sale.status !== "Pagada") return;
-      const client = sale.Client.fullName;
-      const total = parseFloat(sale.total);
+  const colors = [
+    "#f44336",
+    "#2196f3",
+    "#4caf50",
+    "#ff9800",
+    "#9c27b0",
+    "#00bcd4",
+    "#ffc107",
+    "#e91e63",
+    "#3f51b5",
+    "#8bc34a",
+  ];
+  const { users } = useSelector((state) => state.data);
 
-      if (client) {
-        ammountsByClient[client] = (ammountsByClient[client] || 0) + total;
+  const groupClientsByCity = () => {
+    const countByCity = [];
+
+    users.forEach((user) => {
+      const isClient = user?.Role?.name === "Cliente";
+      const city = user?.Residency?.city;
+
+      if (isClient && city) {
+        countByCity[city] = (countByCity[city] || 0) + 1;
       }
     });
 
-    const mapped = Object.entries(ammountsByClient)
-      .map(([client, total]) => ({ name: client, total }))
-      .sort((a, b) => b.total - a.total)
-      .slice(0, 5);
-
-    const data = mapped.map((client, i) => ({
-      name: client.name,
-      population: client.total,
+    const mapped = Object.entries(countByCity).map(([city, count], i) => ({
+      name: city,
+      population: count,
       color: colors[i % colors.length],
-      legendFontColor: "#333",
-      legendFontSize: 14,
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 10,
     }));
 
-    setMapSales(data);
+    console.log(mapped);
+
+    setMapClients(mapped);
   };
 
   useEffect(() => {
-    groupBySales();
-  }, [allSales]);
+    groupClientsByCity();
+  }, [users]);
+
   return (
     <View className="bg-white p-4 rounded-xl border border-gray-200 mb-10">
       <Text
@@ -51,11 +62,11 @@ const TopClientBySales = () => {
           color: "#111827",
         }}
       >
-        Top 5 de clientes con mayores compras
+        Clientes por ciudad
       </Text>
-      {mapSales.length > 0 ? (
+      {mapClients.length > 0 ? (
         <PieChart
-          data={mapSales}
+          data={mapClients}
           width={screenWidth - 20}
           height={220}
           chartConfig={{
@@ -78,11 +89,11 @@ const TopClientBySales = () => {
             textAlign: "center",
           }}
         >
-          No hay información de ventas
+          No hay información de residencia
         </Text>
       )}
     </View>
   );
 };
 
-export default TopClientBySales;
+export default GroupByCity;

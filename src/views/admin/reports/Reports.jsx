@@ -7,7 +7,6 @@ const reportOptions = [
   { id: "ProductReport", label: "Productos", icon: "package" },
   { id: "ClientReport", label: "Clientes", icon: "people" },
   { id: "SaleReport", label: "Ventas", icon: "graph" },
-  { id: "ServiceReport", label: "Servicios", icon: "tools" },
 ];
 
 const Reports = () => {

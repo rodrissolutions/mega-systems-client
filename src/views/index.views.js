@@ -66,4 +66,5 @@ export {
   Appointments,
   InfoAccount,
   InfoCompany,
+  GroupByCity,
 } from "./admin/index.admin.js";
