@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import "./global.css";
 import RootNavigator from "./src/navigation/RootNavigator";
 import { useFontsLoader } from "hooks/index.hooks";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "store/store";
 import { useEffect } from "react";
 import storageUtil from "utils/storage/storage.util";

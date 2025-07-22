@@ -891,11 +891,6 @@ const RootNavigator = () => {
         component={Resend}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="Onboarding"
-        component={Onboarding}
-        options={{ headerShown: false }}
-      />
 
       <Stack.Screen
         name="Admin"

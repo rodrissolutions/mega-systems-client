@@ -23,12 +23,11 @@ import {
   setCategories,
   setCart,
   setResidency,
-  setAppoitments,
   setOffer,
+  setAppointments,
 } from "store/slices/data.slice";
 import { useDispatch, useSelector } from "react-redux";
-import { appointmentAPI } from "../../../api/index.api";
-import { setAppointments } from "store/slices/data.slice";
+import { appointmentAPI } from "api/index.api";
 
 const Home = ({ navigation }) => {
   const [showInfo, setShowInfo] = useState(false);
@@ -43,18 +42,6 @@ const Home = ({ navigation }) => {
   useLayoutEffect(() => {
     setShowInfo(false);
   }, [navigation]);
-
-  // const categories = [
-  //   { id: 1, name: "Computadoras", image: laptop },
-  //   { id: 2, name: "Computadoras", image: laptop },
-  //   { id: 3, name: "Computadoras", image: laptop },
-  //   { id: 4, name: "Computadoras", image: laptop },
-  //   { id: 5, name: "Computadoras", image: laptop },
-  //   { id: 6, name: "Computadoras", image: laptop },
-  //   { id: 7, name: "Computadoras", image: laptop },
-  //   { id: 8, name: "Computadoras", image: laptop },
-  //   { id: 9, name: "Computadoras", image: laptop },
-  // ];
 
   const getData = () => {
     // Obtener toda la información que se mostrará en el home
