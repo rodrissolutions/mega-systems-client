@@ -1,12 +1,10 @@
-import { ScrollView, Text, View } from "react-native";
-import {
-  RevenueOvertime,
-  SaleByWeek,
-  SalesByMonth,
-  SalesByPaymentMethod,
-  SalesByYear,
-  SalesRejected,
-} from "../index.admin";
+import { ScrollView } from "react-native";
+// import {
+//   SaleByWeek,
+//   SalesByMonth,
+//   SalesByPaymentMethod,
+//   SalesByYear,
+// } from "../index.admin";
 
 const SaleReport = () => {
   return (
@@ -19,10 +17,10 @@ const SaleReport = () => {
         paddingHorizontal: 20,
       }}
     >
-      <SalesByPaymentMethod />
+      {/* <SalesByPaymentMethod />
       <SalesByYear />
       <SalesByMonth />
-      <SaleByWeek />
+      <SaleByWeek /> */}
     </ScrollView>
   );
 };

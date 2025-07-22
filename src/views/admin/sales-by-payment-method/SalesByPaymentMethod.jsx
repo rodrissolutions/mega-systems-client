@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { useSelector } from "react-redux";
-import { PieChart } from "react-native-chart-kit";
+// import { PieChart } from "react-native-chart-kit";
 
 const SalesByPaymentMethod = () => {
   const [mapSales, setMapSales] = useState([]);
@@ -68,7 +68,7 @@ const SalesByPaymentMethod = () => {
       >
         Ventas por metodo de pago
       </Text>
-      {totalAmmount === 0 ? (
+      {/* {totalAmmount === 0 ? (
         <Text
           style={{
             fontFamily: "Inter_400Regular",
@@ -98,7 +98,7 @@ const SalesByPaymentMethod = () => {
           paddingLeft="15"
           absolute
         />
-      )}
+      )} */}
     </View>
   );
 };

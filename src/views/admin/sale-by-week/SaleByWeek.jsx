@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import { BarChart } from "react-native-chart-kit";
+// import { BarChart } from "react-native-chart-kit";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -120,7 +120,7 @@ const SalesByWeek = () => {
         </TouchableOpacity>
       </View>
 
-      <BarChart
+      {/* <BarChart
         data={chartData}
         width={chartWidth}
         height={240}
@@ -140,7 +140,7 @@ const SalesByWeek = () => {
           borderRadius: 16,
           alignSelf: "center",
         }}
-      />
+      /> */}
     </View>
   );
 };

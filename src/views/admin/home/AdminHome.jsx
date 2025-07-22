@@ -19,16 +19,15 @@ import {
   setProducts,
   setCompany,
 } from "store/slices/data.slice";
-import {
-  FavoritesChart,
-  RatingChart,
-  UsersChart,
-  ViewsChart,
-} from "components/index.components";
+// import {
+//   FavoritesChart,
+//   RatingChart,
+//   UsersChart,
+//   ViewsChart,
+// } from "components/index.components";
 import {
   setAllApointments,
   setAllSales,
-  setAppointments,
   setBankAccounts,
   setCategories,
   setOffers,
@@ -273,15 +272,15 @@ const AdminHome = () => {
         </ScrollView>
 
         {/* Usuarios Pie Chart */}
-        <UsersChart chartConfig={chartConfig} screenWidth={screenWidth} />
+        {/* <UsersChart chartConfig={chartConfig} screenWidth={screenWidth} /> */}
 
         {/* Productos añadidos a favoritos */}
-        <FavoritesChart chartConfig={chartConfig} screenWidth={screenWidth} />
+        {/* <FavoritesChart chartConfig={chartConfig} screenWidth={screenWidth} /> */}
         {/* Productos mas vistos */}
-        <ViewsChart screenWidth={screenWidth} chartConfig={chartConfig} />
+        {/* <ViewsChart screenWidth={screenWidth} chartConfig={chartConfig} /> */}
 
         {/* Productos mejor calificados */}
-        <RatingChart />
+        {/* <RatingChart /> */}
       </ScrollView>
     </AdminLayout>
   );

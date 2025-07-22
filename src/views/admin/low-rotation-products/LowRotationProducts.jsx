@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Text, View, Dimensions } from "react-native";
 import { useSelector } from "react-redux";
-import { PieChart } from "react-native-chart-kit";
+// import { PieChart } from "react-native-chart-kit";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -57,7 +57,7 @@ const LowRotationProducts = () => {
       >
         Productos con menor rotación
       </Text>
-      {pieData.length > 0 ? (
+      {/* {pieData.length > 0 ? (
         <PieChart
           data={pieData}
           width={screenWidth - 32}
@@ -73,7 +73,7 @@ const LowRotationProducts = () => {
         />
       ) : (
         <Text>No hay datos</Text>
-      )}
+      )} */}
     </View>
   );
 };

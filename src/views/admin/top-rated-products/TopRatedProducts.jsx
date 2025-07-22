@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Text, View, Dimensions, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
-import { PieChart } from "react-native-chart-kit";
+// import { PieChart } from "react-native-chart-kit";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -156,8 +156,8 @@ const TopRatedProducts = () => {
 
   return (
     <ScrollView className="flex-1 bg-[#F5F9FF] ">
-      {renderPieChart("Top 5 Productos Mejor Calificados", bestProducts)}
-      {renderPieChart("Top 5 Productos Peor Calificados", worstProducts)}
+      {/* {renderPieChart("Top 5 Productos Mejor Calificados", bestProducts)} */}
+      {/* {renderPieChart("Top 5 Productos Peor Calificados", worstProducts)} */}
     </ScrollView>
   );
 };

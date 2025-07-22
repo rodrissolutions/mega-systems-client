@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Text, View, Dimensions } from "react-native";
 import { useSelector } from "react-redux";
-import { PieChart } from "react-native-chart-kit";
+// import { PieChart } from "react-native-chart-kit";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -53,7 +53,7 @@ const TopClientBySales = () => {
       >
         Top 5 de clientes con mayores compras
       </Text>
-      {mapSales.length > 0 ? (
+      {/* {mapSales.length > 0 ? (
         <PieChart
           data={mapSales}
           width={screenWidth - 20}
@@ -80,7 +80,7 @@ const TopClientBySales = () => {
         >
           No hay información de ventas
         </Text>
-      )}
+      )} */}
     </View>
   );
 };

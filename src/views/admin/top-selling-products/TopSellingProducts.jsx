@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Text, View, Dimensions } from "react-native";
 import { useSelector } from "react-redux";
-import { ProgressChart } from "react-native-chart-kit";
+// import { ProgressChart } from "react-native-chart-kit";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -71,7 +71,7 @@ const TopSellingProducts = () => {
         Top productos más vendidos (Progreso)
       </Text>
 
-      {chartData.data.length > 0 ? (
+      {/* {chartData.data.length > 0 ? (
         <>
           <ProgressChart
             data={{ data: chartData.data }}
@@ -84,7 +84,6 @@ const TopSellingProducts = () => {
             style={{ marginVertical: 8, borderRadius: 16 }}
           />
 
-          {/* Leyenda manual */}
           <View style={{ marginTop: 10 }}>
             {chartData.sorted.map(([name, qty], i) => (
               <View
@@ -124,7 +123,7 @@ const TopSellingProducts = () => {
         <Text className="text-center text-gray-500">
           No hay datos para mostrar
         </Text>
-      )}
+      )} */}
     </View>
   );
 };

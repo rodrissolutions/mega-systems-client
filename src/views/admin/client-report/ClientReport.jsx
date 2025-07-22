@@ -1,5 +1,5 @@
 import { ScrollView, Text, View } from "react-native";
-import { GroupByCity, TopClientBySales } from "../index.admin";
+// import { GroupByCity, TopClientBySales } from "../index.admin";
 
 const ClientReport = () => {
   return (
@@ -12,8 +12,8 @@ const ClientReport = () => {
         paddingHorizontal: 20,
       }}
     >
-      <GroupByCity />
-      <TopClientBySales />
+      {/* <GroupByCity /> */}
+      {/* <TopClientBySales /> */}
     </ScrollView>
   );
 };

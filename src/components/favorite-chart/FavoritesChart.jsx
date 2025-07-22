@@ -1,7 +1,7 @@
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { BarChart } from "react-native-chart-kit";
+// import { BarChart } from "react-native-chart-kit";
 import { useSelector } from "react-redux";
 
 const FavoritesChart = ({ chartConfig, screenWidth }) => {
@@ -59,7 +59,7 @@ const FavoritesChart = ({ chartConfig, screenWidth }) => {
         </Text>
       </View>
 
-      {favoritosData ? (
+      {/* {favoritosData ? (
         <BarChart
           data={favoritosData}
           width={screenWidth - 48}
@@ -82,7 +82,7 @@ const FavoritesChart = ({ chartConfig, screenWidth }) => {
         >
           Aún no hay productos añadidos a favoritos.
         </Text>
-      )}
+      )} */}
     </View>
   );
 };

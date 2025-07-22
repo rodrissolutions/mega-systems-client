@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Text, View, Dimensions, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
-import { BarChart } from "react-native-chart-kit";
+// import { BarChart } from "react-native-chart-kit";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -81,7 +81,7 @@ const ProductRevenue = () => {
         Ingresos generados por productos
       </Text>
 
-      {chartData.datasets[0].data.length > 0 ? (
+      {/* {chartData.datasets[0].data.length > 0 ? (
         <ScrollView horizontal>
           <BarChart
             data={chartData}
@@ -99,7 +99,7 @@ const ProductRevenue = () => {
         <Text className="text-center text-gray-500">
           No hay datos para mostrar
         </Text>
-      )}
+      )} */}
     </View>
   );
 };
