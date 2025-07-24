@@ -135,7 +135,7 @@ const Cart = ({ openCart, toggleOpenCart }) => {
                     fontSize: 16,
                   }}
                 >
-                  $ {subtotal}
+                  $ {parseFloat(subtotal).toFixed(2)}
                 </Text>
               </View>
               {offer && offer?.isActive && (
@@ -197,7 +197,7 @@ const Cart = ({ openCart, toggleOpenCart }) => {
                     fontSize: 18,
                   }}
                 >
-                  $ {total}
+                  $ {parseFloat(total).toFixed(2)}
                 </Text>
               </View>
               <TouchableOpacity

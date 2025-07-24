@@ -26,6 +26,8 @@ import { userAPI } from "api/index.api";
 import { AxiosError } from "axios";
 import { Input, Password, Submit } from "components/index.components";
 import { validatorUtils } from "../../../utils/index.utils";
+import ListGenders from "../../../modal/list-genders/ListGenders";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Register = () => {
   const initialState = {
@@ -34,6 +36,7 @@ const Register = () => {
     phone: "",
     email: "",
     password: "",
+    gender: "",
   };
 
   const navigation = useNavigation();
@@ -42,6 +45,11 @@ const Register = () => {
   const [data, setData] = useState(initialState);
   const [imageUri, setImageUri] = useState(null);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  const [show, setShow] = useState(false);
+  const toggle = () => {
+    setShow(!show);
+  };
 
   useEffect(() => {
     const showSub = Keyboard.addListener("keyboardDidShow", () =>
@@ -139,7 +147,7 @@ const Register = () => {
         Toast.show({
           type: "success",
           text1: "Registro exitoso",
-          text2: message,
+          text2: "Verifique su correo para completar el registro",
           text1Style: { fontSize: 16, fontWeight: "900" },
           text2Style: { fontSize: 14 },
         });
@@ -178,214 +186,261 @@ const Register = () => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View className="flex-1 bg-[#F5F9FF]">
-          <ScrollView
-            contentContainerStyle={{ paddingBottom: 30 }}
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-          >
-            <View className="w-[85%] mx-auto flex flex-col gap-2 flex-1">
-              {!keyboardVisible && (
-                <View className="flex flex-row items-center gap-2 mt-10">
-                  <Image
-                    source={logo}
-                    className="w-[100px] h-[100px] scale-x-[-1]"
-                    resizeMode="contain"
-                  />
-                  <View className="flex-col gap-1">
-                    <Text
-                      className="text-[#eb1c33]"
-                      style={{
-                        fontFamily: "Orbitron_800ExtraBold",
-                        fontSize: 30,
-                      }}
-                    >
-                      Mega Systems
-                    </Text>
-                    <Text
-                      className="text-gray-400"
-                      style={{
-                        fontFamily: "Inter_700Bold",
-                        fontSize: 15,
-                      }}
-                    >
-                      Servicio y Tecnología a tu alcance
-                    </Text>
+        <SafeAreaView className="flex-1 bg-[#F5F9FF] flex flex-col">
+          <View className="flex-1 bg-[#F5F9FF]">
+            <ScrollView
+              contentContainerStyle={{ paddingBottom: 30 }}
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+            >
+              <View className="w-[85%] mx-auto flex flex-col gap-2 flex-1">
+                {!keyboardVisible && (
+                  <View className="flex flex-row items-center gap-2 mt-10">
+                    <Image
+                      source={logo}
+                      className="w-[100px] h-[100px] scale-x-[-1]"
+                      resizeMode="contain"
+                    />
+                    <View className="flex-col gap-1">
+                      <Text
+                        className="text-[#eb1c33]"
+                        style={{
+                          fontFamily: "Orbitron_800ExtraBold",
+                          fontSize: 30,
+                        }}
+                      >
+                        Mega Systems
+                      </Text>
+                      <Text
+                        className="text-gray-400"
+                        style={{
+                          fontFamily: "Inter_700Bold",
+                          fontSize: 15,
+                        }}
+                      >
+                        Servicio y Tecnología a tu alcance
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              )}
+                )}
 
-              <View className="flex flex-col gap-3 mt-10">
-                <TouchableOpacity
-                  className="relative w-32 h-32 rounded-full border-2 border-gray-[#0A192F] mx-auto flex justify-center items-center bg-white mb-5"
-                  onPress={pickImage}
-                >
-                  <Image
-                    source={imageUri ? { uri: imageUri } : user}
-                    className="w-full h-full rounded-full"
-                    resizeMode="cover"
-                  />
-                  <View className="absolute bottom-1 -right-1 rounded-full bg-[#0A192F] w-10 h-10 flex items-center justify-center">
-                    <Ionicons name="camera" size={24} color={"white"} />
-                  </View>
-                </TouchableOpacity>
-
-                <View className="flex flex-col gap-2">
-                  <Text
-                    className=""
-                    style={{
-                      fontFamily: "Inter_700Bold",
-                      fontSize: 16,
-                      color: "#202244",
-                    }}
+                <View className="flex flex-col gap-3 mt-10">
+                  <TouchableOpacity
+                    className="relative w-32 h-32 rounded-full border-2 border-gray-[#0A192F] mx-auto flex justify-center items-center bg-white mb-5"
+                    onPress={pickImage}
                   >
-                    Nombres
-                  </Text>
-                  <Input
-                    holder="Nombres completos"
-                    value={data.fullName}
-                    onChange={(text) => handleChange("fullName", text)}
-                    Icon={() => (
-                      <Octicons
-                        name="person-fill"
-                        size={20}
-                        color={"#545454"}
-                      />
-                    )}
-                  />
-                </View>
-
-                <View className="flex flex-col gap-2">
-                  <Text
-                    className=""
-                    style={{
-                      fontFamily: "Inter_700Bold",
-                      fontSize: 16,
-                      color: "#202244",
-                    }}
-                  >
-                    Cédula
-                  </Text>
-
-                  <Input
-                    holder="Cédula"
-                    value={data.dni}
-                    onChange={(text) => handleChange("dni", text)}
-                    keyboard="numeric"
-                    Icon={() => (
-                      <FontAwesome name="id-card" size={20} color={"#545454"} />
-                    )}
-                  />
-                </View>
-
-                <View className="flex flex-col gap-2">
-                  <Text
-                    className=""
-                    style={{
-                      fontFamily: "Inter_700Bold",
-                      fontSize: 16,
-                      color: "#202244",
-                    }}
-                  >
-                    Teléfono
-                  </Text>
-
-                  <Input
-                    holder="Teléfono"
-                    value={data.phone}
-                    onChange={(text) => handleChange("phone", text)}
-                    keyboard="numeric"
-                    Icon={() => (
-                      <MaterialCommunityIcons
-                        name="card-account-phone"
-                        size={20}
-                        color={"#545454"}
-                      />
-                    )}
-                  />
-                </View>
-
-                <View className="flex flex-col gap-2">
-                  <Text
-                    className=""
-                    style={{
-                      fontFamily: "Inter_700Bold",
-                      fontSize: 16,
-                      color: "#202244",
-                    }}
-                  >
-                    Correo electrónico
-                  </Text>
-
-                  <Input
-                    holder="Correo electrónico"
-                    value={data.email}
-                    onChange={(text) => handleChange("email", text)}
-                    keyboard="email-address"
-                    Icon={() => (
-                      <Entypo name="mail" size={20} color={"#545454"} />
-                    )}
-                  />
-                </View>
-
-                <View className="flex flex-col gap-2">
-                  <Text
-                    className=""
-                    style={{
-                      fontFamily: "Inter_700Bold",
-                      fontSize: 16,
-                      color: "#202244",
-                    }}
-                  >
-                    Contraseña
-                  </Text>
-
-                  <Password
-                    value={data.password}
-                    handleChange={(text) => handleChange("password", text)}
-                    isPasswordVisible={isPasswordVisible}
-                    setIsPasswordVisible={setIsPasswordVisible}
-                    Icon={() => (
-                      <FontAwesome name="lock" size={20} color={"#545454"} />
-                    )}
-                  />
-                </View>
-
-                <Submit
-                  loading={loading}
-                  handleSubmit={handleSubmit}
-                  text={"Registrar"}
-                />
-
-                <View className="flex flex-row items-center justify-center gap-2 mt-5">
-                  <Text
-                    style={{
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 15,
-                      color: "#545454",
-                    }}
-                  >
-                    ¿Ya tienes una cuenta?
-                  </Text>
-                  <TouchableOpacity onPress={goToLogin}>
-                    <Text
-                      className="underline"
-                      style={{
-                        fontFamily: "Inter_700Bold",
-                        fontSize: 15,
-                        color: "#0A192F",
-                      }}
-                    >
-                      Inicia sesión
-                    </Text>
+                    <Image
+                      source={imageUri ? { uri: imageUri } : user}
+                      className="w-full h-full rounded-full"
+                      resizeMode="cover"
+                    />
+                    <View className="absolute bottom-1 -right-1 rounded-full bg-[#0A192F] w-10 h-10 flex items-center justify-center">
+                      <Ionicons name="camera" size={24} color={"white"} />
+                    </View>
                   </TouchableOpacity>
+
+                  <View className="flex flex-col gap-2">
+                    <Text
+                      className=""
+                      style={{
+                        fontFamily: "Inter_700Bold",
+                        fontSize: 16,
+                        color: "#202244",
+                      }}
+                    >
+                      Nombres
+                    </Text>
+                    <Input
+                      holder="Nombres completos"
+                      value={data.fullName}
+                      onChange={(text) => handleChange("fullName", text)}
+                      Icon={() => (
+                        <Octicons
+                          name="person-fill"
+                          size={20}
+                          color={"#545454"}
+                        />
+                      )}
+                    />
+                  </View>
+
+                  <View className="flex flex-col gap-2">
+                    <Text
+                      className=""
+                      style={{
+                        fontFamily: "Inter_700Bold",
+                        fontSize: 16,
+                        color: "#202244",
+                      }}
+                    >
+                      Cédula
+                    </Text>
+
+                    <Input
+                      holder="Cédula"
+                      value={data.dni}
+                      onChange={(text) => handleChange("dni", text)}
+                      keyboard="numeric"
+                      Icon={() => (
+                        <FontAwesome
+                          name="id-card"
+                          size={20}
+                          color={"#545454"}
+                        />
+                      )}
+                    />
+                  </View>
+
+                  <View className="flex flex-col gap-2">
+                    <Text
+                      className=""
+                      style={{
+                        fontFamily: "Inter_700Bold",
+                        fontSize: 16,
+                        color: "#202244",
+                      }}
+                    >
+                      Teléfono
+                    </Text>
+
+                    <Input
+                      holder="Teléfono"
+                      value={data.phone}
+                      onChange={(text) => handleChange("phone", text)}
+                      keyboard="numeric"
+                      Icon={() => (
+                        <MaterialCommunityIcons
+                          name="card-account-phone"
+                          size={20}
+                          color={"#545454"}
+                        />
+                      )}
+                    />
+                  </View>
+
+                  <View className="flex flex-col gap-2">
+                    <Text
+                      className=""
+                      style={{
+                        fontFamily: "Inter_700Bold",
+                        fontSize: 16,
+                        color: "#202244",
+                      }}
+                    >
+                      Correo electrónico
+                    </Text>
+
+                    <Input
+                      holder="Correo electrónico"
+                      value={data.email}
+                      onChange={(text) => handleChange("email", text)}
+                      keyboard="email-address"
+                      Icon={() => (
+                        <Entypo name="mail" size={20} color={"#545454"} />
+                      )}
+                    />
+                  </View>
+
+                  <View className="flex flex-col gap-2">
+                    <Text
+                      className=""
+                      style={{
+                        fontFamily: "Inter_700Bold",
+                        fontSize: 16,
+                        color: "#202244",
+                      }}
+                    >
+                      Género
+                    </Text>
+
+                    <TouchableOpacity
+                      className="px-3"
+                      style={{
+                        borderWidth: 1,
+                        borderColor: "#ccc",
+                        borderRadius: 8,
+                        backgroundColor: "white",
+                        height: 50,
+                        justifyContent: "center",
+                      }}
+                      onPress={toggle}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "Inter_400Regular",
+                          fontSize: 16,
+                          color: "black",
+                        }}
+                      >
+                        {data?.gender || "Seleccionar"}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View className="flex flex-col gap-2">
+                    <Text
+                      className=""
+                      style={{
+                        fontFamily: "Inter_700Bold",
+                        fontSize: 16,
+                        color: "#202244",
+                      }}
+                    >
+                      Contraseña
+                    </Text>
+
+                    <Password
+                      value={data.password}
+                      handleChange={(text) => handleChange("password", text)}
+                      isPasswordVisible={isPasswordVisible}
+                      setIsPasswordVisible={setIsPasswordVisible}
+                      Icon={() => (
+                        <FontAwesome name="lock" size={20} color={"#545454"} />
+                      )}
+                    />
+                  </View>
+
+                  <Submit
+                    loading={loading}
+                    handleSubmit={handleSubmit}
+                    text={"Registrar"}
+                  />
+
+                  <View className="flex flex-row items-center justify-center gap-2 mt-5">
+                    <Text
+                      style={{
+                        fontFamily: "Inter_400Regular",
+                        fontSize: 15,
+                        color: "#545454",
+                      }}
+                    >
+                      ¿Ya tienes una cuenta?
+                    </Text>
+                    <TouchableOpacity onPress={goToLogin}>
+                      <Text
+                        className="underline"
+                        style={{
+                          fontFamily: "Inter_700Bold",
+                          fontSize: 15,
+                          color: "#0A192F",
+                        }}
+                      >
+                        Inicia sesión
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
-            </View>
-          </ScrollView>
-        </View>
+            </ScrollView>
+          </View>
+        </SafeAreaView>
       </TouchableWithoutFeedback>
       <Toast position="top" />
+      <ListGenders
+        visible={show}
+        onClose={toggle}
+        handleChange={handleChange}
+      />
     </KeyboardAvoidingView>
   );
 };

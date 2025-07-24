@@ -40,7 +40,7 @@ const Services = () => {
     <Layout>
       <View className="flex flex-col flex-1">
         {/* FILTROS */}
-        <View className="flex flex-row h-[50px] bg-white border-b border-gray-200 shadow-md shadow-gray-300">
+        <View className="flex flex-row h-[50px] bg-[#F5F9FF] border-b border-gray-200 shadow-md shadow-gray-300">
           <TouchableOpacity className="flex-1 h-full flex flex-row justify-center items-center border-r border-gray-200 gap-2">
             <Octicons name="filter" size={20} color={"#9ca3af"} />
             <Text
@@ -77,7 +77,7 @@ const Services = () => {
             paddingVertical: 20,
           }}
         >
-          <View className="flex flex-col gap-2">
+          <View className="flex-1 flex-col gap-2">
             {services.length > 0 &&
               services.map((srv) => (
                 <View

@@ -314,7 +314,10 @@ const BuyProductDetail = () => {
                 >
                   Descuento (
                   {buy.disccountType === "Porcentaje"
-                    ? `${buy.disccountValue}%`
+                    ? `${
+                        buy.disccountValue &&
+                        parseFloat(buy.disccountValue).toFixed(0)
+                      }%`
                     : `$${buy.disccountValue}`}
                   )
                 </Text>

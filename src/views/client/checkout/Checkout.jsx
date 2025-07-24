@@ -857,7 +857,7 @@ const Checkout = () => {
               color: "white",
             }}
           >
-            $ {subtotal}
+            $ {parseFloat(subtotal).toFixed(2)}
           </Text>
         </View>
 
@@ -951,7 +951,7 @@ const Checkout = () => {
               fontSize: 18,
             }}
           >
-            $ {total}
+            $ {parseFloat(total).toFixed(2)}
           </Text>
         </View>
       </View>
