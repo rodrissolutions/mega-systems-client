@@ -1,5 +1,5 @@
 import { Feather, Octicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   ScrollView,
   Text,
@@ -10,13 +10,13 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Modal from "react-native-modal";
 
-import RNPickerSelect from "react-native-picker-select";
 import Toast from "react-native-toast-message";
 import { storageUtils } from "../../utils/index.utils";
 import { offerAPI } from "../../api/index.api";
 import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
-import { setOffer, setOffers } from "store/slices/data.slice";
+import { setOffers } from "store/slices/data.slice";
+import ListTypesValues from "../list-types-values/ListTypesValues";
 
 const NewOffer = ({ isVisible, onClose }) => {
   const dispatch = useDispatch();
@@ -27,16 +27,10 @@ const NewOffer = ({ isVisible, onClose }) => {
     value: "",
   });
 
-  const typeValues = [
-    {
-      label: "Porcentaje",
-      value: "Porcentaje",
-    },
-    {
-      label: "Fijo",
-      value: "Fijo",
-    },
-  ];
+  const [show, setShow] = useState(false);
+  const toggleShow = () => {
+    setShow(!show);
+  };
 
   const getOffers = async () => {
     const token = await storageUtils.getItem("token");
@@ -239,26 +233,28 @@ const NewOffer = ({ isVisible, onClose }) => {
                 Tipo
               </Text>
 
-              <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-                <RNPickerSelect
-                  placeholder={{
-                    label: "Seleccione una categoría",
-                    value: null,
-                  }}
+              <TouchableOpacity
+                className="px-3"
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  backgroundColor: "white",
+                  height: 50,
+                  justifyContent: "center",
+                }}
+                onPress={toggleShow}
+              >
+                <Text
                   style={{
-                    inputAndroid: {
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 16,
-                    },
-                    placeholder: {
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 16,
-                    },
+                    fontFamily: "Inter_400Regular",
+                    fontSize: 16,
+                    color: "black",
                   }}
-                  onValueChange={(value) => handleChange("typeValue", value)}
-                  items={typeValues}
-                />
-              </View>
+                >
+                  {offerData.typeValue || "Seleccionar"}
+                </Text>
+              </TouchableOpacity>
             </View>
 
             <View className="flex flex-col gap-2 mb-5">
@@ -302,6 +298,11 @@ const NewOffer = ({ isVisible, onClose }) => {
             </TouchableOpacity>
           </ScrollView>
           <Toast position="top" />
+          <ListTypesValues
+            visible={show}
+            onClose={toggleShow}
+            handleChange={handleChange}
+          />
         </View>
       </SafeAreaView>
     </Modal>

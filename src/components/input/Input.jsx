@@ -21,12 +21,8 @@ const Input = ({
         defaultValue={value}
         onChangeText={onChange}
         keyboardType={keyboard || "default"}
+        maxLength={keyboard === "numeric" ? 10 : null}
         className="flex-1 bg-white outline-none px-1"
-        style={{
-          fontFamily: "Inter_400Regular",
-          fontSize: 16,
-          color: "#505050",
-        }}
       />
     </View>
   );

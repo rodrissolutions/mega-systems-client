@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import { SafeAreaView } from "react-native-safe-area-context";
-import RNPickerSelect from "react-native-picker-select";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
 import { bankAccountAPI } from "../../api/index.api";
@@ -16,9 +15,19 @@ import { storageUtils } from "../../utils/index.utils";
 import { useDispatch } from "react-redux";
 import { setBankAccounts } from "store/slices/data.slice";
 import { AxiosError } from "axios";
+import ListBanks from "../list-banks/ListBanks";
+import ListAccountType from "../list-account/ListAccount";
 
 const NewAccount = ({ isVisible, onClose }) => {
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+  const [showAccountType, setShowAccountType] = useState(false);
+  const toggle = () => {
+    setShow(!show);
+  };
+  const toggleAccountType = () => {
+    setShowAccountType(!showAccountType);
+  };
   const [bankAccountData, setBankAccountData] = useState({
     bankName: "",
     accountHolder: "",
@@ -26,29 +35,6 @@ const NewAccount = ({ isVisible, onClose }) => {
     accountType: "",
     identification: "",
   });
-  const banksEcuador = [
-    { label: "Banco Pichincha", value: "Banco Pichincha" },
-    { label: "Banco del Pacífico", value: "Banco del Pacífico" },
-    { label: "Banco Guayaquil", value: "Banco Guayaquil" },
-    { label: "Produbanco", value: "Produbanco" },
-    { label: "Banco Internacional", value: "Banco Internacional" },
-    { label: "Banco Bolivariano", value: "Banco Bolivariano" },
-    { label: "Banco de Machala", value: "Banco de Machala" },
-    { label: "Banco Amazonas", value: "Banco Amazonas" },
-    { label: "Banco Solidario", value: "Banco Solidario" },
-    { label: "Banco Coopnacional", value: "Banco Coopnacional" },
-    { label: "Banco General Rumiñahui", value: "Banco General Rumiñahui" },
-    { label: "Banco Diners Club", value: "Banco Diners Club" },
-    { label: "Banco Capital", value: "Banco Capital" },
-    { label: "Banco ProCredit", value: "Banco ProCredit" },
-    { label: "Banco del Austro", value: "Banco del Austro" },
-    { label: "BanEcuador", value: "BanEcuador" },
-  ];
-
-  const typeAccount = [
-    { label: "Ahorro", value: "Ahorro" },
-    { label: "Corriente", value: "Corriente" },
-  ];
 
   const getBankAccounts = async () => {
     const token = await storageUtils.getItem("token");
@@ -185,28 +171,28 @@ const NewAccount = ({ isVisible, onClose }) => {
                 Banco
               </Text>
 
-              <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-                <RNPickerSelect
-                  placeholder={{
-                    label: "Seleccione un banco",
-                    value: null,
-                  }}
+              <TouchableOpacity
+                className="px-3"
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  backgroundColor: "white",
+                  height: 50,
+                  justifyContent: "center",
+                }}
+                onPress={toggle}
+              >
+                <Text
                   style={{
-                    inputAndroid: {
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 16,
-                    },
-                    placeholder: {
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 16,
-                    },
+                    fontFamily: "Inter_400Regular",
+                    fontSize: 16,
+                    color: "black",
                   }}
-                  onValueChange={(value) =>
-                    handleBankAccountData("bankName", value)
-                  }
-                  items={banksEcuador}
-                />
-              </View>
+                >
+                  {bankAccountData.bankName || "Seleccionar"}
+                </Text>
+              </TouchableOpacity>
             </View>
 
             {/* Tipo de cuenta */}
@@ -220,29 +206,30 @@ const NewAccount = ({ isVisible, onClose }) => {
               >
                 Tipo de cuenta
               </Text>
+              {/* Tipo de cuenta */}
 
-              <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-                <RNPickerSelect
-                  placeholder={{
-                    label: "Seleccione un tipo de cuenta",
-                    value: null,
-                  }}
+              <TouchableOpacity
+                className="px-3"
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  backgroundColor: "white",
+                  height: 50,
+                  justifyContent: "center",
+                }}
+                onPress={toggleAccountType}
+              >
+                <Text
                   style={{
-                    inputAndroid: {
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 16,
-                    },
-                    placeholder: {
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 16,
-                    },
+                    fontFamily: "Inter_400Regular",
+                    fontSize: 16,
+                    color: "black",
                   }}
-                  onValueChange={(value) =>
-                    handleBankAccountData("accountType", value)
-                  }
-                  items={typeAccount}
-                />
-              </View>
+                >
+                  {bankAccountData.accountType || "Seleccionar"}
+                </Text>
+              </TouchableOpacity>
             </View>
 
             {/* Numero de cuenta */}
@@ -260,9 +247,13 @@ const NewAccount = ({ isVisible, onClose }) => {
               <TextInput
                 keyboardType="numeric"
                 value={bankAccountData.accountNumber}
-                onChangeText={(value) =>
-                  handleBankAccountData("accountNumber", value)
-                }
+                onChangeText={(value) => {
+                  // Solo permite números y máximo 10 dígitos
+                  const numericValue = value.replace(/[^0-9]/g, ""); // eliminar caracteres no numéricos
+                  if (numericValue.length <= 10) {
+                    handleBankAccountData("accountNumber", numericValue);
+                  }
+                }}
                 className="h-[50px] bg-white border border-gray-200 rounded-lg px-3"
                 style={{
                   fontFamily: "Inter_400Regular",
@@ -313,9 +304,13 @@ const NewAccount = ({ isVisible, onClose }) => {
               <TextInput
                 keyboardType="numeric"
                 value={bankAccountData.identification}
-                onChangeText={(value) =>
-                  handleBankAccountData("identification", value)
-                }
+                onChangeText={(value) => {
+                  // Solo permite números y máximo 10 dígitos
+                  const numericValue = value.replace(/[^0-9]/g, ""); // eliminar caracteres no numéricos
+                  if (numericValue.length <= 10) {
+                    handleBankAccountData("identification", numericValue);
+                  }
+                }}
                 className="h-[50px] bg-white border border-gray-200 rounded-lg px-3"
                 style={{
                   fontFamily: "Inter_400Regular",
@@ -342,6 +337,16 @@ const NewAccount = ({ isVisible, onClose }) => {
             </TouchableOpacity>
           </ScrollView>
           <Toast position="top" />
+          <ListBanks
+            visible={show}
+            onClose={toggle}
+            handleChange={handleBankAccountData}
+          />
+          <ListAccountType
+            visible={showAccountType}
+            onClose={toggleAccountType}
+            handleChange={handleBankAccountData}
+          />
         </View>
       </SafeAreaView>
     </Modal>

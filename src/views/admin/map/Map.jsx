@@ -5,9 +5,6 @@ import { useEffect } from "react";
 const Map = () => {
   const { currentUser } = useSelector((state) => state.data);
 
-  useEffect(() => {
-    console.log(currentUser?.Residency);
-  }, []);
   return (
     <View className="flex-1 bg-[#f5f9ff] h-[800px] w-[500px]">
       <MapView

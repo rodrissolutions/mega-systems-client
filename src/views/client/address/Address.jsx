@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
 import { useDispatch, useSelector } from "react-redux";
 import { LoginRequired } from "components/index.components";
 import { FontAwesome6 } from "@expo/vector-icons";
@@ -16,6 +15,7 @@ import * as Location from "expo-location";
 import Toast from "react-native-toast-message";
 import residencyAPI from "../../../api/residency/residency.api";
 import { setResidency } from "store/slices/data.slice";
+import TypeAddress from "../../../modal/type-address/TypeAddress";
 
 const Address = () => {
   const dispatch = useDispatch();
@@ -32,14 +32,15 @@ const Address = () => {
     phone: "",
     type: "",
   });
+  const [visibleAddress, setVisibleAddress] = useState(false);
 
-  const typeResidence = [
-    { label: "Casa", value: "Casa" },
-    { label: "Trabajo", value: "Trabajo" },
-  ];
+  const toggleVisibleAddress = () => {
+    setVisibleAddress(!visibleAddress);
+  };
 
   const getUbication = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
+
     if (status !== "granted") {
       console.log("Permiso denegado");
       return;
@@ -459,27 +460,28 @@ const Address = () => {
                 >
                   ¿Es casa o trabajo?
                 </Text>
-                <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-                  <RNPickerSelect
-                    placeholder={{
-                      label: "Seleccione una opción",
-                      value: null,
-                    }}
+                <TouchableOpacity
+                  className="px-3"
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                    borderRadius: 8,
+                    backgroundColor: "white",
+                    height: 50,
+                    justifyContent: "center",
+                  }}
+                  onPress={toggleVisibleAddress}
+                >
+                  <Text
                     style={{
-                      inputAndroid: {
-                        fontFamily: "Inter_400Regular",
-                        fontSize: 16,
-                      },
-                      placeholder: {
-                        fontFamily: "Inter_400Regular",
-                        fontSize: 16,
-                      },
+                      fontFamily: "Inter_400Regular",
+                      fontSize: 16,
+                      color: "black",
                     }}
-                    onValueChange={(value) => handleChange("type", value)}
-                    items={typeResidence}
-                    value={ubication?.type}
-                  />
-                </View>
+                  >
+                    {ubication.type || "Seleccionar"}
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -504,6 +506,11 @@ const Address = () => {
       )}
 
       <Toast position="bottom" />
+      <TypeAddress
+        visible={visibleAddress}
+        onClose={toggleVisibleAddress}
+        handleChange={handleChange}
+      />
     </KeyboardAvoidingView>
   );
 };

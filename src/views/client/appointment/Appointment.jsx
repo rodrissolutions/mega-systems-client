@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { MaterialIcons, Octicons } from "@expo/vector-icons";
-import RNPickerSelect from "react-native-picker-select";
 import { useDispatch, useSelector } from "react-redux";
 import { LoginRequired } from "components/index.components";
 import Toast from "react-native-toast-message";
@@ -17,12 +16,20 @@ import { appointmentAPI } from "../../../api/index.api";
 import { AxiosError } from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { setAppointments } from "store/slices/data.slice";
+import ListProducts from "../../admin/list-products/ListProducts";
 
 const Appointment = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [isAvailable, setIsAvailable] = useState(false);
   const [productId, setProductId] = useState(null);
+  const [productName, setProductName] = useState(null);
+  const handleProductName = (name) => setProductName(name);
+
+  const [showProducts, setShowProducts] = useState(false);
+  const toggleShowProducts = () => {
+    setShowProducts(!showProducts);
+  };
 
   const [appointment, setAppointment] = useState({
     description: null,
@@ -162,10 +169,6 @@ const Appointment = () => {
         text2Style: { fontSize: 14 },
       });
     }
-  };
-
-  const handleProduct = (value) => {
-    setProductId(value);
   };
 
   const getAppoitments = () => {
@@ -484,24 +487,28 @@ const Appointment = () => {
                 </Text>
 
                 <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-                  <RNPickerSelect
-                    placeholder={{
-                      label: "Seleccione un producto",
-                      value: null,
-                    }}
+                  <TouchableOpacity
+                    className="px-3"
                     style={{
-                      inputAndroid: {
-                        fontFamily: "Inter_400Regular",
-                        fontSize: 16,
-                      },
-                      placeholder: {
-                        fontFamily: "Inter_400Regular",
-                        fontSize: 16,
-                      },
+                      borderWidth: 1,
+                      borderColor: "#ccc",
+                      borderRadius: 8,
+                      backgroundColor: "white",
+                      height: 50,
+                      justifyContent: "center",
                     }}
-                    onValueChange={(value) => handleChange("ProductId", value)}
-                    items={mappedProducts}
-                  />
+                    onPress={toggleShowProducts}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "Inter_400Regular",
+                        fontSize: 16,
+                        color: "black",
+                      }}
+                    >
+                      {productName || "Seleccionar un producto"}
+                    </Text>
+                  </TouchableOpacity>
 
                   <Text
                     className="text-gray-400 px-2 mt-1"
@@ -563,7 +570,13 @@ const Appointment = () => {
           <LoginRequired />
         )}
       </ScrollView>
-      <Toast position="bottom" />
+      <Toast position="top" />
+      <ListProducts
+        visible={showProducts}
+        onClose={toggleShowProducts}
+        handleChange={handleChange}
+        handleProductName={handleProductName}
+      />
     </View>
   );
 };

@@ -9,45 +9,35 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import RNPickerSelect from "react-native-picker-select";
 import { pickerUtils, storageUtils } from "../../../utils/index.utils";
 import { productAPI } from "../../../api/index.api";
 import Toast from "react-native-toast-message";
 import { AxiosError } from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { setProducts } from "store/slices/data.slice";
+import ListColors from "../../../modal/list-colors/LIstColors";
 
 const EditProduct = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [productData, setProductData] = useState({});
-  const [categoriesData, setCategoriesData] = useState([]);
   const [specList, setSpecList] = useState([]);
   const [imageUri, setImageUri] = useState(null);
   const [newImage, setNewImage] = useState(false);
   const [years, setYears] = useState([]);
   const [year, setYear] = useState(null);
 
-  const colors = [
-    { label: "Rojo", value: "Rojo" },
-    { label: "Verde", value: "Verde" },
-    { label: "Azul", value: "Azul" },
-    { label: "Amarillo", value: "Amarillo" },
-    { label: "Naranja", value: "Naranja" },
-    { label: "Morado", value: "Morado" },
-    { label: "Rosado", value: "Rosado" },
-    { label: "Negro", value: "Negro" },
-    { label: "Blanco", value: "Blanco" },
-    { label: "Gris", value: "Gris" },
-    { label: "Celeste", value: "Celeste" },
-    { label: "Marrón", value: "Marrón" },
-    { label: "Turquesa", value: "Turquesa" },
-    { label: "Lima", value: "Lima" },
-    { label: "Dorado", value: "Dorado" },
-    { label: "Plateado", value: "Plateado" },
-  ];
+  const [showCategories, setShowCategories] = useState(false);
+  const toggleShowCategories = () => {
+    setShowCategories(!showCategories);
+  };
 
-  const { product, categories } = useSelector((state) => state.data);
+  const [showColors, setShowColors] = useState(false);
+  const toggleShowColors = () => {
+    setShowColors(!showColors);
+  };
+
+  const { product } = useSelector((state) => state.data);
 
   const getProducts = () => {
     productAPI.getProducts().then((res) => {
@@ -111,14 +101,6 @@ const EditProduct = () => {
       setNewImage(true);
       setImageUri(uri);
     }
-  };
-
-  const mapCategories = () => {
-    const mapCat = categories.map((ctg) => ({
-      label: ctg.name,
-      value: ctg.id,
-    }));
-    setCategoriesData(mapCat);
   };
 
   const mapYears = () => {
@@ -254,7 +236,6 @@ const EditProduct = () => {
   };
 
   useEffect(() => {
-    mapCategories();
     mapYears();
     if (product) {
       const year = new Date(product.launchDate).getFullYear().toString();
@@ -311,27 +292,29 @@ const EditProduct = () => {
             Categoría
           </Text>
 
-          <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-            <RNPickerSelect
-              value={productData?.Category?.id}
-              placeholder={{
-                label: "Seleccione una categoría",
-                value: null,
-              }}
+          <TouchableOpacity
+            disabled
+            className="px-3"
+            style={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              borderRadius: 8,
+              backgroundColor: "white",
+              height: 50,
+              justifyContent: "center",
+            }}
+            onPress={toggleShowCategories}
+          >
+            <Text
               style={{
-                inputAndroid: {
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 16,
-                },
-                placeholder: {
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 16,
-                },
+                fontFamily: "Inter_400Regular",
+                fontSize: 16,
+                color: "black",
               }}
-              onValueChange={(value) => handleChange("CategoryId", value)}
-              items={categoriesData}
-            />
-          </View>
+            >
+              {productData?.Category?.name || "Seleccionar"}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         {/* Nombre */}
@@ -505,27 +488,28 @@ const EditProduct = () => {
             Color
           </Text>
 
-          <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-            <RNPickerSelect
-              value={productData?.color}
-              placeholder={{
-                label: "Seleccione un color",
-                value: null,
-              }}
+          <TouchableOpacity
+            className="px-3"
+            style={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              borderRadius: 8,
+              backgroundColor: "white",
+              height: 50,
+              justifyContent: "center",
+            }}
+            onPress={toggleShowColors}
+          >
+            <Text
               style={{
-                inputAndroid: {
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 16,
-                },
-                placeholder: {
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 16,
-                },
+                fontFamily: "Inter_400Regular",
+                fontSize: 16,
+                color: "black",
               }}
-              onValueChange={(value) => handleChange("color", value)}
-              items={colors}
-            />
-          </View>
+            >
+              {productData?.color || "Seleccionar"}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         {/* Año de lanzamiento */}
@@ -539,30 +523,28 @@ const EditProduct = () => {
           >
             Año de lanzamiento
           </Text>
-
-          <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-            <RNPickerSelect
-              value={year}
-              placeholder={{
-                label: "Seleccione un año",
-                value: null,
-              }}
+          <TouchableOpacity
+            disabled
+            className="px-3"
+            style={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              borderRadius: 8,
+              backgroundColor: "white",
+              height: 50,
+              justifyContent: "center",
+            }}
+          >
+            <Text
               style={{
-                inputAndroid: {
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 16,
-                },
-                placeholder: {
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 16,
-                },
+                fontFamily: "Inter_400Regular",
+                fontSize: 16,
+                color: "black",
               }}
-              onValueChange={(value) => {
-                handleChange("launchDate", value);
-              }}
-              items={years}
-            />
-          </View>
+            >
+              {year || "Seleccionar"}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         {/* Garantía */}
@@ -745,6 +727,12 @@ const EditProduct = () => {
       </ScrollView>
 
       <Toast position="top" />
+      <ListColors
+        visible={showColors}
+        onClose={toggleShowColors}
+        handleChange={handleChange}
+        currentColor={productData?.color}
+      />
     </View>
   );
 };

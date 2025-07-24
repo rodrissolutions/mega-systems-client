@@ -19,10 +19,6 @@ const getStarDistribution = (reviews) => {
 };
 
 const TableRanking = ({ average, reviews }) => {
-  useEffect(() => {
-    console.log("Average:", average);
-  }, []);
-
   const { percentages } = getStarDistribution(reviews);
 
   return (

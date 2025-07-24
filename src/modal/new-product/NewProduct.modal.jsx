@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -17,6 +16,9 @@ import { productAPI } from "../../api/index.api";
 import { setProducts } from "store/slices/data.slice";
 import { AxiosError } from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
+import ListCategories from "../list-categories/ListCategories";
+import ListColors from "../list-colors/LIstColors";
+import ListYears from "../list-years/ListYears";
 
 const NewProduct = ({ isVisible, onClose }) => {
   const dispatch = useDispatch();
@@ -37,28 +39,26 @@ const NewProduct = ({ isVisible, onClose }) => {
     specification: {},
   });
   const [categoryId, setCategoryId] = useState(null);
+  const [categoryName, setCategoryName] = useState(null);
+
   const { categories } = useSelector((state) => state.data);
   const [categoriesData, setCategoriesData] = useState([]);
-  const [years, setYears] = useState([]);
 
-  const colors = [
-    { label: "Rojo", value: "Rojo" },
-    { label: "Verde", value: "Verde" },
-    { label: "Azul", value: "Azul" },
-    { label: "Amarillo", value: "Amarillo" },
-    { label: "Naranja", value: "Naranja" },
-    { label: "Morado", value: "Morado" },
-    { label: "Rosado", value: "Rosado" },
-    { label: "Negro", value: "Negro" },
-    { label: "Blanco", value: "Blanco" },
-    { label: "Gris", value: "Gris" },
-    { label: "Celeste", value: "Celeste" },
-    { label: "Marrón", value: "Marrón" },
-    { label: "Turquesa", value: "Turquesa" },
-    { label: "Lima", value: "Lima" },
-    { label: "Dorado", value: "Dorado" },
-    { label: "Plateado", value: "Plateado" },
-  ];
+  const [visibleListCategories, setVisibleListCategories] = useState(false);
+
+  const toggleListCategories = () => {
+    setVisibleListCategories(!visibleListCategories);
+  };
+
+  const [visibleListYears, setVisibleListYears] = useState(false);
+  const toggleVisibleListYears = () => {
+    setVisibleListYears(!visibleListYears);
+  };
+
+  const [visibleColors, setVisibleColors] = useState(false);
+  const toggleListColors = () => {
+    setVisibleColors(!visibleColors);
+  };
 
   const mapCategories = () => {
     const data = categories.map((ctg) => ({
@@ -69,17 +69,8 @@ const NewProduct = ({ isVisible, onClose }) => {
     setCategoriesData(data);
   };
 
-  const mapYears = () => {
-    const currentYear = new Date().getFullYear();
-    const years = [];
-    for (let i = currentYear; i >= 2000; i--) {
-      years.push({ label: i, value: i });
-    }
-
-    setYears(years);
-  };
-
-  const handleCategoryChange = (value) => {
+  const handleCategoryChange = (name, value) => {
+    setCategoryName(name);
     setCategoryId(value);
   };
 
@@ -319,7 +310,6 @@ const NewProduct = ({ isVisible, onClose }) => {
 
   useEffect(() => {
     mapCategories();
-    mapYears();
   }, [categories]);
   return (
     <Modal
@@ -371,26 +361,28 @@ const NewProduct = ({ isVisible, onClose }) => {
                 Categoría
               </Text>
 
-              <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-                <RNPickerSelect
-                  placeholder={{
-                    label: "Seleccione una categoría",
-                    value: null,
-                  }}
+              <TouchableOpacity
+                className="px-3"
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  backgroundColor: "white",
+                  height: 50,
+                  justifyContent: "center",
+                }}
+                onPress={toggleListCategories}
+              >
+                <Text
                   style={{
-                    inputAndroid: {
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 16,
-                    },
-                    placeholder: {
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 16,
-                    },
+                    fontFamily: "Inter_400Regular",
+                    fontSize: 16,
+                    color: "black",
                   }}
-                  onValueChange={(value) => handleCategoryChange(value)}
-                  items={categoriesData}
-                />
-              </View>
+                >
+                  {categoryName || "Seleccionar"}
+                </Text>
+              </TouchableOpacity>
             </View>
 
             {/* Nombre */}
@@ -555,26 +547,28 @@ const NewProduct = ({ isVisible, onClose }) => {
                 Color
               </Text>
 
-              <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-                <RNPickerSelect
-                  placeholder={{
-                    label: "Seleccione un color",
-                    value: null,
-                  }}
+              <TouchableOpacity
+                className="px-3"
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  backgroundColor: "white",
+                  height: 50,
+                  justifyContent: "center",
+                }}
+                onPress={toggleListColors}
+              >
+                <Text
                   style={{
-                    inputAndroid: {
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 16,
-                    },
-                    placeholder: {
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 16,
-                    },
+                    fontFamily: "Inter_400Regular",
+                    fontSize: 16,
+                    color: "black",
                   }}
-                  onValueChange={(value) => handleChange("color", value)}
-                  items={colors}
-                />
-              </View>
+                >
+                  {productData.color || "Seleccionar"}
+                </Text>
+              </TouchableOpacity>
             </View>
 
             {/* Año de lanzamiento */}
@@ -589,26 +583,28 @@ const NewProduct = ({ isVisible, onClose }) => {
                 Año de lanzamiento
               </Text>
 
-              <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-                <RNPickerSelect
-                  placeholder={{
-                    label: "Seleccione un año",
-                    value: null,
-                  }}
+              <TouchableOpacity
+                className="px-3"
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  backgroundColor: "white",
+                  height: 50,
+                  justifyContent: "center",
+                }}
+                onPress={toggleVisibleListYears}
+              >
+                <Text
                   style={{
-                    inputAndroid: {
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 16,
-                    },
-                    placeholder: {
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 16,
-                    },
+                    fontFamily: "Inter_400Regular",
+                    fontSize: 16,
+                    color: "black",
                   }}
-                  onValueChange={(value) => handleChange("launchDate", value)}
-                  items={years}
-                />
-              </View>
+                >
+                  {productData?.launchDate?.toString() || "Seleccionar"}
+                </Text>
+              </TouchableOpacity>
             </View>
 
             {/* Garantía */}
@@ -808,6 +804,21 @@ const NewProduct = ({ isVisible, onClose }) => {
           </ScrollView>
           <Toast position="top" />
         </View>
+        <ListCategories
+          visible={visibleListCategories}
+          onClose={toggleListCategories}
+          handleChange={handleCategoryChange}
+        />
+        <ListColors
+          visible={visibleColors}
+          onClose={toggleListColors}
+          handleChange={handleChange}
+        />
+        <ListYears
+          visible={visibleListYears}
+          onClose={toggleVisibleListYears}
+          handleChange={handleChange}
+        />
       </SafeAreaView>
     </Modal>
   );

@@ -8,8 +8,6 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import { Octicons, Feather } from "@expo/vector-icons";
-import AdminLayout from "layouts/AdminLayout";
-import RNPickerSelect from "react-native-picker-select";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useDispatch, useSelector } from "react-redux";
 import scheduleAPI from "../../../api/schedule/schedule.api";
@@ -17,16 +15,7 @@ import { setSchedules } from "store/slices/data.slice";
 import Toast from "react-native-toast-message";
 import { AxiosError } from "axios";
 import { storageUtils } from "../../../utils/index.utils";
-
-const days = [
-  "Lunes",
-  "Martes",
-  "Miercoles",
-  "Jueves",
-  "Viernes",
-  "Sabado",
-  "Domingo",
-];
+import ListDays from "../list-days/ListDays";
 
 const Schedule = () => {
   const dispatch = useDispatch();
@@ -38,6 +27,9 @@ const Schedule = () => {
     closingHour: "",
     isWorking: true,
   });
+
+  const [showDay, setShowDay] = useState(false);
+  const toggleShowDays = () => setShowDay(!showDay);
 
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -148,6 +140,10 @@ const Schedule = () => {
       });
   };
 
+  const handleDay = (name, value) => {
+    setForm({ ...form, [name]: value });
+  };
+
   const handleDelete = async (id) => {
     const token = await storageUtils.getItem("token");
 
@@ -196,7 +192,6 @@ const Schedule = () => {
 
   useEffect(() => {
     if (schedules) {
-      console.log(schedules);
       setSchedulesData(schedules);
     }
   }, [schedules]);
@@ -226,12 +221,28 @@ const Schedule = () => {
           Agregar horario
         </Text>
 
-        <RNPickerSelect
-          onValueChange={(value) => setForm({ ...form, day: value })}
-          value={form.day}
-          placeholder={{ label: "Selecciona un día", value: null }}
-          items={days.map((d) => ({ label: d, value: d }))}
-        />
+        <TouchableOpacity
+          className="px-3"
+          style={{
+            borderWidth: 1,
+            borderColor: "#ccc",
+            borderRadius: 8,
+            backgroundColor: "white",
+            height: 50,
+            justifyContent: "center",
+          }}
+          onPress={toggleShowDays}
+        >
+          <Text
+            style={{
+              fontFamily: "Inter_400Regular",
+              fontSize: 16,
+              color: "black",
+            }}
+          >
+            {form.day || "Selecciona un día"}
+          </Text>
+        </TouchableOpacity>
 
         {/* Horas */}
         <View className="flex-row gap-3 mt-3">
@@ -351,6 +362,11 @@ const Schedule = () => {
         )}
       </ScrollView>
       <Toast position="top" />
+      <ListDays
+        visible={showDay}
+        onClose={toggleShowDays}
+        handleChange={handleDay}
+      />
       {/* Picker de hora */}
       {show && (
         <DateTimePicker

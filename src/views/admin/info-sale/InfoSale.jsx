@@ -13,13 +13,13 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import RNPickerSelect from "react-native-picker-select";
 import { storageUtils } from "../../../utils/index.utils";
 import { saleAPI } from "../../../api/index.api";
 import { AxiosError } from "axios";
 import Toast from "react-native-toast-message";
 import { useNavigation } from "@react-navigation/native";
 import { setAllSales } from "store/slices/data.slice";
+import SaleStatus from "../../../modal/sale-status/SaleStatus";
 
 const InfoSale = () => {
   const dispatch = useDispatch();
@@ -30,11 +30,10 @@ const InfoSale = () => {
   });
   const { currentSale } = useSelector((state) => state.data);
 
-  const typeStatus = [
-    { label: "Pendiente", value: "Pendiente" },
-    { label: "Pagada", value: "Pagada" },
-    { label: "Rechazada", value: "Rechazada" },
-  ];
+  const [showStatus, setShowStatus] = useState(false);
+  const toggleShowStatus = () => {
+    setShowStatus(!showStatus);
+  };
 
   const getSales = async () => {
     const token = await storageUtils.getItem("token");
@@ -484,27 +483,29 @@ const InfoSale = () => {
                     >
                       Estado
                     </Text>
-                    <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-                      <RNPickerSelect
-                        value={saleData?.status}
-                        placeholder={{
-                          label: "Seleccione una opción",
-                          value: null,
-                        }}
-                        onValueChange={(value) => handleChange("status", value)}
+                    <TouchableOpacity
+                      disabled
+                      className="px-3"
+                      style={{
+                        borderWidth: 1,
+                        borderColor: "#ccc",
+                        borderRadius: 8,
+                        backgroundColor: "white",
+                        height: 50,
+                        justifyContent: "center",
+                      }}
+                      // onPress={toggleShowCategories}
+                    >
+                      <Text
                         style={{
-                          inputAndroid: {
-                            fontFamily: "Inter_400Regular",
-                            fontSize: 16,
-                          },
-                          placeholder: {
-                            fontFamily: "Inter_400Regular",
-                            fontSize: 16,
-                          },
+                          fontFamily: "Inter_400Regular",
+                          fontSize: 16,
+                          color: "black",
                         }}
-                        items={typeStatus}
-                      />
-                    </View>
+                      >
+                        {currentSale?.status || "Seleccionar"}
+                      </Text>
+                    </TouchableOpacity>
                   </View>
 
                   {/* Observacion */}
@@ -584,7 +585,7 @@ const InfoSale = () => {
                       color: "#0A192F",
                     }}
                   >
-                    {currentSale.status}
+                    {currentSale?.status}
                   </Text>
                 </View>
               </View>
@@ -654,6 +655,12 @@ const InfoSale = () => {
         </ScrollView>
       </TouchableWithoutFeedback>
       <Toast position="top" />
+      <SaleStatus
+        visible={showStatus}
+        onClose={toggleShowStatus}
+        handleChange={handleChange}
+        currenStatus={currentSale?.status}
+      />
     </KeyboardAvoidingView>
   );
 };

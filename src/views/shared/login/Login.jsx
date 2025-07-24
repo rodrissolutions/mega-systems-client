@@ -12,14 +12,14 @@ import {
 } from "react-native";
 import logo from "assets/logo.png";
 import { Octicons } from "@expo/vector-icons";
-import { use, useState } from "react";
+import { useState } from "react";
 import { authAPI } from "api/index.api";
 import Toast from "react-native-toast-message";
 import { AxiosError } from "axios";
 import { Input, Password, Submit } from "components/index.components";
 import { useDispatch } from "react-redux";
 import { setUser } from "store/slices/data.slice";
-import storageUtil from "utils/storage/storage.util";
+import { storageUtils } from "utils/index.utils";
 const Login = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -85,8 +85,8 @@ const Login = () => {
           text2Style: { fontSize: 14 },
         });
 
-        await storageUtil.saveItem("token", token);
-        await storageUtil.saveItem("user", user);
+        await storageUtils.saveItem("token", token);
+        await storageUtils.saveItem("user", user);
 
         setTimeout(() => {
           dispatch(setUser(user));
@@ -297,7 +297,7 @@ const Login = () => {
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>
-      <Toast position="bottom" />
+      <Toast position="top" />
     </KeyboardAvoidingView>
   );
 };

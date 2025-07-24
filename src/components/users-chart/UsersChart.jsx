@@ -1,7 +1,7 @@
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Dimensions, Text, View } from "react-native";
-// import { PieChart } from "react-native-chart-kit";
+import { PieChart } from "react-native-chart-kit";
 import { useSelector } from "react-redux";
 
 const UsersChart = ({ chartConfig, screenWidth }) => {
@@ -79,7 +79,7 @@ const UsersChart = ({ chartConfig, screenWidth }) => {
         </Text>
       </View>
 
-      {/* <PieChart
+      <PieChart
         data={usersData}
         width={screenWidth - 48}
         height={220}
@@ -89,7 +89,7 @@ const UsersChart = ({ chartConfig, screenWidth }) => {
         paddingLeft={"15"}
         center={[0, 0]}
         absolute
-      /> */}
+      />
     </View>
   );
 };

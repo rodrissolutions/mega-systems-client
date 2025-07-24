@@ -2,34 +2,28 @@ import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSelector } from "react-redux";
 import { dateUtils } from "../../../utils/index.utils";
-import RNPickerSelect from "react-native-picker-select";
 import { Feather, Octicons } from "@expo/vector-icons";
+import ListTechs from "../../../modal/list-techs/ListTechs";
+import ListTypeStatus from "../../../modal/type-status/TypeStatus";
 
 const EditAppointment = () => {
   const [technicians, setTechnicians] = useState([]);
   const [appointmentData, setAppointmentData] = useState({});
   const { appointment, users } = useSelector((state) => state.data);
 
-  const typeStatus = [
-    {
-      label: "Pendiente",
-      value: false,
-    },
-    {
-      label: "Realizada",
-      value: true,
-    },
-  ];
+  const [showTypeStatus, setShowTypeStatus] = useState(false);
+  const [showTechs, setShowTechs] = useState(false);
 
-  const mapTechinicians = () => {
-    const techs = users.filter((usr) => usr.Role.name === "Técnico");
+  const toggleShowTypeStatus = () => {
+    setShowTypeStatus(!showTypeStatus);
+  };
 
-    const mapped = techs.map((tc) => ({
-      label: tc.fullName,
-      value: tc.id,
-    }));
+  const toggleShowTechs = () => {
+    setShowTechs(!showTechs);
+  };
 
-    setTechnicians(mapped);
+  const handleTechName = (name) => {
+    setTechName(name);
   };
 
   const handleChange = (name, value) => {
@@ -42,13 +36,11 @@ const EditAppointment = () => {
 
   const handleSubmit = () => {
     const { Client, Technician, Product, Service, ...rest } = appointmentData;
-    console.log(rest);
   };
 
   useEffect(() => {
     if (appointment) {
       setAppointmentData(appointment);
-      mapTechinicians();
     }
   }, [appointment]);
   return (
@@ -214,27 +206,28 @@ const EditAppointment = () => {
           Ténico asignado
         </Text>
 
-        <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-          <RNPickerSelect
-            value={appointmentData?.TechnicianId}
-            placeholder={{
-              label: "Seleccione un técnico",
-              value: null,
-            }}
+        <TouchableOpacity
+          className="px-3"
+          style={{
+            borderWidth: 1,
+            borderColor: "#ccc",
+            borderRadius: 8,
+            backgroundColor: "white",
+            height: 50,
+            justifyContent: "center",
+          }}
+          onPress={toggleShowTechs}
+        >
+          <Text
             style={{
-              inputAndroid: {
-                fontFamily: "Inter_400Regular",
-                fontSize: 16,
-              },
-              placeholder: {
-                fontFamily: "Inter_400Regular",
-                fontSize: 16,
-              },
+              fontFamily: "Inter_400Regular",
+              fontSize: 16,
+              color: "black",
             }}
-            onValueChange={(value) => handleChange("TechnicianId", value)}
-            items={technicians}
-          />
-        </View>
+          >
+            {appointmentData?.Technician?.fullName || "Seleccionar"}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       <View className="flex flex-col gap-2 mb-5">
@@ -248,27 +241,30 @@ const EditAppointment = () => {
           Estado
         </Text>
 
-        <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-          <RNPickerSelect
-            value={appointmentData?.status}
-            placeholder={{
-              label: "Seleccione un estado",
-              value: null,
-            }}
+        <TouchableOpacity
+          className="px-3"
+          style={{
+            borderWidth: 1,
+            borderColor: "#ccc",
+            borderRadius: 8,
+            backgroundColor: "white",
+            height: 50,
+            justifyContent: "center",
+          }}
+          onPress={toggleShowTypeStatus}
+        >
+          <Text
             style={{
-              inputAndroid: {
-                fontFamily: "Inter_400Regular",
-                fontSize: 16,
-              },
-              placeholder: {
-                fontFamily: "Inter_400Regular",
-                fontSize: 16,
-              },
+              fontFamily: "Inter_400Regular",
+              fontSize: 16,
+              color: "black",
             }}
-            onValueChange={(value) => handleChange("status", value)}
-            items={typeStatus}
-          />
-        </View>
+          >
+            {appointmentData?.status
+              ? "Realizada"
+              : "Pendiente" || "Seleccionar"}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {appointmentData.TechnicianId ? (
@@ -338,6 +334,17 @@ const EditAppointment = () => {
           </Text>
         </View>
       )}
+
+      <ListTechs
+        visible={showTechs}
+        onClose={toggleShowTechs}
+        handleChange={handleChange}
+      />
+      <ListTypeStatus
+        visible={showTypeStatus}
+        onClose={toggleShowTypeStatus}
+        handleChange={handleChange}
+      />
     </ScrollView>
   );
 };

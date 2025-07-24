@@ -1,11 +1,11 @@
 import { ScrollView, Text, View } from "react-native";
-// import {
-//   LowRotationProducts,
-//   ProductRevenue,
-//   StockVsSales,
-//   TopRatedProducts,
-//   TopSellingProducts,
-// } from "../index.admin";
+import {
+  LowRotationProducts,
+  ProductRevenue,
+  StockVsSales,
+  TopRatedProducts,
+  TopSellingProducts,
+} from "../index.admin";
 
 const ProductReport = () => {
   return (
@@ -18,11 +18,11 @@ const ProductReport = () => {
         paddingHorizontal: 20,
       }}
     >
-      {/* <LowRotationProducts />
+      <LowRotationProducts />
       <TopSellingProducts />
       <ProductRevenue />
       <StockVsSales />
-      <TopRatedProducts /> */}
+      <TopRatedProducts />
     </ScrollView>
   );
 };

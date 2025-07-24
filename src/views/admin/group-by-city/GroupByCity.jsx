@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Text, View, Dimensions } from "react-native";
 import { useSelector } from "react-redux";
 
-// import { PieChart } from "react-native-chart-kit";
+import { PieChart } from "react-native-chart-kit";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -43,8 +43,6 @@ const GroupByCity = () => {
       legendFontSize: 10,
     }));
 
-    console.log(mapped);
-
     setMapClients(mapped);
   };
 
@@ -64,7 +62,7 @@ const GroupByCity = () => {
       >
         Clientes por ciudad
       </Text>
-      {/* {mapClients.length > 0 ? (
+      {mapClients.length > 0 ? (
         <PieChart
           data={mapClients}
           width={screenWidth - 20}
@@ -91,7 +89,7 @@ const GroupByCity = () => {
         >
           No hay información de residencia
         </Text>
-      )} */}
+      )}
     </View>
   );
 };

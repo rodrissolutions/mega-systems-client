@@ -1,10 +1,10 @@
 import { ScrollView } from "react-native";
-// import {
-//   SaleByWeek,
-//   SalesByMonth,
-//   SalesByPaymentMethod,
-//   SalesByYear,
-// } from "../index.admin";
+import {
+  SaleByWeek,
+  SalesByMonth,
+  SalesByPaymentMethod,
+  SalesByYear,
+} from "../index.admin";
 
 const SaleReport = () => {
   return (
@@ -17,10 +17,10 @@ const SaleReport = () => {
         paddingHorizontal: 20,
       }}
     >
-      {/* <SalesByPaymentMethod />
+      <SalesByPaymentMethod />
       <SalesByYear />
       <SalesByMonth />
-      <SaleByWeek /> */}
+      <SaleByWeek />
     </ScrollView>
   );
 };

@@ -847,16 +847,16 @@ const AdminNavigator = () => {
 };
 
 const RootNavigator = () => {
-  // const { user } = useSelector((state) => state.data);
-  // const initialRoute = user
-  //   ? user.Role.name === "Administrador"
-  //     ? "Admin"
-  //     : "Home"
-  //   : "Home";
+  const { user } = useSelector((state) => state.data);
+  const initialRoute = user
+    ? user.Role.name === "Administrador"
+      ? "Admin"
+      : "Home"
+    : "Home";
 
   return (
     <Stack.Navigator
-      initialRouteName={"Home"}
+      initialRouteName={initialRoute}
       screenOptions={{
         animation: "slide_from_right",
       }}
@@ -889,6 +889,11 @@ const RootNavigator = () => {
       <Stack.Screen
         name="Resend"
         component={Resend}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Onboarding"
+        component={Onboarding}
         options={{ headerShown: false }}
       />
 

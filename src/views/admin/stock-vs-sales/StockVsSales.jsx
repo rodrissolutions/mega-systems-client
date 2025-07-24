@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Text, View, Dimensions, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
-// import { StackedBarChart } from "react-native-chart-kit";
+import { StackedBarChart } from "react-native-chart-kit";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -64,7 +64,7 @@ const StockVsSales = () => {
       >
         Stock vs Ventas
       </Text>
-      {/* 
+
       {chartData.data.length > 0 ? (
         <>
           <ScrollView horizontal>
@@ -96,7 +96,7 @@ const StockVsSales = () => {
         <Text className="text-center text-gray-500">
           No hay datos para mostrar
         </Text>
-      )} */}
+      )}
     </View>
   );
 };

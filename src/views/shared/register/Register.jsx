@@ -230,58 +230,126 @@ const Register = () => {
                   </View>
                 </TouchableOpacity>
 
-                <Input
-                  holder="Nombres completos"
-                  value={data.fullName}
-                  onChange={(text) => handleChange("fullName", text)}
-                  Icon={() => (
-                    <Octicons name="person-fill" size={20} color={"#545454"} />
-                  )}
-                />
+                <View className="flex flex-col gap-2">
+                  <Text
+                    className=""
+                    style={{
+                      fontFamily: "Inter_700Bold",
+                      fontSize: 16,
+                      color: "#202244",
+                    }}
+                  >
+                    Nombres
+                  </Text>
+                  <Input
+                    holder="Nombres completos"
+                    value={data.fullName}
+                    onChange={(text) => handleChange("fullName", text)}
+                    Icon={() => (
+                      <Octicons
+                        name="person-fill"
+                        size={20}
+                        color={"#545454"}
+                      />
+                    )}
+                  />
+                </View>
 
-                <Input
-                  holder="Cédula"
-                  value={data.dni}
-                  onChange={(text) => handleChange("dni", text)}
-                  keyboard="numeric"
-                  Icon={() => (
-                    <FontAwesome name="id-card" size={20} color={"#545454"} />
-                  )}
-                />
+                <View className="flex flex-col gap-2">
+                  <Text
+                    className=""
+                    style={{
+                      fontFamily: "Inter_700Bold",
+                      fontSize: 16,
+                      color: "#202244",
+                    }}
+                  >
+                    Cédula
+                  </Text>
 
-                <Input
-                  holder="Teléfono"
-                  value={data.phone}
-                  onChange={(text) => handleChange("phone", text)}
-                  keyboard="numeric"
-                  Icon={() => (
-                    <MaterialCommunityIcons
-                      name="card-account-phone"
-                      size={20}
-                      color={"#545454"}
-                    />
-                  )}
-                />
+                  <Input
+                    holder="Cédula"
+                    value={data.dni}
+                    onChange={(text) => handleChange("dni", text)}
+                    keyboard="numeric"
+                    Icon={() => (
+                      <FontAwesome name="id-card" size={20} color={"#545454"} />
+                    )}
+                  />
+                </View>
 
-                <Input
-                  holder="Correo electrónico"
-                  value={data.email}
-                  onChange={(text) => handleChange("email", text)}
-                  keyboard="email-address"
-                  Icon={() => (
-                    <Entypo name="mail" size={20} color={"#545454"} />
-                  )}
-                />
+                <View className="flex flex-col gap-2">
+                  <Text
+                    className=""
+                    style={{
+                      fontFamily: "Inter_700Bold",
+                      fontSize: 16,
+                      color: "#202244",
+                    }}
+                  >
+                    Teléfono
+                  </Text>
 
-                <Password
-                  value={data.password}
-                  handleChange={(text) => handleChange("password", text)}
-                  isPasswordVisible={isPasswordVisible}
-                  setIsPasswordVisible={setIsPasswordVisible}
-                  Icon={() => (
-                    <FontAwesome name="lock" size={20} color={"#545454"} />
-                  )}
-                />
+                  <Input
+                    holder="Teléfono"
+                    value={data.phone}
+                    onChange={(text) => handleChange("phone", text)}
+                    keyboard="numeric"
+                    Icon={() => (
+                      <MaterialCommunityIcons
+                        name="card-account-phone"
+                        size={20}
+                        color={"#545454"}
+                      />
+                    )}
+                  />
+                </View>
+
+                <View className="flex flex-col gap-2">
+                  <Text
+                    className=""
+                    style={{
+                      fontFamily: "Inter_700Bold",
+                      fontSize: 16,
+                      color: "#202244",
+                    }}
+                  >
+                    Correo electrónico
+                  </Text>
+
+                  <Input
+                    holder="Correo electrónico"
+                    value={data.email}
+                    onChange={(text) => handleChange("email", text)}
+                    keyboard="email-address"
+                    Icon={() => (
+                      <Entypo name="mail" size={20} color={"#545454"} />
+                    )}
+                  />
+                </View>
+
+                <View className="flex flex-col gap-2">
+                  <Text
+                    className=""
+                    style={{
+                      fontFamily: "Inter_700Bold",
+                      fontSize: 16,
+                      color: "#202244",
+                    }}
+                  >
+                    Contraseña
+                  </Text>
+
+                  <Password
+                    value={data.password}
+                    handleChange={(text) => handleChange("password", text)}
+                    isPasswordVisible={isPasswordVisible}
+                    setIsPasswordVisible={setIsPasswordVisible}
+                    Icon={() => (
+                      <FontAwesome name="lock" size={20} color={"#545454"} />
+                    )}
+                  />
+                </View>
 
                 <Submit
                   loading={loading}

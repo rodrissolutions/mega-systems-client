@@ -28,7 +28,6 @@ const Product = ({ toggleShowInfo, product, index }) => {
   };
 
   const showInfoProduct = (currentProduct) => {
-    console.log(currentProduct);
     dispatch(setProduct(currentProduct));
     toggleShowInfo();
 

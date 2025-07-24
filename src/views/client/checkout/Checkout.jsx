@@ -8,20 +8,36 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
 import { useDispatch, useSelector } from "react-redux";
-import Item from "../../../components/item/Item";
+import Item from "components/item/Item";
 import {
   resetCart,
   setBuys,
   setSubtotal,
   setTotal,
 } from "store/slices/data.slice";
-import { codeAPI, saleAPI } from "../../../api/index.api";
+import { codeAPI, saleAPI } from "api/index.api";
 import Toast from "react-native-toast-message";
 import { AxiosError } from "axios";
+import TypeBuy from "../../../modal/type-buy/TypeBuy";
+import TypeDelivery from "../../../modal/type-delivery/TypeDelivery";
+import TypePayment from "../../../modal/type-payment/TypePayment";
 
 const Checkout = () => {
+  const [visibleTypeBuy, setVisibleTypeBuy] = useState(false);
+  const [visibleTypeDelivery, setVisibleTypeDelivery] = useState(false);
+  const [visiblePaymentMethod, setVisilePaymentMethod] = useState(false);
+  const toggleVisibleTypeBuy = () => {
+    setVisibleTypeBuy(!visibleTypeBuy);
+  };
+  const toggleTypeDelivery = () => {
+    setVisibleTypeDelivery(!visibleTypeDelivery);
+  };
+
+  const toggleVisiblePaymentMethod = () => {
+    setVisilePaymentMethod(!visiblePaymentMethod);
+  };
+
   const { residency, cart, total, subtotal, offer, user } = useSelector(
     (state) => state.data
   );
@@ -60,19 +76,19 @@ const Checkout = () => {
     navigation.goBack();
   };
 
-  const typeBuy = [
-    { label: "Retiro en Tienda", value: "Retiro en Tienda" },
-    { label: "Entrega a Domicilio", value: "Entrega a Domicilio" },
-  ];
-  const typeAddressDelivery = [
-    { label: "Entrega normal", value: "Entrega normal" },
-    { label: "Entrega rápida", value: "Entrega rápida" },
-  ];
+  // const typeBuy = [
+  //   { label: "Retiro en Tienda", value: "Retiro en Tienda" },
+  //   { label: "Entrega a Domicilio", value: "Entrega a Domicilio" },
+  // ];
+  // const typeAddressDelivery = [
+  //   { label: "Entrega normal", value: "Entrega normal" },
+  //   { label: "Entrega rápida", value: "Entrega rápida" },
+  // ];
 
-  const typePayment = [
-    { label: "Efectivo", value: "Efectivo" },
-    { label: "Transferencia bancaria", value: "Transferencia" },
-  ];
+  // const typePayment = [
+  //   { label: "Efectivo", value: "Efectivo" },
+  //   { label: "Transferencia bancaria", value: "Transferencia" },
+  // ];
 
   const getTotal = () => {
     const subTotalAmmount =
@@ -418,7 +434,6 @@ const Checkout = () => {
           paddingBottom: 40,
         }}
       >
-        {/* Nota */}
         <View className="w-full h-fit bg-green-200 rounded-lg flex flex-row items-center justify-center border border-green-300 px-5 py-3">
           <Text
             className="text-green-900"
@@ -434,8 +449,6 @@ const Checkout = () => {
         </View>
 
         <View className="flex flex-col mt-5">
-          {/* Método de entrega */}
-
           <View className="flex flex-col gap-2">
             <Text
               className="text-gray-500"
@@ -446,26 +459,28 @@ const Checkout = () => {
             >
               ¿Cómo desea recibir su compra?
             </Text>
-            <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-              <RNPickerSelect
-                placeholder={{
-                  label: "Seleccione una opción",
-                  value: null,
-                }}
+            <TouchableOpacity
+              className="px-3"
+              style={{
+                borderWidth: 1,
+                borderColor: "#ccc",
+                borderRadius: 8,
+                backgroundColor: "white",
+                height: 50,
+                justifyContent: "center",
+              }}
+              onPress={toggleVisibleTypeBuy}
+            >
+              <Text
                 style={{
-                  inputAndroid: {
-                    fontFamily: "Inter_400Regular",
-                    fontSize: 16,
-                  },
-                  placeholder: {
-                    fontFamily: "Inter_400Regular",
-                    fontSize: 16,
-                  },
+                  fontFamily: "Inter_400Regular",
+                  fontSize: 16,
+                  color: "black",
                 }}
-                onValueChange={(value) => handleChange("typeBuy", value)}
-                items={typeBuy}
-              />
-            </View>
+              >
+                {sale.typeBuy || "Seleccionar"}
+              </Text>
+            </TouchableOpacity>
           </View>
 
           {/* Tipo de entrega a domicilio, solo se muestra si la opcion escogida es de entrega a domicilio */}
@@ -503,9 +518,7 @@ const Checkout = () => {
                 </View>
               </View>
             ) : (
-              // Caso 2: Es entrega a domicilio y sí hay dirección
               <View className="flex flex-col mt-3">
-                {/* Nota */}
                 <View className="w-full h-fit bg-red-200 rounded-lg flex flex-row items-center justify-center border border-red-300 px-5 py-3">
                   <Text
                     className="text-red-900"
@@ -520,7 +533,6 @@ const Checkout = () => {
                   </Text>
                 </View>
 
-                {/* Tipo de entrega */}
                 <View className="flex flex-col gap-2 mt-3">
                   <Text
                     className="text-gray-500"
@@ -532,30 +544,31 @@ const Checkout = () => {
                     Tipo de entrega
                   </Text>
                   <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-                    <RNPickerSelect
-                      placeholder={{
-                        label: "Seleccione una opción",
-                        value: null,
-                      }}
+                    <TouchableOpacity
+                      className="px-3"
                       style={{
-                        inputAndroid: {
-                          fontFamily: "Inter_400Regular",
-                          fontSize: 16,
-                        },
-                        placeholder: {
-                          fontFamily: "Inter_400Regular",
-                          fontSize: 16,
-                        },
+                        borderWidth: 1,
+                        borderColor: "#ccc",
+                        borderRadius: 8,
+                        backgroundColor: "white",
+                        height: 50,
+                        justifyContent: "center",
                       }}
-                      onValueChange={(value) =>
-                        handleTypeDelivery("type", value)
-                      }
-                      items={typeAddressDelivery}
-                    />
+                      onPress={toggleTypeDelivery}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "Inter_400Regular",
+                          fontSize: 16,
+                          color: "black",
+                        }}
+                      >
+                        {delivery.typeDelivery || "Seleccionar"}
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
 
-                {/* Dirección */}
                 <View className="flex flex-col gap-2 mt-3">
                   <View className="flex flex-row justify-between items-center">
                     <Text
@@ -697,43 +710,30 @@ const Checkout = () => {
               Forma de pago
             </Text>
             <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-              <RNPickerSelect
-                placeholder={{
-                  label: "Seleccione una opción",
-                  value: null,
-                }}
+              <TouchableOpacity
+                className="px-3"
                 style={{
-                  inputAndroid: {
-                    fontFamily: "Inter_400Regular",
-                    fontSize: 16,
-                  },
-                  placeholder: {
-                    fontFamily: "Inter_400Regular",
-                    fontSize: 16,
-                  },
+                  borderWidth: 1,
+                  borderColor: "#ccc",
+                  borderRadius: 8,
+                  backgroundColor: "white",
+                  height: 50,
+                  justifyContent: "center",
                 }}
-                onValueChange={(value) => handleChange("paymentMethod", value)}
-                items={typePayment}
-              />
+                onPress={toggleVisiblePaymentMethod}
+              >
+                <Text
+                  style={{
+                    fontFamily: "Inter_400Regular",
+                    fontSize: 16,
+                    color: "black",
+                  }}
+                >
+                  {sale.paymentMethod || "Seleccionar"}
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
-
-          {/* Nota que solo aparecerá si la opcion escogida es de pago por transferencia */}
-          {sale.paymentMethod == "Transferencia" && (
-            <View className="w-full h-fit bg-red-200 rounded-lg flex flex-row items-center justify-center border border-red-300 px-5 py-3 mt-3">
-              <Text
-                className="text-red-900"
-                style={{
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 15,
-                  textAlign: "center",
-                }}
-              >
-                Recuerda que las entregas a domicilio tienen un recargo
-                adicional que varía segun el tipo de entrega
-              </Text>
-            </View>
-          )}
 
           {/* Resumen del pedido */}
           <View className="flex flex-col gap-2 mt-3">
@@ -956,6 +956,23 @@ const Checkout = () => {
         </View>
       </View>
       <Toast position="bottom" />
+      <TypeBuy
+        visible={visibleTypeBuy}
+        onClose={toggleVisibleTypeBuy}
+        handleChange={handleChange}
+      />
+
+      <TypeDelivery
+        visible={visibleTypeDelivery}
+        onClose={toggleTypeDelivery}
+        handleChange={handleTypeDelivery}
+      />
+
+      <TypePayment
+        visible={visiblePaymentMethod}
+        onClose={toggleVisiblePaymentMethod}
+        handleChange={handleChange}
+      />
     </View>
   );
 };

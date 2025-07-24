@@ -269,45 +269,47 @@ const InfoProduct = ({ showInfo, toggleShowInfo }) => {
               resizeMode="contain"
             />
 
-            {!hasInCart ? (
-              <TouchableOpacity
-                className="absolute top-4 right-7 flex flex-row items-center gap-1"
-                onPress={() => addToCart(product)}
-              >
-                <MaterialCommunityIcons
-                  name="cart-plus"
-                  size={25}
-                  color={"#9ca3af"}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                className="absolute top-4 right-7 flex flex-row items-center gap-1"
-                onPress={() => removeItemCart(product)}
-              >
-                <MaterialCommunityIcons
-                  name="cart-minus"
-                  size={25}
-                  color={"#9ca3af"}
-                />
-              </TouchableOpacity>
-            )}
+            {user &&
+              (!hasInCart ? (
+                <TouchableOpacity
+                  className="absolute top-4 right-7 flex flex-row items-center gap-1"
+                  onPress={() => addToCart(product)}
+                >
+                  <MaterialCommunityIcons
+                    name="cart-plus"
+                    size={25}
+                    color={"#9ca3af"}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  className="absolute top-4 right-7 flex flex-row items-center gap-1"
+                  onPress={() => removeItemCart(product)}
+                >
+                  <MaterialCommunityIcons
+                    name="cart-minus"
+                    size={25}
+                    color={"#9ca3af"}
+                  />
+                </TouchableOpacity>
+              ))}
 
-            {favorites.some((fav) => fav.ProductId === product.id) ? (
-              <TouchableOpacity
-                className="absolute top-4 left-7 flex flex-row items-center gap-1"
-                onPress={() => removeFavorite(product.id)}
-              >
-                <Octicons name="heart-fill" size={25} color={"#f00"} />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                className="absolute top-4 left-7 flex flex-row items-center gap-1"
-                onPress={() => addToFavorite(product.id)}
-              >
-                <Octicons name="heart" size={25} color={"#9ca3af"} />
-              </TouchableOpacity>
-            )}
+            {user &&
+              (favorites.some((fav) => fav.ProductId === product.id) ? (
+                <TouchableOpacity
+                  className="absolute top-4 left-7 flex flex-row items-center gap-1"
+                  onPress={() => removeFavorite(product.id)}
+                >
+                  <Octicons name="heart-fill" size={25} color={"#f00"} />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  className="absolute top-4 left-7 flex flex-row items-center gap-1"
+                  onPress={() => addToFavorite(product.id)}
+                >
+                  <Octicons name="heart" size={25} color={"#9ca3af"} />
+                </TouchableOpacity>
+              ))}
           </View>
 
           {/* Contenido */}

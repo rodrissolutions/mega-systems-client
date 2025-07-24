@@ -8,8 +8,7 @@ import {
 import AdminLayout from "layouts/AdminLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { Octicons } from "@expo/vector-icons";
-import RNPickerSelect from "react-native-picker-select";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { setCurrentSale } from "store/slices/data.slice";
 
@@ -31,17 +30,13 @@ const Sales = () => {
     navigation.navigate("InfoSale");
   };
 
-  useEffect(() => {
-    console.log(allSales);
-  }, []);
-
   return (
     <AdminLayout>
       <View className="flex-1 bg-gray-50">
         {/* Filtros */}
         <View className="px-5 py-4 bg-white border-b border-gray-200 flex flex-row items-center justify-between gap-3">
           {/* Buscar por código */}
-          <View className="w-[48%] flex flex-col gap-1">
+          <View className="w-full flex flex-col gap-1">
             <Text
               style={{
                 fontFamily: "Inter_600SemiBold",
@@ -60,39 +55,6 @@ const Sales = () => {
                 color: "#374151",
               }}
             />
-          </View>
-
-          {/* Filtro por estado */}
-          <View className="w-[48%] flex flex-col gap-1">
-            <Text
-              style={{
-                fontFamily: "Inter_600SemiBold",
-                fontSize: 14,
-                color: "#0A192F",
-              }}
-            >
-              Estado
-            </Text>
-            <View className="h-[48px] border border-gray-200 rounded-lg justify-center bg-white px-2">
-              <RNPickerSelect
-                placeholder={{ label: "Seleccione una opción", value: null }}
-                style={{
-                  inputAndroid: {
-                    fontFamily: "Inter_400Regular",
-                    fontSize: 14,
-                    color: "#374151",
-                  },
-                  placeholder: {
-                    fontFamily: "Inter_400Regular",
-                    fontSize: 14,
-                    color: "#9CA3AF",
-                  },
-                }}
-                value={currentStatus}
-                onValueChange={(value) => setCurrentStatus(value)}
-                items={typeStatus}
-              />
-            </View>
           </View>
         </View>
 

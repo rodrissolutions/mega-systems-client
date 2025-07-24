@@ -65,10 +65,6 @@ const Item = ({ product, quantity, id, index, pd }) => {
     getTotal();
   };
 
-  useEffect(() => {
-    console.log(product);
-  }, []);
-
   return (
     <View
       className={`flex flex-row py-3 ${

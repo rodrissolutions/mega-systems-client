@@ -11,28 +11,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { storageUtils } from "../../../utils/index.utils";
 import { offerAPI } from "../../../api/index.api";
 import { setOffers } from "store/slices/data.slice";
-import RNPickerSelect from "react-native-picker-select";
 import Toast from "react-native-toast-message";
 import { Feather } from "@expo/vector-icons";
 import { AxiosError } from "axios";
+import ListTypesValues from "../../../modal/list-types-values/ListTypesValues";
+import ListStatusOffer from "../status-offer/StatusOffer";
 
 const EditOffer = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  const [show, setShow] = useState(false);
+  const toggleShow = () => {
+    setShow(!show);
+  };
+
+  const [showIsActive, setShowIsActive] = useState(false);
+  const toggleShowIsActive = () => {
+    setShowIsActive(!showIsActive);
+  };
+
   const [offerData, setOfferData] = useState({});
   const { offer } = useSelector((state) => state.data);
-
-  const typeValues = [
-    {
-      label: "Porcentaje",
-      value: "Porcentaje",
-    },
-    {
-      label: "Fijo",
-      value: "Fijo",
-    },
-  ];
 
   const typeActives = [
     {
@@ -182,27 +182,28 @@ const EditOffer = () => {
             Tipo
           </Text>
 
-          <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-            <RNPickerSelect
-              value={offerData?.typeValue}
-              placeholder={{
-                label: "Seleccione un tipo",
-                value: null,
-              }}
+          <TouchableOpacity
+            className="px-3"
+            style={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              borderRadius: 8,
+              backgroundColor: "white",
+              height: 50,
+              justifyContent: "center",
+            }}
+            onPress={toggleShow}
+          >
+            <Text
               style={{
-                inputAndroid: {
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 16,
-                },
-                placeholder: {
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 16,
-                },
+                fontFamily: "Inter_400Regular",
+                fontSize: 16,
+                color: "black",
               }}
-              onValueChange={(value) => handleChange("typeValue", value)}
-              items={typeValues}
-            />
-          </View>
+            >
+              {offerData?.typeValue || "Seleccionar"}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <View className="flex flex-col gap-2 mb-5">
@@ -239,27 +240,28 @@ const EditOffer = () => {
             Estado
           </Text>
 
-          <View className="w-full border border-gray-200 h-[50px] bg-white rounded-lg">
-            <RNPickerSelect
-              value={offerData?.isActive}
-              placeholder={{
-                label: "Seleccione un tipo",
-                value: null,
-              }}
+          <TouchableOpacity
+            className="px-3"
+            style={{
+              borderWidth: 1,
+              borderColor: "#ccc",
+              borderRadius: 8,
+              backgroundColor: "white",
+              height: 50,
+              justifyContent: "center",
+            }}
+            onPress={toggleShowIsActive}
+          >
+            <Text
               style={{
-                inputAndroid: {
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 16,
-                },
-                placeholder: {
-                  fontFamily: "Inter_400Regular",
-                  fontSize: 16,
-                },
+                fontFamily: "Inter_400Regular",
+                fontSize: 16,
+                color: "black",
               }}
-              onValueChange={(value) => handleChange("isActive", value)}
-              items={typeActives}
-            />
-          </View>
+            >
+              {offerData?.isActive ? "Activo" : "Inactivo"}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity
@@ -279,6 +281,18 @@ const EditOffer = () => {
         </TouchableOpacity>
       </ScrollView>
       <Toast position="top" />
+      <ListTypesValues
+        visible={show}
+        onClose={toggleShow}
+        handleChange={handleChange}
+        currentValue={offerData?.typeValue}
+      />
+      <ListStatusOffer
+        visible={showIsActive}
+        onClose={toggleShowIsActive}
+        handleChange={handleChange}
+        currentActive={offerData?.isActive}
+      />
     </View>
   );
 };

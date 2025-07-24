@@ -32,7 +32,9 @@ import { appointmentAPI } from "api/index.api";
 const Home = ({ navigation }) => {
   const [showInfo, setShowInfo] = useState(false);
   const dispatch = useDispatch();
-  const { products, categories, user } = useSelector((state) => state.data);
+  const { products, categories, user, offer } = useSelector(
+    (state) => state.data
+  );
 
   const handleInfoProduct = (id) => {
     toggleShowInfo();
@@ -134,51 +136,54 @@ const Home = ({ navigation }) => {
         >
           <View className="flex flex-col">
             {/* Ofertas */}
-            <View className="mb-3">
-              {/* Oferta */}
-              <View className="w-full h-[200px] bg-[#132f58] rounded-lg border-4 border-[#FFD700] flex flex-row">
-                <View className="flex-1 flex justify-center items-center">
-                  <Text
-                    style={{
-                      fontFamily: "Orbitron_700Bold",
-                      fontSize: 50,
-                      color: "#FFD700",
-                    }}
-                  >
-                    20%
-                  </Text>
-                  <Text
-                    style={{
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 20,
-                      color: "#FFD700",
-                    }}
-                  >
-                    de descuento
-                  </Text>
-                </View>
-                <View className="flex-1 py-5 flex flex-col items-center justify-center gap-2 px-3 ">
-                  <Text
-                    style={{
-                      fontFamily: "Inter_700Bold",
-                      fontSize: 20,
-                      color: "white",
-                    }}
-                  >
-                    Aprovecha esta semana de descuento
-                  </Text>
-                  <Text
-                    style={{
-                      fontFamily: "Inter_400Regular",
-                      fontSize: 15,
-                      color: "white",
-                    }}
-                  >
-                    y obtén un 20% de descuento en tu compra
-                  </Text>
+            {offer && offer.isActive && (
+              <View className="mb-3">
+                <View className="w-full h-[200px] bg-[#132f58] rounded-lg border-4 border-[#FFD700] flex flex-row">
+                  <View className="flex-1 flex justify-center items-center">
+                    <Text
+                      style={{
+                        fontFamily: "Orbitron_700Bold",
+                        fontSize: 40,
+                        color: "#FFD700",
+                      }}
+                    >
+                      {offer.typeValue === "Porcentaje"
+                        ? parseFloat(offer.value).toFixed(0) + "%"
+                        : "$" + offer.value}
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: "Inter_400Regular",
+                        fontSize: 20,
+                        color: "#FFD700",
+                      }}
+                    >
+                      de descuento
+                    </Text>
+                  </View>
+                  <View className="flex-1 py-5 flex flex-col items-center justify-center gap-2 px-3 ">
+                    <Text
+                      style={{
+                        fontFamily: "Inter_700Bold",
+                        fontSize: 20,
+                        color: "white",
+                      }}
+                    >
+                      {offer.title}
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: "Inter_400Regular",
+                        fontSize: 15,
+                        color: "white",
+                      }}
+                    >
+                      {offer?.description}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
+            )}
             {/* Categorías */}
             <View className="flex flex-col">
               <FlatList
@@ -222,7 +227,7 @@ const Home = ({ navigation }) => {
             </View>
 
             {/* Filtrar mas vendidos */}
-            <View className="mt-5 flex flex-row items-center mb-3">
+            {/* <View className="mt-5 flex flex-row items-center mb-3">
               <TouchableOpacity className="flex flex-row items-center gap-2 px-3 py-2 border border-gray-200 rounded-lg bg-[#1786f9]">
                 <Text
                   style={{
@@ -240,8 +245,8 @@ const Home = ({ navigation }) => {
                   size={15}
                 />
               </TouchableOpacity>
-            </View>
-            <View className="flex flex-1 flex-row w-full justify-between  gap-y-5 flex-wrap gap-2 ">
+            </View> */}
+            <View className="flex flex-1 flex-row w-full justify-between  gap-y-5 flex-wrap gap-2 mt-10">
               {products &&
                 products.length > 0 &&
                 products.map((product, index) => {

@@ -10,10 +10,6 @@ const Layout = ({ children, showBarSearch = true }) => {
     setOpenCart(!openCart);
   };
 
-  useEffect(() => {
-    console.log(showBarSearch);
-  }, [showBarSearch]);
-
   return (
     <SafeAreaView className="flex-1 bg-[#F5F9FF] flex flex-col">
       <StatusBar backgroundColor="#1786f9" barStyle="light-content" />

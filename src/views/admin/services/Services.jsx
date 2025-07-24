@@ -29,10 +29,6 @@ const Services = () => {
     navigation.navigate("EditService");
   };
 
-  useEffect(() => {
-    console.log(services);
-  }, []);
-
   return isVisible ? (
     <NewService isVisible={isVisible} onClose={toggleModal} />
   ) : (

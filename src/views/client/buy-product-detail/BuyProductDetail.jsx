@@ -187,10 +187,8 @@ const BuyProductDetail = () => {
       <View className="mt-5 flex flex-col rounded-xl overflow-hidden border border-gray-200 bg-white">
         {/* Header */}
         <View className="flex flex-row bg-gray-800 h-[50px]">
-          {/* Imagen */}
-          <View className="w-[20%] h-full border-r border-gray-500"></View>
-          {/* Nombre del producto */}
-          <View className="w-[40%] h-full border-r border-gray-500 flex flex-row items-center justify-center">
+          <View className="w-[20%] h-full border-r border-gray-500" />
+          <View className="w-[40%] h-full border-r border-gray-500 flex items-center justify-center">
             <Text
               style={{
                 fontFamily: "Inter_700Bold",
@@ -201,8 +199,7 @@ const BuyProductDetail = () => {
               Producto
             </Text>
           </View>
-
-          <View className="w-[15%] h-full border-r border-gray-500 flex flex-row items-center justify-center">
+          <View className="w-[15%] h-full border-r border-gray-500 flex items-center justify-center">
             <Text
               style={{
                 fontFamily: "Inter_700Bold",
@@ -213,7 +210,7 @@ const BuyProductDetail = () => {
               #
             </Text>
           </View>
-          <View className="w-[25%] h-full  flex flex-row items-center justify-center">
+          <View className="w-[25%] h-full flex items-center justify-center">
             <Text
               style={{
                 fontFamily: "Inter_700Bold",
@@ -228,19 +225,18 @@ const BuyProductDetail = () => {
 
         {/* Body */}
         <View className="flex flex-col">
-          {buy?.SaleDetails.map((sld) => (
-            <View className="flex flex-row h-fit border-b border-gray-200">
-              {/* Imagen */}
-              <View className="w-[20%] h-full  flex flex-row items-center justify-center">
+          {buy?.SaleDetails.map((sld, index) => (
+            <View
+              key={sld.id || index}
+              className="flex flex-row border-b border-gray-200 py-2"
+            >
+              <View className="w-[20%] flex items-center justify-center">
                 <Image
-                  source={{
-                    uri: sld.Product.photo,
-                  }}
-                  className="w-[40px] h-[40px]"
+                  source={{ uri: sld.Product.photo }}
+                  className="w-[40px] h-[40px] rounded"
                 />
               </View>
-
-              <View className="w-[40%] h-full  flex flex-row items-center justify-center px-3 py-3">
+              <View className="w-[40%] flex items-center justify-center px-3">
                 <Text
                   style={{
                     fontFamily: "Inter_400Regular",
@@ -252,8 +248,7 @@ const BuyProductDetail = () => {
                   {sld.Product.name}
                 </Text>
               </View>
-
-              <View className="w-[15%] h-full  flex flex-row items-center justify-center">
+              <View className="w-[15%] flex items-center justify-center">
                 <Text
                   style={{
                     fontFamily: "Inter_700Bold",
@@ -264,8 +259,7 @@ const BuyProductDetail = () => {
                   {sld.quantity}
                 </Text>
               </View>
-
-              <View className="w-[25%] h-full flex flex-row items-center justify-center">
+              <View className="w-[25%] flex items-center justify-center">
                 <Text
                   style={{
                     fontFamily: "Inter_700Bold",
@@ -281,29 +275,87 @@ const BuyProductDetail = () => {
         </View>
 
         {/* Footer */}
-        <View className="flex flex-row h-[50px] bg-gray-700">
-          <View className="w-[75%] h-full flex flex-row items-center justify-center border-r border-gray-600">
-            <Text
-              style={{
-                fontFamily: "Inter_700Bold",
-                fontSize: 14,
-                color: "#fff",
-              }}
-            >
-              Total
-            </Text>
+        <View className="flex flex-col">
+          <View className="flex flex-row h-[50px] bg-gray-700 border-t border-gray-600">
+            <View className="w-[75%] flex items-center justify-center border-r border-gray-600">
+              <Text
+                style={{
+                  fontFamily: "Inter_700Bold",
+                  fontSize: 14,
+                  color: "#fff",
+                }}
+              >
+                Subtotal
+              </Text>
+            </View>
+            <View className="w-[25%] flex items-center justify-center">
+              <Text
+                style={{
+                  fontFamily: "Inter_700Bold",
+                  fontSize: 14,
+                  color: "#fff",
+                }}
+              >
+                $ {buy.subTotal}
+              </Text>
+            </View>
           </View>
 
-          <View className="w-[25%] h-full flex flex-row items-center justify-center">
-            <Text
-              style={{
-                fontFamily: "Inter_700Bold",
-                fontSize: 14,
-                color: "#fff",
-              }}
-            >
-              $ {buy.total}
-            </Text>
+          {/* Si hay descuento */}
+          {buy.disccount && parseFloat(buy.disccount) > 0 && (
+            <View className="flex flex-row h-[50px] bg-gray-700 border-t border-gray-600">
+              <View className="w-[75%] flex items-center justify-center border-r border-gray-600">
+                <Text
+                  style={{
+                    fontFamily: "Inter_700Bold",
+                    fontSize: 14,
+                    color: "#fff",
+                  }}
+                >
+                  Descuento (
+                  {buy.disccountType === "Porcentaje"
+                    ? `${buy.disccountValue}%`
+                    : `$${buy.disccountValue}`}
+                  )
+                </Text>
+              </View>
+              <View className="w-[25%] flex items-center justify-center">
+                <Text
+                  style={{
+                    fontFamily: "Inter_700Bold",
+                    fontSize: 14,
+                    color: "#fff",
+                  }}
+                >
+                  - $ {buy.disccount}
+                </Text>
+              </View>
+            </View>
+          )}
+
+          <View className="flex flex-row h-[50px] bg-gray-800 border-t border-gray-700">
+            <View className="w-[75%] flex items-center justify-center border-r border-gray-600">
+              <Text
+                style={{
+                  fontFamily: "Inter_700Bold",
+                  fontSize: 16,
+                  color: "#fff",
+                }}
+              >
+                Total a pagar
+              </Text>
+            </View>
+            <View className="w-[25%] flex items-center justify-center">
+              <Text
+                style={{
+                  fontFamily: "Inter_700Bold",
+                  fontSize: 16,
+                  color: "#fff",
+                }}
+              >
+                $ {buy.total}
+              </Text>
+            </View>
           </View>
         </View>
       </View>

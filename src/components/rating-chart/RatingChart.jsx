@@ -2,7 +2,7 @@ import { Octicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { useSelector } from "react-redux";
-// import { RankingChart } from "../index.components";
+import { RankingChart } from "../index.components";
 
 const RatingChart = () => {
   const [rankingData, setRankingData] = useState(null);
@@ -37,7 +37,7 @@ const RatingChart = () => {
         </Text>
       </View>
 
-      {/* {rankingData && rankingData.length > 0 ? (
+      {rankingData && rankingData.length > 0 ? (
         <RankingChart data={rankingData} />
       ) : (
         <Text
@@ -51,7 +51,7 @@ const RatingChart = () => {
         >
           Aún no hay productos calificados
         </Text>
-      )} */}
+      )}
     </View>
   );
 };
