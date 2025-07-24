@@ -10,14 +10,9 @@ const SaleStatus = ({
   const [valueSelected, setSelectedValue] = useState(null);
 
   const typeStatus = [
-    {
-      label: "Pendiente",
-      value: false,
-    },
-    {
-      label: "Realizada",
-      value: true,
-    },
+    { label: "Pendiente", value: "Pendiente" },
+    { label: "Pagada", value: "Pagada" },
+    { label: "Rechazada", value: "Rechazada" },
   ];
 
   const handleSelect = (value) => {
