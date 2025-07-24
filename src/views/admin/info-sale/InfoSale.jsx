@@ -484,7 +484,6 @@ const InfoSale = () => {
                       Estado
                     </Text>
                     <TouchableOpacity
-                      disabled
                       className="px-3"
                       style={{
                         borderWidth: 1,
@@ -494,7 +493,7 @@ const InfoSale = () => {
                         height: 50,
                         justifyContent: "center",
                       }}
-                      // onPress={toggleShowCategories}
+                      onPress={toggleShowStatus}
                     >
                       <Text
                         style={{

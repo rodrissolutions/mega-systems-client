@@ -260,9 +260,7 @@ const EditAppointment = () => {
               color: "black",
             }}
           >
-            {appointmentData?.status
-              ? "Realizada"
-              : "Pendiente" || "Seleccionar"}
+            {appointmentData?.status || "Seleccionar"}
           </Text>
         </TouchableOpacity>
       </View>

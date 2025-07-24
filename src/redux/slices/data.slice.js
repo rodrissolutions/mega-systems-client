@@ -165,6 +165,7 @@ const dataSlice = createSlice({
       state.user = null;
       state.cart = null;
       state.favorites = [];
+      state.residency = null;
     },
 
     addOrIncrementItem: (state, action) => {

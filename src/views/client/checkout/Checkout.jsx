@@ -282,6 +282,8 @@ const Checkout = () => {
         Cart: cart,
       };
 
+      console.log(saleData);
+
       saleAPI
         .createSaleWithDelivery(saleData)
         .then((res) => {

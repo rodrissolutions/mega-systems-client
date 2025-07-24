@@ -348,7 +348,7 @@ const InfoUser = () => {
               </View>
             </View>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               className="mt-5 flex flex-row items-center gap-2 bg-[#0A192F] py-3 px-5 rounded-xl justify-center"
               onPress={goToLocation}
             >
@@ -361,7 +361,7 @@ const InfoUser = () => {
               >
                 Ver ubicación
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         ) : (
           <View className="w-full h-[100px] bg-white border border-gray-200 rounded-xl px-5 flex flex-col items-center justify-center gap-2">
